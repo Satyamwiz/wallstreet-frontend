@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
 import Navbar from "./components/Navbar.jsx";
 import DesktopNavbar from "./components/DesktopNavbar.jsx";
+import Home from "./pages/Home.jsx"
+import Footer from "./components/Footer.jsx";
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
@@ -29,6 +32,8 @@ function App() {
                 {!user && <DesktopNavbar />}
             </div>
 
+            {!user && <Footer />}
+
             <div className={`container-fluid`}>
                 <div className="row flex-nowrap">
 
@@ -47,7 +52,11 @@ function App() {
                     {/**
                      * All the pages are rendered here
                      */}
-                    <div className={css}>ALL CONTENT HERE</div>
+                    <div className={css}>
+                        <Routes>
+                            <Route exact path="/" element={<Home />} />
+                        </Routes>
+                    </div>
 
                 </div>
             </div>
