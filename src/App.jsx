@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar.jsx";
 import DesktopNavbar from "./components/DesktopNavbar.jsx";
 import Home from "./pages/Home.jsx"
 import Footer from "./components/Footer.jsx";
+import Rules from "./pages/Rules.jsx"
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
@@ -55,6 +56,7 @@ function App() {
                     <div className={css}>
                         <Routes>
                             <Route exact path="/" element={<Home />} />
+                            <Route exact path="/rules" element={<Rules />} />
                         </Routes>
                     </div>
 
