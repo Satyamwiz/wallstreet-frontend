@@ -8,6 +8,7 @@ import Footer from "./components/Footer.jsx";
 import Rules from "./pages/Rules.jsx";
 import News from "./pages/News.jsx";
 import NewsDetail from "./pages/NewsDetail.jsx";
+import Stocks from "./pages/Stocks.jsx";
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
@@ -67,6 +68,11 @@ function App() {
                                 exact
                                 path="/newsdetail/:id"
                                 element={user ? <NewsDetail /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                exact
+                                path="/stocks"
+                                element={user ? <Stocks /> : <Navigate to="/login" />}
                             />
                             <Route exact path="/rules" element={<Rules />} />
                         </Routes>
