@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useEffect} from "react";
 import Lottie from "lottie-react";
 import animationData from "../lottie/114986-ultimate-trading-experience.json";
 // import { UseAuthContext } from "../Hooks/UseAuthContext";
