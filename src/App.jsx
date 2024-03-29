@@ -9,6 +9,7 @@ import Rules from "./pages/Rules.jsx";
 import News from "./pages/News.jsx";
 import NewsDetail from "./pages/NewsDetail.jsx";
 import Stocks from "./pages/Stocks.jsx";
+import StocksDetail from "./pages/StocksDetail.jsx";
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
@@ -73,6 +74,11 @@ function App() {
                                 exact
                                 path="/stocks"
                                 element={user ? <Stocks /> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                exact
+                                path="/stocksdetail/:id"
+                                element={user ? <StocksDetail /> : <Navigate to="/login" />}
                             />
                             <Route exact path="/rules" element={<Rules />} />
                         </Routes>

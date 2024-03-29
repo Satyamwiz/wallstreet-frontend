@@ -51,12 +51,22 @@ const stockService = {
         return axiosAuthInstance.post(`/stocks/sell/${id}`, sellOrderData)
         .then(res => res.data)
         .catch(err => err.response)
+    },
+    getQuantity: (id) => {
+        return axiosAuthInstance.get(`/availablequantity/${id}`)
+        .then(res => res.data)
+        .catch(err => err.response)
     }
 }
 
 const portfolioService = {
     getPortfolio: () => {
         return axiosAuthInstance.get("/portfolio/")
+        .then(res => res.data)
+        .catch(err => err.response)
+    },
+    getCash: () => {
+        return axiosAuthInstance.get("/cash/")
         .then(res => res.data)
         .catch(err => err.response)
     }
