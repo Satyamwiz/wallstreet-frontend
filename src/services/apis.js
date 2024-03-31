@@ -69,6 +69,11 @@ const portfolioService = {
         return axiosAuthInstance.get("/cash/")
         .then(res => res.data)
         .catch(err => err.response)
+    },
+    getTransactions: () => {
+        return axiosAuthInstance.get("/transactions/")
+        .then(res => res.data)
+        .catch(err => err.response)
     }
 }
 
