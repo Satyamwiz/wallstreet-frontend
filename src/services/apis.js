@@ -1,7 +1,7 @@
 import {axiosAuthInstance, axiosNoAuthInstance} from "./axiosInstance";
 
 const userService = {
-    loginUser: () => {
+    loginUser: (loginData) => {
         return axiosNoAuthInstance.post("/auth/token/login/", loginData)
         .then(res => res.data)
         .catch(err => err.response)

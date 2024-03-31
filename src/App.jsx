@@ -11,14 +11,15 @@ import NewsDetail from "./pages/NewsDetail.jsx";
 import Stocks from "./pages/Stocks.jsx";
 import StocksDetail from "./pages/StocksDetail.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
+import Login from "./pages/Login.jsx"
+import {useAuthContext} from "./hooks/useAuthContext"
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
  */
 function App() {
 
-    // Get the user using the context
-    const user = true;
+    const { user } = useAuthContext()
     const css = user ? "col-md-9 col-xl-10 col-12 content" : "col-12 content";
     
     return (
@@ -85,6 +86,11 @@ function App() {
                                 exact
                                 path="/portfolio"
                                 element={user ? <Portfolio/> : <Navigate to="/login" />}
+                            />
+                            <Route
+                                exact
+                                path="/login"
+                                element={!user ? <Login /> : <Navigate to="/" />}
                             />
                             <Route exact path="/rules" element={<Rules />} />
                         </Routes>

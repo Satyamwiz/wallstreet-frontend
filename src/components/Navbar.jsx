@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import image from "../assets/stockwhite.svg";
+import { useAuthContext } from "../hooks/useAuthContext";
+import {useLogout} from "../hooks/useLogout"
 
 /**
  * This is the navbar only rendered on mobile devices
@@ -8,11 +10,11 @@ import image from "../assets/stockwhite.svg";
 const Navbar = () => {
 
     // Get the user using context
-    const user = false;
-    const logout = true;
+    const { user } = useAuthContext();
+    const {logout} = useLogout();
 
     const handleLogout = () => {
-        console.log("LOGGED OUT");
+        logout();
     };
 
     return (

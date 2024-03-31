@@ -1,13 +1,12 @@
 import {React, useEffect} from "react";
 import Lottie from "lottie-react";
 import animationData from "../lottie/114986-ultimate-trading-experience.json";
-// import { UseAuthContext } from "../Hooks/UseAuthContext";
 import { NavLink } from "react-router-dom";
 import Footer from "../components/Footer.jsx";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
-    //   const { user } = UseAuthContext();
-    const user = true;
+    const { user } = useAuthContext();
 
     const css = user ? "homepageLogin" : "homepage";
 

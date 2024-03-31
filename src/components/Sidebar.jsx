@@ -1,18 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import image from "../assets/stockwhite.svg";
+import { useAuthContext } from "../hooks/useAuthContext";
+import {useLogout} from "../hooks/useLogout"
 
 /**
  * This is the sidebar component which only rendered is user is logged in and on desktop devices
  */
 const Sidebar = () => {
 
-    // Get user using context
-    const user = true;
-    const logout = true;
+    const { user } = useAuthContext();
+    const {logout} = useLogout();
 
     const handleLogout = () => {
-        console.log("LOGGED OUT");
+        logout();
     };
 
     return (
