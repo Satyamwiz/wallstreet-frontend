@@ -12,6 +12,7 @@ import Stocks from "./pages/Stocks.jsx";
 import StocksDetail from "./pages/StocksDetail.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Login from "./pages/Login.jsx"
+import Register from "./pages/Register.jsx"
 import CommingSoon from "./components/CommingSoon.jsx"
 import {useAuthContext} from "./hooks/useAuthContext"
 
@@ -92,6 +93,11 @@ function App() {
                                 exact
                                 path="/login"
                                 element={!user ? <Login /> : <Navigate to="/" />}
+                            />
+                            <Route
+                                exact
+                                path="/register"
+                                element={!user ? <Register /> : <Navigate to="/" />}
                             />
                             <Route exact path="/rules" element={<Rules />} />
                             <Route exact path="/ranking" element={<CommingSoon />} />

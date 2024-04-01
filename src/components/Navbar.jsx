@@ -196,6 +196,16 @@ const Navbar = () => {
                                                     Login
                                                 </span>
                                             </NavLink>
+                                            <NavLink
+                                                exact
+                                                to="/register"
+                                                className="nav-link align-middle px-0 py-4"
+                                            >
+                                                <span className="bi bi-person-plus navitems h3">
+                                                    {" "}
+                                                    Register
+                                                </span>
+                                            </NavLink>
                                         </li>
                                     )}
 

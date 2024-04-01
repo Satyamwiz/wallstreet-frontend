@@ -11,7 +11,7 @@ const userService = {
         .then(res => res.data)
         .catch(err => err.response)
     },
-    registerUser: () => {
+    registerUser: (registerData) => {
         return axiosNoAuthInstance.post("/auth/users/", registerData)
         .then(res => res.data)
         .catch(err => err.response)

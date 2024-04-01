@@ -1,26 +1,45 @@
 import { React, useState } from "react";
-import { useLogin } from "../hooks/useLogin.jsx";
+import { userService } from "../services/apis.js";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
     const [username, setName] = useState("");
+
+    const [email, setEmail] = useState("");
 
     const [password, setPass] = useState("");
 
-    const { login, error, isLoading } = useLogin();
+    const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await login(username, password);
+        userService
+            .registerUser({
+                email: email,
+                name: username,
+                password: password,
+            })
+            .then((res) => {
+                navigate("/login");
+            })
+            .catch((err) => console.log(err));
     };
 
     return (
         <div className="login-page px-4">
             <form className="login-form shadow-lg">
-                <h4>User Login</h4>
+                <h4>User Register</h4>
                 <input
                     className="my-4"
                     type="text"
                     placeholder="Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                />
+                <input
+                    className="my-4"
+                    type="text"
+                    placeholder="Username"
                     onChange={(e) => setName(e.target.value)}
                     value={username}
                 />
@@ -34,7 +53,7 @@ const Login = () => {
                 <input
                     className="my-1"
                     type="submit"
-                    value="Log In"
+                    value="Register"
                     onClick={(e) => handleSubmit(e)}
                 />
                 {/* add the loader and error handling */}
@@ -43,4 +62,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
