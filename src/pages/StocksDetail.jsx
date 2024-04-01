@@ -3,7 +3,11 @@ import BuyModal from "../components/BuyModal";
 import SellModal from "../components/SellModal";
 import { useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { stockService, portfolioService } from "../services/apis";
+import {
+    stockService,
+    portfolioService,
+    marketService,
+} from "../services/apis";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import LineChart from "../components/LineChart";
@@ -57,6 +61,10 @@ const StocksDetail = () => {
             stockService
                 .getQuantity(id)
                 .then((res) => setAvailableShares(res.available_quantity))
+                .catch((err) => console.log(err));
+            marketService
+                .checkMarketStatus()
+                .then((res) => setIsMarketOpen(res.is_open))
                 .catch((err) => console.log(err));
         }, 1300);
     }, []);
@@ -153,8 +161,8 @@ const StocksDetail = () => {
 
                     {!isMarketOpen && (
                         <div className="text-warning mb-5 fs-5 text-center">
-                            [Note : Due to technical difficulties, the market is
-                            currently closed. Trading will be resumed soon.]
+                            [ Note : The market is
+                            currently closed. Trading will be resumed tommorrow morning 9 AM ]
                         </div>
                     )}
 

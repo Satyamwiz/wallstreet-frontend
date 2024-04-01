@@ -77,4 +77,12 @@ const portfolioService = {
     }
 }
 
-export {userService, newsService, stockService, portfolioService};
+const marketService = {
+    checkMarketStatus: () => {
+        return axiosNoAuthInstance.get("/market/")
+        .then(res => res.data)
+        .catch(err => err.response)
+    }
+}
+
+export {userService, newsService, stockService, portfolioService, marketService};
