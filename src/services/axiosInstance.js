@@ -12,7 +12,9 @@ const axiosAuthInstance = axios.create({
 
 axiosAuthInstance.interceptors.request.use(
     (config) => {
-        config.headers.Authorization = `Token ${import.meta.env.VITE_BEARER_TOKEN}`;
+        if(localStorage.getItem("user")){
+            config.headers.Authorization = `Token ${localStorage.getItem("user")}`;
+        }
         return config;
     },
     (error) => {
