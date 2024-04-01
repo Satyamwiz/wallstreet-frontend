@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { userService } from "../services/apis.js";
 import { useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify';
 
 const Register = () => {
     const [username, setName] = useState("");
@@ -13,6 +14,7 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const id = toast.loading("Please wait...");
         userService
             .registerUser({
                 email: email,
@@ -20,9 +22,13 @@ const Register = () => {
                 password: password,
             })
             .then((res) => {
+                toast.update(id, { render: "Registered successfully !", type: "success", isLoading: false, autoClose:4000 })
                 navigate("/login");
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err)
+                toast.update(id, { render: (err.data[Object.keys(err.data)[0]])[0], type: "error", isLoading: false, autoClose:4000 })
+            });
     };
 
     return (

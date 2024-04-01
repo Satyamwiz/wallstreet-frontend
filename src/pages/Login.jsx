@@ -20,7 +20,7 @@ const Login = () => {
                 <input
                     className="my-4"
                     type="text"
-                    placeholder="Email"
+                    placeholder="Username"
                     onChange={(e) => setName(e.target.value)}
                     value={username}
                 />

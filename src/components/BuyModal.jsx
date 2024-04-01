@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { stockService } from "../services/apis";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const BuyModal = ({ id, ticker, name, cash, current_price, price_change }) => {
     const [qty, setQty] = useState(0);
@@ -9,43 +9,32 @@ const BuyModal = ({ id, ticker, name, cash, current_price, price_change }) => {
     const sign = price_change > 0 ? "+" : "";
     const color = price_change >= 0 ? "text-success" : "text-danger";
 
-    // const handleBuy = (e) => {
-    //     e.preventDefault();
-    //     const tid = toast.loading("Please wait...");
-    //     const data = {
-    //         company: id,
-    //         quantity: qty,
-    //         bidPrice_price: bidPrice,
-    //     };
-    //     placeBuyOrder(data)
-    //         .then((response) => {
-    //             toast.update(tid, {
-    //                 render: "Buy order placed successfully !",
-    //                 type: "success",
-    //                 isLoading: false,
-    //                 autoClose: 5000,
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             toast.update(tid, {
-    //                 render: error.response.data.message,
-    //                 type: "error",
-    //                 isLoading: false,
-    //                 autoClose: 5000,
-    //             });
-    //         });
-    // };
-
     const handleBuy = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const tid = toast.loading("Please wait...");
         const buyOrderData = {
             price: bidPrice,
-            quantity: qty
-        }
-        stockService.buyStock(id, buyOrderData)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-    }
+            quantity: qty,
+        };
+        stockService
+            .buyStock(id, buyOrderData)
+            .then((res) => {
+                toast.update(tid, {
+                    render: "Buy order placed successfully !",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            })
+            .catch((err) => {
+                toast.update(tid, {
+                    render: err.data.detail,
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 5000,
+                });
+            });
+    };
 
     return (
         <div>
