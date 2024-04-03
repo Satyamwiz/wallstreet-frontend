@@ -1,45 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import NewsCard from "../components/NewsCard.jsx";
-// import { getNews } from "../Utils/Apis";
 import { ThreeDots } from "react-loader-spinner";
+import { newsService } from "../services/apis.js";
 
 const News = () => {
-    // const [news, setNews] = useState(null);
-    const [news, setNews] = useState([
-        {
-            id:1,
-            title: "News1",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex molestiae dolores quam nesciunt sunt laborum quod voluptatum ducimus alias? Minus neque commodi optio dolores animi culpa nulla, architecto reiciendis modi!"
-        },
-        {
-            id:2,
-            title: "News2",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex molestiae dolores quam nesciunt sunt laborum quod voluptatum ducimus alias? Minus neque commodi optio dolores animi culpa nulla, architecto reiciendis modi!"
-        },
-        {
-            id:3,
-            title: "News1",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex molestiae dolores quam nesciunt sunt laborum quod voluptatum ducimus alias? Minus neque commodi optio dolores animi culpa nulla, architecto reiciendis modi!"
-        },
-        {
-            id:4,
-            title: "News2",
-            description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex molestiae dolores quam nesciunt sunt laborum quod voluptatum ducimus alias? Minus neque commodi optio dolores animi culpa nulla, architecto reiciendis modi!"
-        }
-    ]);
+    const [news, setNews] = useState(null);
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         getNews()
-    //             .then((news) => {
-    //                 setNews(news.data.reverse());
-    //             })
-    //             .catch((error) => {
-    //                 console.error(error);
-    //             });
-    //     }, 1300);
-    // }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            newsService
+                .getNews()
+                .then((res) => setNews(res))
+                .catch((err) => console.log(err));
+        }, 1300);
+    }, []);
 
     return (
         <div className="container p-0 p-sm-5">

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NewsCard = ({ id, title, description }) => {
+const NewsCard = ({ id, title, short_description }) => {
     return (
         <div className="container">
             <div className="d-flex">
@@ -17,7 +17,7 @@ const NewsCard = ({ id, title, description }) => {
                             {title}
                         </h5>
                         <p class="card-text  mb-4" style={{ color: "#fefdff" }}>
-                            {description.slice(0, 200)} ...
+                            {short_description.slice(0, 200)} ...
                         </p>
                         <Link
                             to={`/newsdetail/${id}`}

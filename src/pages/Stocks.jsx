@@ -4,17 +4,21 @@ import { useState } from "react";
 import StockCard from "../components/StockCard.jsx";
 import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { stockService } from "../services/apis";
+import { stockService, portfolioService } from "../services/apis";
 
 const Stocks = () => {
     const [stocks, setStocks] = useState(null);
-    const [cash, setCash] = useState(100000000);
+    const [cash, setCash] = useState(0);
 
     useEffect(() => {
         setTimeout(() => {
             stockService
                 .getStocks()
                 .then((res) => setStocks(res))
+                .catch((err) => console.log(err));
+            portfolioService
+                .getCash()
+                .then((res) => setCash(res.cash))
                 .catch((err) => console.log(err));
         }, 1300);
     }, []);
@@ -60,8 +64,11 @@ const Stocks = () => {
                 {stocks && (
                     <>
                         {stocks.map((stock) => {
-                            const change = parseFloat(stock.price_change).toFixed(2);
-                            const color = change >= 0 ? "text-success" : "text-danger";
+                            const change = parseFloat(
+                                stock.price_change
+                            ).toFixed(2);
+                            const color =
+                                change >= 0 ? "text-success" : "text-danger";
                             return (
                                 <Link to={`/stocksdetail/${stock.id}`}>
                                     <div className="col">
