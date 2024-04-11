@@ -113,4 +113,21 @@ const marketService = {
     }
 }
 
-export {userService, newsService, stockService, portfolioService, marketService};
+const ipoService = {
+    getIpos: () => {
+        return axiosAuthInstance.get("/ipos/")
+        .then(res => res.data)
+        .catch(err => {
+            throw err.response
+        })
+    },
+    subscribeIpo: (id, ipoSubscribeData) => {
+        return axiosAuthInstance.post(`/ipos/subscribe/${id}`, ipoSubscribeData)
+        .then(res => res.data)
+        .catch(err => {
+            throw err.response
+        })
+    }
+}
+
+export {userService, newsService, stockService, portfolioService, marketService, ipoService};

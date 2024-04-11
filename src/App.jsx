@@ -14,6 +14,7 @@ import Portfolio from "./pages/Portfolio.jsx";
 import Login from "./pages/Login.jsx"
 import Register from "./pages/Register.jsx"
 import CommingSoon from "./components/CommingSoon.jsx"
+import Ipos from "./pages/Ipos.jsx";
 import {useAuthContext} from "./hooks/useAuthContext"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -115,7 +116,7 @@ function App() {
                             />
                             <Route exact path="/rules" element={<Rules />} />
                             <Route exact path="/ranking" element={<CommingSoon />} />
-                            <Route exact path="/ipo" element={<CommingSoon />} />
+                            <Route exact path="/ipo" element={<Ipos />} />
                         </Routes>
                     </div>
 
