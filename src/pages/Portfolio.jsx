@@ -15,6 +15,7 @@ const Portfolio = () => {
                 .then((res) => {
                     setCash(res.cash);
                     setHoldings(res.holdings);
+                    setNetworth(res.networth);
                 })
                 .catch((err) => console.log(err));
             portfolioService
