@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_LOCAL_BACKEND;
+const API_URL = import.meta.env.VITE_WALLSTREET_BACKEND;
 
 const axiosNoAuthInstance = axios.create({
     baseURL: API_URL,
