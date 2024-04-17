@@ -156,6 +156,9 @@ const StocksDetail = () => {
                                     shares={availableShares}
                                 />
                             </div>
+                            <div className="stockinformation my-5 px-3">
+                                <div dangerouslySetInnerHTML={{ __html: stock.details }} />
+                            </div>
                         </div>
                     )}
 
@@ -207,6 +210,9 @@ const StocksDetail = () => {
                                     ).toFixed(2)}
                                     shares={availableShares}
                                 />
+                            </div>
+                            <div className="stockinformation my-5 px-3">
+                                <div dangerouslySetInnerHTML={{ __html: stock.details }} />
                             </div>
                         </div>
                     )}
