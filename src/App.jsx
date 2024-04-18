@@ -109,11 +109,11 @@ function App() {
                                 path="/login"
                                 element={!user ? <Login /> : <Navigate to="/" />}
                             />
-                            <Route
+                            {/* <Route
                                 exact
                                 path="/register"
                                 element={!user ? <Register /> : <Navigate to="/" />}
-                            />
+                            /> */}
                             <Route exact path="/rules" element={<Rules />} />
                             {/* <Route exact path="/ranking" element={<CommingSoon />} /> */}
                             <Route exact path="/ipo" element={<Ipos />} />

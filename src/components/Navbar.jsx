@@ -196,7 +196,7 @@ const Navbar = () => {
                                                     Login
                                                 </span>
                                             </NavLink>
-                                            <NavLink
+                                            {/* <NavLink
                                                 exact
                                                 to="/register"
                                                 className="nav-link align-middle px-0 py-4"
@@ -205,7 +205,7 @@ const Navbar = () => {
                                                     {" "}
                                                     Register
                                                 </span>
-                                            </NavLink>
+                                            </NavLink> */}
                                         </li>
                                     )}
 

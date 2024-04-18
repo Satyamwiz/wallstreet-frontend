@@ -90,14 +90,14 @@ const DesktopNavbar = () => {
                                             Login
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
+                                    {/* <li className="nav-item">
                                         <NavLink
                                             to="/register"
                                             className="nav-link text-light navItem"
                                         >
                                             Register
                                         </NavLink>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </div>
