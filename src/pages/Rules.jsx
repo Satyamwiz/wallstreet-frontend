@@ -18,8 +18,8 @@ const Rules = () => {
                         <br />
                         <li className="text-align-justify ">
                             Each participant will receive initial cash of
-                            ₹10,00,000 which he/she can use to subscribe IPOs
-                            and buy stocks
+                            ₹10,00,000 which can be used to subscribe IPOs
+                            and buy stocks.
                         </li>
                         <br />
                         <li>

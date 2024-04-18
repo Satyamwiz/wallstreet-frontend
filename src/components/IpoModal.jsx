@@ -111,7 +111,7 @@ const IpoModal = ({
                                     <p className="mt-0">{issue_size}</p>
 
                                     <p className="mb-0 ipodetailtitle mt-4">
-                                        Quantity
+                                        Lot Qty
                                     </p>
                                     <div>
                                         <input
