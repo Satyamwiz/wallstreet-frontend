@@ -16,6 +16,12 @@ const Rules = () => {
                             subscribe to IPOs using the cash amount.
                         </li>
                         <br />
+                        <li className="text-align-justify ">
+                            Each participant will receive initial cash of
+                            ₹10,00,000 which he/she can use to subscribe IPOs
+                            and buy stocks
+                        </li>
+                        <br />
                         <li>
                             IPOs will be floated every day before start of the
                             actual trading days to which participants can
@@ -38,7 +44,7 @@ const Rules = () => {
                         <br />
 
                         <li>
-                            The market will be up from 9:00 AM to 5:00 PM for 3
+                            The market will be up from 9:00 AM to 3:00 PM for 2
                             days.This period is defined as 'day' henceforth in
                             the document.
                         </li>
