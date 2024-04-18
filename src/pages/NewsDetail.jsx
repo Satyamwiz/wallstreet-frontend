@@ -13,7 +13,7 @@ const NewsDetail = () => {
             newsService
                 .getNewsDetail(id)
                 .then((res) => setNews(res))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
         }, 1300);
     }, []);
 

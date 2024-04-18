@@ -41,6 +41,7 @@ const IpoModal = ({
                 })
                 .catch((error) => {
                     toast.error(error.data.detail);
+                    console.clear()
                 });
         }
     };

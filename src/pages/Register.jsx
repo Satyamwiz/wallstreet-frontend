@@ -26,7 +26,7 @@ const Register = () => {
                 navigate("/login");
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 toast.update(id, { render: (err.data[Object.keys(err.data)[0]])[0], type: "error", isLoading: false, autoClose:4000 })
             });
     };

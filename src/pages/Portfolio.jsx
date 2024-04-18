@@ -17,14 +17,14 @@ const Portfolio = () => {
                     setHoldings(res.holdings);
                     setNetworth(res.networth);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
             portfolioService
                 .getTransactions()
                 .then((res) => {
                     setTransactions(res)
-                    console.log(res)
+                    // console.log(res)
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
         }, 1300);
     }, []);
 

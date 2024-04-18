@@ -53,19 +53,19 @@ const StocksDetail = () => {
                         ],
                     });
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
             portfolioService
                 .getCash()
                 .then((res) => setCash(res.cash))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
             stockService
                 .getQuantity(id)
                 .then((res) => setAvailableShares(res.available_quantity))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
             marketService
                 .checkMarketStatus()
                 .then((res) => setIsMarketOpen(res.is_open))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
         }, 1300);
     }, []);
 

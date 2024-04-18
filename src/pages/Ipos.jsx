@@ -11,7 +11,7 @@ const Ipos = () => {
             ipoService
                 .getIpos()
                 .then((res) => setIpos(res))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
         }, 1300);
     }, []);
 

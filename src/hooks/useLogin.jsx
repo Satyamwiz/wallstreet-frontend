@@ -45,6 +45,7 @@ export const useLogin = () => {
             toast.update(id, { render: "Logged in successfully !", type: "success", isLoading: false, autoClose:4000 })
         })
         .catch((err) => {
+            console.clear()
             axios.post(`${import.meta.env.VITE_MAINWEB_BACKEND}verify/user/`, {
                 username: username,
                 password: password,
@@ -76,11 +77,14 @@ export const useLogin = () => {
                     })
                     .catch((err) => {
                         toast.update(id, { render: err.response.data.detail, type: "error", isLoading: false, autoClose:4000 })
+                        console.clear()
                     })
                 }
             })
             .catch((err)=>{
+                console.clear()
                 toast.update(id, { render: err.response.data.detail, type: "error", isLoading: false, autoClose:4000 })
+                console.clear()
             })
             setLoading(false);
             setError(err);

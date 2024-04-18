@@ -15,11 +15,11 @@ const Stocks = () => {
             stockService
                 .getStocks()
                 .then((res) => setStocks(res))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
             portfolioService
                 .getCash()
                 .then((res) => setCash(res.cash))
-                .catch((err) => console.log(err));
+                .catch((err) => console.log(""));
         }, 1300);
     }, []);
 

@@ -22,11 +22,11 @@ export const AuthContextProvider = ({ children }) => {
         const user = localStorage.getItem('user');
         if (user) {
             dispatch({ type: 'LOGIN', payload: user });
-            console.log('CHANGE IN AUTHCONTEXT')
+            // console.log('CHANGE IN AUTHCONTEXT')
         }
     }, []);
 
-    console.log("AuthContext state: ", state);
+    // console.log("AuthContext state: ", state);
 
     return <AuthContext.Provider value={{...state, dispatch}}>{children}</AuthContext.Provider>;
 };
