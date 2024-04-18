@@ -102,18 +102,18 @@ const Navbar = () => {
                                         </NavLink>
                                     </li>
 
-                                    {/* <li className="nav-item">
-                                          <NavLink
-                                            exact
-                                            to="/ipo"
-                                            className="nav-link align-middle px-0 py-4"
-                                          >
-                                            <span className="bi bi-bar-chart navitems h3 bi bi-clipboard-data">
-                                              {" "}
-                                              Ipo
-                                            </span>
-                                          </NavLink>
-                                        </li> */}
+                                    <li className="nav-item">
+                                        <NavLink
+                                        exact
+                                        to="/ipo"
+                                        className="nav-link align-middle px-0 py-4"
+                                        >
+                                        <span className="bi bi-bar-chart navitems h3 bi bi-clipboard-data">
+                                            {" "}
+                                            Ipo
+                                        </span>
+                                        </NavLink>
+                                    </li>
 
                                     {user && (
                                         <li
@@ -137,7 +137,7 @@ const Navbar = () => {
                                         </li>
                                     )}
 
-                                    <li
+                                    {/* <li
                                         className="nav-item"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#navbarSupportedContent"
@@ -155,7 +155,7 @@ const Navbar = () => {
                                                 Rankings
                                             </span>
                                         </NavLink>
-                                    </li>
+                                    </li> */}
 
                                     <li
                                         className="nav-item"
@@ -189,7 +189,7 @@ const Navbar = () => {
                                             <NavLink
                                                 exact
                                                 to="/login"
-                                                className="nav-link align-middle px-0 py-4"
+                                                className="nav-link align-middle text-center px-0 py-4"
                                             >
                                                 <span className="bi bi-box-arrow-in-right navitems h3">
                                                     {" "}

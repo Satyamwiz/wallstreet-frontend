@@ -84,7 +84,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                     )}
-
+{/* 
                     <li className="nav-item">
                         <NavLink
                             exact
@@ -93,6 +93,17 @@ const Sidebar = () => {
                         >
                             {" "}
                             Ranking
+                        </NavLink>
+                    </li> */}
+
+                    <li className="nav-item">
+                        <NavLink
+                            exact
+                            to="/rules"
+                            className="nav-link align-middle px-0 py-4 navitems h3 bi bi-box-arrow-left bi bi-people"
+                        >
+                            {" "}
+                            Rules
                         </NavLink>
                     </li>
                 </ul>

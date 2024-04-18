@@ -115,7 +115,7 @@ function App() {
                                 element={!user ? <Register /> : <Navigate to="/" />}
                             />
                             <Route exact path="/rules" element={<Rules />} />
-                            <Route exact path="/ranking" element={<CommingSoon />} />
+                            {/* <Route exact path="/ranking" element={<CommingSoon />} /> */}
                             <Route exact path="/ipo" element={<Ipos />} />
                         </Routes>
                     </div>
