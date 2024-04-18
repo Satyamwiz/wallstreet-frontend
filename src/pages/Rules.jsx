@@ -24,10 +24,9 @@ const Rules = () => {
                         <br />
 
                         <li>
-                            IPO allocation will be visible on the first day of
-                            actual trading and will be done on a first come
-                            first serve basis. So keep an eye on our social
-                            media handles for constant updates.
+                            IPO allocation will be visible on the first day. So
+                            keep an eye on our social media handles for constant
+                            updates.
                         </li>
                         <br />
 
@@ -46,32 +45,9 @@ const Rules = () => {
                         <br />
 
                         <li>
-                            Any buy bid or sell ask can be made within a margin
-                            of ±10% of the current share price.For ex,if the
-                            current market price of a share is Rs.100/-,a buy or
-                            sell bid can be made from any range between Rs. 90-
-                            Rs.110/-
-                        </li>
-                        <br />
-
-                        <li>
-                            A transaction fee of 1% of total transaction cost
-                            will be charged from both the seller and the buyer
-                            for every successful transaction between the two.
-                        </li>
-                        <br />
-
-                        <li>
-                            When a user places a buy bid for the shares of the
-                            company A, the amount he's bidding for will be
-                            immediately deducted from his account along with the
-                            relevant transaction fee of 1%. For ex. if the buyer
-                            buys 50 shares for Rs. 106 each share, the cost will
-                            be Rs.5300/-. Adding 1% transaction fee the final
-                            cost that'll be deducted from the buyer's account
-                            will be1.01*5300 = Rs.5353/-. This amount will be
-                            immediately deducted, and the user won't be able to
-                            access this amount.
+                            Any buy bid or sell ask rounded off must be to
+                            current price. ex. If current price is ₹100.78 then
+                            but bid or sell ask must be in range ₹100 to ₹101
                         </li>
                         <br />
 
@@ -99,6 +75,14 @@ const Rules = () => {
                         <li>
                             News regarding the listed companies would be
                             displayed every half an hour.
+                        </li>
+                        <br />
+
+                        <li>
+                            After final listing price is determined for an IPO,
+                            any additional bid amount placed by a user above the
+                            final listing price will be returned to the user's
+                            account.
                         </li>
                     </ol>
                 </div>
