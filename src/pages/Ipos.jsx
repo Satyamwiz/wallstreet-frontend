@@ -10,7 +10,7 @@ const Ipos = () => {
         setTimeout(() => {
             ipoService
                 .getIpos()
-                .then((res) => setIpos(res))
+                .then((res) => setIpos(res.reverse()))
                 .catch((err) => console.log(""));
         }, 1300);
     }, []);
