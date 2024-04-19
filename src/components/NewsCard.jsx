@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NewsCard = ({ id, title, short_description }) => {
+const NewsCard = ({ id, title, short_description, published_at}) => {
     return (
         <div className="container">
             <div className="d-flex">
@@ -11,13 +11,16 @@ const NewsCard = ({ id, title, short_description }) => {
                 >
                     <div class="card-body">
                         <h5
-                            class="card-title mb-4 text-truncate"
+                            class="card-title mb-3 text-truncate"
                             style={{ color: "#5eb5f8" }}
                         >
                             {title}
                         </h5>
-                        <p class="card-text  mb-4" style={{ color: "#fefdff" }}>
-                            {short_description.slice(0, 200)} ...
+                        <p className="text-muted mb-3">
+                        {published_at.slice(11, 16)} &nbsp; {published_at.slice(0, 10)}
+                        </p>
+                        <p class="card-text mb-3" style={{ color: "#fefdff" }}>
+                            {short_description.slice(0, 185)} ...
                         </p>
                         <Link
                             to={`/newsdetail/${id}`}
