@@ -82,7 +82,7 @@ function App() {
                             <Route
                                 exact
                                 path="/news"
-                                element={<News />}
+                                element={<CommingSoon />}
                             />
                             <Route
                                 exact
@@ -92,7 +92,7 @@ function App() {
                             <Route
                                 exact
                                 path="/stocks"
-                                element={user ? <Stocks /> : <Navigate to="/login" />}
+                                element={user ? <CommingSoon /> : <Navigate to="/login" />}
                             />
                             <Route
                                 exact

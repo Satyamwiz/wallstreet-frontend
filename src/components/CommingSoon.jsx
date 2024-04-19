@@ -4,7 +4,7 @@ const CommingSoon = () => {
     return (
         <div>
             <div class="comingsoon">
-                <h1 className='comingsoonText'>Coming Soon...</h1>
+                <h1 className='comingsoonText'>Trading will start from 20/04/2024 9:00 AM</h1>
             </div>
         </div>
     )
