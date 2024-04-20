@@ -67,11 +67,11 @@ const Portfolio = () => {
                                 <div class="col-6 text-end">
                                     <p class="mt-2 mb-sm-2 h5 ms-sm-3 me-2 bi bi-wallet d-none d-sm-block">
                                         {" "}
-                                        Balance : {`₹ ${cash}`}
+                                        Cash : {`₹ ${cash}`}
                                     </p>
                                     <p class="mb-3 mb-sm-2 h5 ms-sm-3 bi bi-wallet d-block d-sm-none ">
                                         {" "}
-                                        Balance :{" "}
+                                        Cash :{" "}
                                     </p>
                                     <p class="mb-0 h5 ms-sm-4 mt-3 d-block d-sm-none">{`₹ ${cash}`}</p>
                                 </div>
