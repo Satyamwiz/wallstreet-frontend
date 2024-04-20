@@ -58,14 +58,14 @@ const DesktopNavbar = () => {
                                             News
                                         </NavLink>
                                     </li>
-                                    {/* <li className="nav-item">
+                                    <li className="nav-item">
                                         <NavLink
                                             to="/ranking"
                                             className="nav-link text-light navItem"
                                         >
                                             Rankings
                                         </NavLink>
-                                    </li> */}
+                                    </li>
                                     <li className="nav-item">
                                         <NavLink
                                         to="/ipo"

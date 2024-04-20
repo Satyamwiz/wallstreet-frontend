@@ -162,4 +162,16 @@ const ipoService = {
     }
 }
 
-export {userService, newsService, stockService, portfolioService, marketService, ipoService};
+const rankService = {
+    getRankings: () => {
+        return axiosNoAuthInstance.get('/ranking/')
+        .then(res => res.data)
+        .catch(err => {
+            console.clear()
+            throw err.response
+            console.clear()
+        })
+    }
+}
+
+export {userService, newsService, stockService, portfolioService, marketService, ipoService, rankService};

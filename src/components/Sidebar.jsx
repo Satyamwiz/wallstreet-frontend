@@ -84,7 +84,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                     )}
-{/* 
+
                     <li className="nav-item">
                         <NavLink
                             exact
@@ -94,7 +94,7 @@ const Sidebar = () => {
                             {" "}
                             Ranking
                         </NavLink>
-                    </li> */}
+                    </li>
 
                     <li className="nav-item">
                         <NavLink

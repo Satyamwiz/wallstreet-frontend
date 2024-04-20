@@ -137,7 +137,7 @@ const Navbar = () => {
                                         </li>
                                     )}
 
-                                    {/* <li
+                                    <li
                                         className="nav-item"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#navbarSupportedContent"
@@ -155,7 +155,7 @@ const Navbar = () => {
                                                 Rankings
                                             </span>
                                         </NavLink>
-                                    </li> */}
+                                    </li>
 
                                     <li
                                         className="nav-item"

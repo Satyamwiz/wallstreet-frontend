@@ -18,6 +18,7 @@ import Ipos from "./pages/Ipos.jsx";
 import {useAuthContext} from "./hooks/useAuthContext"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Ranking from "./pages/Ranking.jsx";
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
@@ -115,7 +116,7 @@ function App() {
                                 element={!user ? <Register /> : <Navigate to="/" />}
                             /> */}
                             <Route exact path="/rules" element={<Rules />} />
-                            {/* <Route exact path="/ranking" element={<CommingSoon />} /> */}
+                            <Route exact path="/ranking" element={<Ranking />} />
                             <Route exact path="/ipo" element={<Ipos />} />
                         </Routes>
                     </div>
