@@ -30,7 +30,7 @@ const SellModal = ({
                     render: "Sell order placed successfully !",
                     type: "success",
                     isLoading: false,
-                    autoClose: 5000,
+                    autoClose: 3000,
                 });
             })
             .catch((err) => {
@@ -38,7 +38,7 @@ const SellModal = ({
                     render: err.data.detail,
                     type: "error",
                     isLoading: false,
-                    autoClose: 5000,
+                    autoClose: 3000,
                 });
             });
     };

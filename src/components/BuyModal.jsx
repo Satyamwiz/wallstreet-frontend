@@ -23,7 +23,7 @@ const BuyModal = ({ id, ticker, name, cash, current_price, price_change }) => {
                     render: "Buy order placed successfully !",
                     type: "success",
                     isLoading: false,
-                    autoClose: 5000,
+                    autoClose: 3000,
                 });
             })
             .catch((err) => {
@@ -31,7 +31,7 @@ const BuyModal = ({ id, ticker, name, cash, current_price, price_change }) => {
                     render: err.data.detail,
                     type: "error",
                     isLoading: false,
-                    autoClose: 5000,
+                    autoClose: 3000,
                 });
             });
     };

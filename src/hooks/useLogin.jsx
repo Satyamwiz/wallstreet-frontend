@@ -42,7 +42,7 @@ export const useLogin = () => {
             localStorage.setItem("user", res.auth_token);
             dispatch({ type: 'LOGIN', payload: res.auth_token });
             setLoading(false);
-            toast.update(id, { render: "Logged in successfully !", type: "success", isLoading: false, autoClose:4000 })
+            toast.update(id, { render: "Logged in successfully !", type: "success", isLoading: false, autoClose:3000 })
         })
         .catch((err) => {
             console.clear()
@@ -72,18 +72,18 @@ export const useLogin = () => {
                             localStorage.setItem("user", res.auth_token);
                             dispatch({ type: 'LOGIN', payload: res.auth_token });
                             setLoading(false);
-                            toast.update(id, { render: "Logged in successfully !", type: "success", isLoading: false, autoClose:4000 })
+                            toast.update(id, { render: "Logged in successfully !", type: "success", isLoading: false, autoClose:3000 })
                         })
                     })
                     .catch((err) => {
-                        toast.update(id, { render: err.response.data.detail, type: "error", isLoading: false, autoClose:4000 })
+                        toast.update(id, { render: err.response.data.detail, type: "error", isLoading: false, autoClose:3000 })
                         console.clear()
                     })
                 }
             })
             .catch((err)=>{
                 console.clear()
-                toast.update(id, { render: err.response.data.detail, type: "error", isLoading: false, autoClose:4000 })
+                toast.update(id, { render: err.response.data.detail, type: "error", isLoading: false, autoClose:3000 })
                 console.clear()
             })
             setLoading(false);
