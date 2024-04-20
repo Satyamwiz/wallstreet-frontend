@@ -87,7 +87,7 @@ const Rules = () => {
 
                         <li>
                             News regarding the listed companies would be
-                            displayed every half an hour.
+                            displayed every 10 minutes.
                         </li>
                         <br />
 
