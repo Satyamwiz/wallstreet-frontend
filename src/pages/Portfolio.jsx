@@ -160,10 +160,8 @@ const Portfolio = () => {
                             <tbody>
                                 <>
                                     {transactions.map((t) => {
-                                        const color =
-                                            t.transaction_type === "buy"
-                                                ? "text-success"
-                                                : "text-danger";
+                                        let color = t.transaction_type === "buy" ? "text-success" : "text-danger";
+                                        color = t.transaction_type === "pending" ? "text-muted" : color;
                                         return (
                                             <tr className="border-0">
                                                 <td scope="row">{t.ticker}</td>
