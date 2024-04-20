@@ -165,7 +165,7 @@ const StocksDetail = () => {
                     {!isMarketOpen && (
                         <div className="text-warning mb-5 fs-5 text-center">
                             [ Note : The market is
-                            currently closed. Trading will be resumed tommorrow morning 9 AM ]
+                            currently closed. Trading will be resumed at morning 9 AM ]
                         </div>
                     )}
 
