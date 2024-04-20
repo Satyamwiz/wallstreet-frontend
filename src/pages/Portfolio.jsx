@@ -161,7 +161,8 @@ const Portfolio = () => {
                                 <>
                                     {transactions.map((t) => {
                                         let color = t.transaction_type === "buy" ? "text-success" : "text-danger";
-                                        color = t.transaction_type === "pending" ? "text-muted" : color;
+                                        color = t.transaction_type === "pend" ? "text-muted" : color;
+                                        let transaction_type = t.transaction_type.toUpperCase() === "pend" ? "pending".toUpperCase() : t.transaction_type.toUpperCase()
                                         return (
                                             <tr className="border-0">
                                                 <td scope="row">{t.ticker}</td>
