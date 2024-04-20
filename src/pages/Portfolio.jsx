@@ -170,7 +170,7 @@ const Portfolio = () => {
                                                 <td
                                                     className={`${color} fw-bold`}
                                                 >
-                                                    {t.transaction_type.toUpperCase()}
+                                                    {transaction_type.toUpperCase()}
                                                 </td>
                                                 <td>₹ {t.traded_price}</td>
                                             </tr>
