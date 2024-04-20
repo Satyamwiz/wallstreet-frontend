@@ -14,7 +14,7 @@ const NewsDetail = () => {
                 .getNewsDetail(id)
                 .then((res) => setNews(res))
                 .catch((err) => console.log(""));
-        }, 1300);
+        }, 900);
     }, []);
 
     return (

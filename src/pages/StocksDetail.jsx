@@ -66,7 +66,7 @@ const StocksDetail = () => {
                 .checkMarketStatus()
                 .then((res) => setIsMarketOpen(res.is_open))
                 .catch((err) => console.log(""));
-        }, 1300);
+        }, 900);
     }, []);
 
     return (
@@ -157,15 +157,19 @@ const StocksDetail = () => {
                                 />
                             </div>
                             <div className="stockinformation my-5 px-3">
-                                <div dangerouslySetInnerHTML={{ __html: stock.details }} />
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: stock.details,
+                                    }}
+                                />
                             </div>
                         </div>
                     )}
 
                     {!isMarketOpen && (
                         <div className="text-warning mb-5 fs-5 text-center">
-                            [ Note : The market is
-                            currently closed. Trading will be resumed at morning 9 AM ]
+                            [ Note : The market is currently closed. Trading
+                            will be resumed at morning 9 AM ]
                         </div>
                     )}
 
@@ -212,7 +216,11 @@ const StocksDetail = () => {
                                 />
                             </div>
                             <div className="stockinformation my-5 px-3">
-                                <div dangerouslySetInnerHTML={{ __html: stock.details }} />
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: stock.details,
+                                    }}
+                                />
                             </div>
                         </div>
                     )}

@@ -21,11 +21,11 @@ const Portfolio = () => {
             portfolioService
                 .getTransactions()
                 .then((res) => {
-                    setTransactions(res)
+                    setTransactions(res);
                     // console.log(res)
                 })
                 .catch((err) => console.log(""));
-        }, 1300);
+        }, 900);
     }, []);
 
     return (
@@ -113,8 +113,18 @@ const Portfolio = () => {
                                                 <td>
                                                     {holding.total_quantity}
                                                 </td>
-                                                <td>₹ {`${parseFloat(holding.avg_price).toFixed(2)}`}</td>
-                                                <td>₹ {`${parseFloat(holding.stock__current_price).toFixed(2)}`}</td>
+                                                <td>
+                                                    ₹{" "}
+                                                    {`${parseFloat(
+                                                        holding.avg_price
+                                                    ).toFixed(2)}`}
+                                                </td>
+                                                <td>
+                                                    ₹{" "}
+                                                    {`${parseFloat(
+                                                        holding.stock__current_price
+                                                    ).toFixed(2)}`}
+                                                </td>
                                             </tr>
                                         );
                                     })}
@@ -150,12 +160,13 @@ const Portfolio = () => {
                             <tbody>
                                 <>
                                     {transactions.map((t) => {
-                                        const color = t.transaction_type === "buy" ? "text-success" : "text-danger";
+                                        const color =
+                                            t.transaction_type === "buy"
+                                                ? "text-success"
+                                                : "text-danger";
                                         return (
                                             <tr className="border-0">
-                                                <td scope="row">
-                                                    {t.ticker}
-                                                </td>
+                                                <td scope="row">{t.ticker}</td>
                                                 <td>{t.quantity}</td>
                                                 <td
                                                     className={`${color} fw-bold`}

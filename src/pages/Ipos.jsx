@@ -12,7 +12,7 @@ const Ipos = () => {
                 .getIpos()
                 .then((res) => setIpos(res.reverse()))
                 .catch((err) => console.log(""));
-        }, 1300);
+        }, 900);
     }, []);
 
     return (

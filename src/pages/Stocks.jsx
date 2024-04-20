@@ -20,7 +20,7 @@ const Stocks = () => {
                 .getCash()
                 .then((res) => setCash(res.cash))
                 .catch((err) => console.log(""));
-        }, 1300);
+        }, 900);
     }, []);
 
     return (
