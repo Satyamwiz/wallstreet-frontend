@@ -18,8 +18,8 @@ const Rules = () => {
                         <br />
                         <li className="text-align-justify ">
                             Each participant will receive initial cash of
-                            ₹10,00,000 which can be used to subscribe IPOs
-                            and buy stocks.
+                            ₹10,00,000 which can be used to subscribe IPOs and
+                            buy stocks.
                         </li>
                         <br />
                         <li>
@@ -54,6 +54,13 @@ const Rules = () => {
                             Any buy bid or sell ask rounded off must be to
                             current price. ex. If current price is ₹100.78 then
                             but bid or sell ask must be in range ₹100 to ₹101
+                        </li>
+                        <br />
+
+                        <li>
+                            The stock price would be updated every 3 minutes.
+                            The stock price change would be calculated w.r.t its
+                            value 3 minutes ago.
                         </li>
                         <br />
 
