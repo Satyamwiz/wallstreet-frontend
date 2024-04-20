@@ -101,7 +101,6 @@ const Rules = () => {
                 </div>
             </div>
             <br />
-            <br />
         </div>
     );
 };
