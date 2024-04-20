@@ -113,8 +113,8 @@ const Portfolio = () => {
                                                 <td>
                                                     {holding.total_quantity}
                                                 </td>
-                                                <td>₹ {holding.avg_price}</td>
-                                                <td>₹ {holding.stock__current_price}</td>
+                                                <td>₹ {`${parseFloat(holding.avg_price).toFixed(2)}`}</td>
+                                                <td>₹ {`${parseFloat(holding.stock__current_price).toFixed(2)}`}</td>
                                             </tr>
                                         );
                                     })}
