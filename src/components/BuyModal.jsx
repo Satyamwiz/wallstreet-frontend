@@ -135,7 +135,7 @@ const BuyModal = ({ id, ticker, name, cash, current_price, price_change }) => {
                         <div
                             className="text-light mb-3 mt-3 px-1 bi bi-wallet"
                             style={{ fontSize: "18px" }}
-                        >{` Wallet : ₹ ${cash}`}</div>
+                        >{` Cash : ₹ ${cash}`}</div>
                         <div
                             className="text-warning mb-2 px-1"
                             style={{ fontSize: "18px" }}
