@@ -1,8 +1,11 @@
-# React + Vite
+# WallStreet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WallStreet is a real-time stock market simulation platform, where the users can subscribe for Ipos, buy and sell the stocks, view interactive charts and explore the stock news to analyze the stocks.
 
-Currently, two official plugins are available:
+## Technologies Used
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Snapshots
+![Gif (1)](https://github.com/user-attachments/assets/45bc6d08-8d03-4e9d-ab2b-e323b38903b2)
