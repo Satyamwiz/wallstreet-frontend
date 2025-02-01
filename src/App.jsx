@@ -6,19 +6,18 @@ import DesktopNavbar from "./components/DesktopNavbar.jsx";
 import Home from "./pages/Home.jsx"
 import Footer from "./components/Footer.jsx";
 import Rules from "./pages/Rules.jsx";
-import News from "./pages/News.jsx";
-import NewsDetail from "./pages/NewsDetail.jsx";
 import Stocks from "./pages/Stocks.jsx";
 import StocksDetail from "./pages/StocksDetail.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Login from "./pages/Login.jsx"
 import Register from "./pages/Register.jsx"
 import CommingSoon from "./components/CommingSoon.jsx"
-import Ipos from "./pages/Ipos.jsx";
+// import Ipos from "./pages/Ipos.jsx";
 import {useAuthContext} from "./hooks/useAuthContext"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Ranking from "./pages/Ranking.jsx";
+import LandingPage from './pages/LandingPage';
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
@@ -80,16 +79,16 @@ function App() {
                     <div className={css}>
                         <Routes>
                             <Route exact path="/" element={<Home />} />
-                            <Route
+                            {/* <Route
                                 exact
                                 path="/news"
                                 element={<News />}
-                            />
-                            <Route
+                            /> */}
+                            {/* <Route
                                 exact
                                 path="/newsdetail/:id"
                                 element={user ? <NewsDetail /> : <Navigate to="/login" />}
-                            />
+                            /> */}
                             <Route
                                 exact
                                 path="/stocks"
@@ -117,7 +116,7 @@ function App() {
                             /> */}
                             <Route exact path="/rules" element={<Rules />} />
                             <Route exact path="/ranking" element={<Ranking />} />
-                            <Route exact path="/ipo" element={<Ipos />} />
+                            {/* <Route exact path="/ipo" element={<Ipos />} /> */}
                         </Routes>
                     </div>
 

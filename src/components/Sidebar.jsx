@@ -48,20 +48,9 @@ const Sidebar = () => {
                         </li>
                     )}
 
-                    {user && (
-                        <li className="nav-item">
-                            <NavLink
-                                exact
-                                to="/news"
-                                className="nav-link align-middle px-0 py-4 navitems h3 bi bi-newspaper"
-                            >
-                                {" "}
-                                News
-                            </NavLink>
-                        </li>
-                    )}
+                   
 
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <NavLink
                             exact
                             to="/ipo"
@@ -70,7 +59,7 @@ const Sidebar = () => {
                             {" "}
                             Ipo
                         </NavLink>
-                    </li>
+                    </li> */}
 
                     {user && (
                         <li className="nav-item">

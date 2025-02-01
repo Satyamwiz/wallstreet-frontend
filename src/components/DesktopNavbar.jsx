@@ -50,14 +50,7 @@ const DesktopNavbar = () => {
                                             Home
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
-                                        <NavLink
-                                            to="/news"
-                                            className="nav-link text-light navItem"
-                                        >
-                                            News
-                                        </NavLink>
-                                    </li>
+                                   
                                     <li className="nav-item">
                                         <NavLink
                                             to="/ranking"
@@ -66,14 +59,14 @@ const DesktopNavbar = () => {
                                             Rankings
                                         </NavLink>
                                     </li>
-                                    <li className="nav-item">
+                                    {/* <li className="nav-item">
                                         <NavLink
                                         to="/ipo"
                                         className="nav-link text-light navItem"
                                         >
                                         IPOs
                                         </NavLink>
-                                    </li>
+                                    </li> */}
                                     <li className="nav-item">
                                         <NavLink
                                             to="/rules"

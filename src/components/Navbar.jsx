@@ -82,7 +82,7 @@ const Navbar = () => {
                                         </li>
                                     )}
 
-                                    <li
+                                    {/* <li
                                         className="nav-item"
                                         data-bs-toggle="collapse"
                                         data-bs-target="#navbarSupportedContent"
@@ -100,20 +100,20 @@ const Navbar = () => {
                                                 News
                                             </span>
                                         </NavLink>
-                                    </li>
+                                    </li> */}
 
-                                    <li className="nav-item">
+                                    {/* <li className="nav-item">
                                         <NavLink
                                         exact
                                         to="/ipo"
                                         className="nav-link align-middle px-0 py-4"
-                                        >
-                                        <span className="bi bi-bar-chart navitems h3 bi bi-clipboard-data">
+                                        > */}
+                                        {/* <span className="bi bi-bar-chart navitems h3 bi bi-clipboard-data">
                                             {" "}
                                             Ipo
                                         </span>
                                         </NavLink>
-                                    </li>
+                                    </li> */}
 
                                     {user && (
                                         <li
@@ -131,7 +131,7 @@ const Navbar = () => {
                                             >
                                                 <span className="bi bi-bar-chart navitems h3 bi bi-pie-chart">
                                                     {" "}
-                                                    Portfolio
+                                                    Portfolioiadad
                                                 </span>
                                             </NavLink>
                                         </li>
