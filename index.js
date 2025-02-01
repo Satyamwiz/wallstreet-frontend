@@ -18,8 +18,6 @@ app.get('/api/order_data', (req, res) => {
     const ammout = Math.floor(Math.random() * 1000) + 1; // Random price between 1 and 1000
 
     const data = {
-        order_id: uuidv4(),
-        order: {
             id: uuidv4(),
             order_price: orderPrice,
             order_status: randomStatus,
@@ -31,7 +29,6 @@ app.get('/api/order_data', (req, res) => {
             order_type: order_type[Math.floor(Math.random() * order_type.length)],
             buy_sell: buy_sell[Math.floor(Math.random() * buy_sell.length)],    
             ammout: ammout
-        }
     };
     res.json(data);
 });
