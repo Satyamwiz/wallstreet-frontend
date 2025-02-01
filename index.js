@@ -37,8 +37,6 @@ app.post('/api/place_order', (req, res) => {
     const { order_price, order_status, quantity, company_id, user_id, order_type, buy_sell } = req.body;
 
     const data = {
-        order_id: uuidv4(),
-        order: {
             id: uuidv4(),
             order_price: order_price,
             order_status: order_status,
@@ -49,7 +47,6 @@ app.post('/api/place_order', (req, res) => {
             user_id: user_id,
             order_type: order_type,
             buy_sell: buy_sell
-        }
     };
     res.json(data);
 });
