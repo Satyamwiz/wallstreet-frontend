@@ -15,6 +15,7 @@ app.get('/api/order_data', (req, res) => {
     const quantity = Math.floor(Math.random() * 100) + 1; // Random quantity between 1 and 100
     const order_type = ['delivery', 'SL', 'intraday'];
     const buy_sell = ['buy', 'sell'];
+    const ammout = Math.floor(Math.random() * 1000) + 1; // Random price between 1 and 1000
 
     const data = {
         order_id: uuidv4(),
@@ -29,6 +30,7 @@ app.get('/api/order_data', (req, res) => {
             user_id: uuidv4(),
             order_type: order_type[Math.floor(Math.random() * order_type.length)],
             buy_sell: buy_sell[Math.floor(Math.random() * buy_sell.length)],    
+            ammout: ammout
         }
     };
     res.json(data);
