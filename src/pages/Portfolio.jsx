@@ -1,32 +1,97 @@
 import { React, useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import { portfolioService } from "../services/apis";
+// import { portfolioService } from "../services/apis";
 
+// const Portfolio = () => {
+//     const [cash, setCash] = useState(0);
+//     const [networth, setNetworth] = useState(0);
+//     const [transactions, setTransactions] = useState([]);
+//     const [holdings, setHoldings] = useState(null);
+
+//     useEffect(() => {
+//         setTimeout(() => {
+//             portfolioService
+//                 .getPortfolio()
+//                 .then((res) => {
+//                     setCash(res.cash);
+//                     setHoldings(res.holdings);
+//                     setNetworth(res.networth);
+//                 })
+//                 .catch((err) => console.log(""));
+//             portfolioService
+//                 .getTransactions()
+//                 .then((res) => {
+//                     setTransactions(res);
+//                     // console.log(res)
+//                 })
+//                 .catch((err) => console.log(""));
+//         }, 900);
+//     }, []);
 const Portfolio = () => {
     const [cash, setCash] = useState(0);
     const [networth, setNetworth] = useState(0);
     const [transactions, setTransactions] = useState([]);
     const [holdings, setHoldings] = useState(null);
+    const [pendingTransactions, setPendingTransactions] = useState([]);
+
+    // Mock data structure
+    const mockPortfolio = {
+        cash: 25000.50,
+        networth: 154300.75,
+        holdings: [
+            {
+                stock__ticker: "AAPL",
+                total_quantity: 50,
+                avg_price: 145.30,
+                stock__current_price: 185.45,
+                profit_loss: 2007.50,
+                trade_type: "delivery"
+            },
+            {
+                stock__ticker: "TSLA",
+                total_quantity: 25,
+                avg_price: 220.50,
+                stock__current_price: 275.80,
+                profit_loss: 1382.50,
+                trade_type: "intraday"
+            },
+            {
+                stock__ticker: "MSFT",
+                total_quantity: 40,
+                avg_price: 245.75,
+                stock__current_price: 310.20,
+                profit_loss: 2578.00,
+                trade_type: "delivery"
+            }
+        ]
+    };
+
+    const mockTransactions = [
+        { id: 1, ticker: "AAPL", quantity: 10, transaction_type: "buy", traded_price: 182.50, date: "2024-02-01", trade_type: "delivery" },
+        { id: 2, ticker: "TSLA", quantity: 5, transaction_type: "sell", traded_price: 270.25, date: "2024-02-01", trade_type: "intraday" },
+        { id: 3, ticker: "GOOGL", quantity: 8, transaction_type: "buy", traded_price: 2350.75, date: "2024-02-01", trade_type: "delivery" }
+    ];
+
+    const mockPendingTransactions = [
+        { id: 1, ticker: "MSFT", quantity: 15, transaction_type: "buy", traded_price: 305.00, date: "2024-02-02", trade_type: "delivery" },
+        { id: 2, ticker: "NVDA", quantity: 5, transaction_type: "sell", traded_price: 580.25, date: "2024-02-02", trade_type: "intraday" }
+    ];
 
     useEffect(() => {
         setTimeout(() => {
-            portfolioService
-                .getPortfolio()
-                .then((res) => {
-                    setCash(res.cash);
-                    setHoldings(res.holdings);
-                    setNetworth(res.networth);
-                })
-                .catch((err) => console.log(""));
-            portfolioService
-                .getTransactions()
-                .then((res) => {
-                    setTransactions(res);
-                    // console.log(res)
-                })
-                .catch((err) => console.log(""));
+            setCash(mockPortfolio.cash);
+            setHoldings(mockPortfolio.holdings);
+            setNetworth(mockPortfolio.networth);
+            setTransactions(mockTransactions);
+            setPendingTransactions(mockPendingTransactions);
         }, 900);
     }, []);
+
+    const handleCancelTransaction = (transactionId) => {
+        setPendingTransactions(prevTransactions => 
+            prevTransactions.filter(t => t.id !== transactionId)
+        );
+    };
 
     return (
         <div>
