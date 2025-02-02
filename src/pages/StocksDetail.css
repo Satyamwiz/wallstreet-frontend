@@ -1,0 +1,141 @@
+/* Overall Container */
+.stocks-detail-container {
+    background-color: #414141;
+    padding: 30px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #e2e8f0;
+  }
+  
+  /* Loader */
+  .loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+  
+  /* Header Section */
+  .stock-header {
+    text-align: center;
+    margin-bottom: 30px;
+    background-color: #2d3748;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  .stock-title {
+    margin: 0;
+    color: #edf2f7;
+    font-size: 2rem;
+  }
+  
+  /* Toggle Section */
+  .toggle-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .toggle-btn {
+    background-color: #2d3748;
+    border: none;
+    color: #a0aec0;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .toggle-btn:hover {
+    background-color: #4a5568;
+    color: #edf2f7;
+  }
+  .toggle-btn.active {
+    background-color: #4a5568;
+    color: #edf2f7;
+  }
+  
+  /* Chart Section */
+  .chart-section {
+    margin: 40px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #2d3748;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+  }
+  
+  /* Action Section */
+  .action-section {
+    text-align: center;
+    margin: 30px 0;
+  }
+  .market-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn-buy {
+    background-color: #38a169;
+    color: #fff;
+  }
+  .btn-buy:hover {
+    background-color: #2f855a;
+  }
+  .btn-sell {
+    background-color: #e53e3e;
+    color: #fff;
+  }
+  .btn-sell:hover {
+    background-color: #c53030;
+  }
+  .market-closed {
+    color: #e53e3e;
+    font-size: 18px;
+    margin: 20px 0;
+  }
+  
+  /* Additional Info Section */
+  .additional-info-section {
+    margin: 40px 0;
+  }
+  .additional-info-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #63b3ed;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .info-card {
+    background-color: #2d3748;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-weight: bold;
+    color: #cbd5e0;
+  }
+  
+  /* Stock Details Section */
+  .stock-details-section {
+    margin: 40px 0;
+    background-color: #2d3748;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .stock-description p {
+    margin: 0;
+    line-height: 1.6;
+    color: #e2e8f0;
+  }
+  
