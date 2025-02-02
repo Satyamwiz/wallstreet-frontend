@@ -30,26 +30,7 @@ const userService = {
     }
 }
 
-const newsService = {
-    getNews: () => {
-        return axiosNoAuthInstance.get("/news/")
-        .then(res => res.data)
-        .catch(err => {
-            console.clear()
-            throw err.response
-            console.clear()
-        })
-    },
-    getNewsDetail: (id) => {
-        return axiosNoAuthInstance.get(`/news/${id}`)
-        .then(res => res.data)
-        .catch(err => {
-            console.clear()
-            throw err.response
-            console.clear()
-        })
-    }
-}
+
 
 const stockService = {
     getStocks: () => {
@@ -141,26 +122,26 @@ const marketService = {
     }
 }
 
-const ipoService = {
-    getIpos: () => {
-        return axiosAuthInstance.get("/ipos/")
-        .then(res => res.data)
-        .catch(err => {
-            console.clear()
-            throw err.response
-            console.clear()
-        })
-    },
-    subscribeIpo: (id, ipoSubscribeData) => {
-        return axiosAuthInstance.post(`/ipos/subscribe/${id}`, ipoSubscribeData)
-        .then(res => res.data)
-        .catch(err => {
-            console.clear()
-            throw err.response
-            console.clear()
-        })
-    }
-}
+// const ipoService = {
+//     getIpos: () => {
+//         return axiosAuthInstance.get("/ipos/")
+//         .then(res => res.data)
+//         .catch(err => {
+//             console.clear()
+//             throw err.response
+//             console.clear()
+//         })
+//     },
+//     subscribeIpo: (id, ipoSubscribeData) => {
+//         return axiosAuthInstance.post(`/ipos/subscribe/${id}`, ipoSubscribeData)
+//         .then(res => res.data)
+//         .catch(err => {
+//             console.clear()
+//             throw err.response
+//             console.clear()
+//         })
+//     }
+// }
 
 const rankService = {
     getRankings: () => {
@@ -174,4 +155,4 @@ const rankService = {
     }
 }
 
-export {userService, newsService, stockService, portfolioService, marketService, ipoService, rankService};
+export {userService, stockService, portfolioService, marketService, rankService};
