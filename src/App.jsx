@@ -7,6 +7,7 @@ import Home from "./pages/Home.jsx"
 import Footer from "./components/Footer.jsx";
 import Rules from "./pages/Rules.jsx";
 import Stocks from "./pages/Stocks.jsx";
+import StockCard from "./components/StockCard.jsx";  /* Change  later*/
 import StocksDetail from "./pages/StocksDetail.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Login from "./pages/Login.jsx"
@@ -94,6 +95,14 @@ function App() {
                                 path="/stocks"
                                 element={user ? <Stocks /> : <Navigate to="/login" />}
                             />
+
+                            {/* For trial */}
+                            <Route
+                                exact
+                                path="/stockCard"
+                                element={<StockCard />}
+                            />
+
                             <Route
                                 exact
                                 path="/stocksdetail/:id"
