@@ -8,10 +8,10 @@ import {
   FaBuilding,
   FaClipboardList,
 } from "react-icons/fa";
-import CompanyWisePnL from "../components/CompanyWisePnL/CompanyWisePnL";
-import HoldingsCard from "../components/HoldingsCard/HoldingsCard";
-import OrderDetails from "../components/OrderDetails/OrderDetails";
-import TransactionHistory from "../components/TransactionHistory/TransactionHistory";
+import CompanyWisePnL from "./components/CompanyWisePnL";
+import HoldingsCard from "./components/HoldingsCard";
+import OrderDetails from "./components/OrderDetails";
+import TransactionHistory from "./components/TransactionHistory";
 import "./Portfolio.css";
 
 const Portfolio = () => {
