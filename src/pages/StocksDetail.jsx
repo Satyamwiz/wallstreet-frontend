@@ -18,7 +18,7 @@ export const stockService = {
       id: id,
       ticker: "AAPL",
       name: "Apple Inc.",
-      current_price: 178.45,
+      current_price: 118.45,
       price_change: 2.3,
       // Intraday price history (no longer used)
       price_history: [
@@ -65,6 +65,7 @@ const StocksDetail = () => {
   const [chartData, setChartData] = useState(null);
   const [isMarketOpen, setIsMarketOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [showBuyModal, setShowBuyModal] = useState(false);
   // Fetch stock details on mount or when id changes
   useEffect(() => {
     setTimeout(() => {
@@ -147,18 +148,19 @@ const StocksDetail = () => {
                 <button
                   className="btn btn-buy"
                   data-toggle="modal"
+                  onClick={() => setShowBuyModal(true)}
                   data-target={`#modal${id}`}
                 >
                   Buy
                 </button>
-                <BuyModal
+                {/* <BuyModal
                   id={stock.id}
                   ticker={stock.ticker}
                   name={stock.name}
                   current_price={stock.current_price}
                   price_change={parseFloat(stock.price_change).toFixed(2)}
                   cash={cash}
-                />
+                /> */}
                 <button
                   className="btn btn-sell"
                   data-toggle="modal"
@@ -181,40 +183,20 @@ const StocksDetail = () => {
               </div>
             )}
           </section>
+           {/* Conditionally render the BuyModal */}
+           {showBuyModal && (
+            <BuyModal
+              id={stock.id}
+              ticker={stock.ticker}
+              name={stock.name}
+              cash={cash}
+              current_price={stock.current_price+10}
+              price_change={stock.price_change}
+              onClose={() => setShowBuyModal(false)}
+            />
+          )}
 
-          {/* Additional Info Section
-          <section className="additional-info-section">
-            <h2>Additional Information</h2>
-            <div className="info-grid">
-              <div className="info-card">
-                <strong>Dividend Yield:</strong> {stock.dividendYield}%
-              </div>
-              <div className="info-card">
-                <strong>Dividend Per Share:</strong> ${stock.dividendPerShare}
-              </div>
-              <div className="info-card">
-                <strong>Ex-Dividend Date:</strong> {stock.exDividendDate}
-              </div>
-              <div className="info-card">
-                <strong>Payment Date:</strong> {stock.paymentDate}
-              </div>
-              <div className="info-card">
-                <strong>Market Cap:</strong> {stock.marketCap}
-              </div>
-              <div className="info-card">
-                <strong>P/E Ratio:</strong> {stock.peRatio}
-              </div>
-              <div className="info-card">
-                <strong>Sector:</strong> {stock.sector}
-              </div>
-              <div className="info-card">
-                <strong>Industry:</strong> {stock.industry}
-              </div>
-            </div>
-          </section>
-
-
-          {/* Stock Details Section */}
+         
 
             {/* Navigation Tabs */}
       <nav className="tab-navigation">
@@ -266,6 +248,19 @@ const StocksDetail = () => {
                 </div>
               </div>
             </div>
+            <div className="info-card range-card">
+              <h3>All Time Range</h3>
+              <div className="range-slider">
+                <div className="range-values">
+                  <span>${(stock.current_price - 10).toFixed(2)}</span>
+                  <span>${(stock.current_price + 10).toFixed(2)}</span>
+                </div>
+                <div className="range-bar">
+                  <div className="range-progress" style={{ width: '60%' }}></div>
+                  <div className="range-marker" style={{ left: '60%' }}></div>
+                </div>
+              </div>
+            </div>
 
             {/* Key Statistics */}
             <div className="info-grid">
@@ -281,10 +276,7 @@ const StocksDetail = () => {
                 <strong>P/E Ratio</strong>
                 <span>{stock.peRatio}</span>
               </div>
-              <div className="info-card">
-                <strong>52W Range</strong>
-                <span>${(stock.current_price - 50).toFixed(2)} - ${(stock.current_price + 50).toFixed(2)}</span>
-              </div>
+              
             </div>
           </div>
         )}

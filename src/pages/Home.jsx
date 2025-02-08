@@ -1,105 +1,103 @@
-import {React, useEffect} from "react";
-import Lottie from "lottie-react";
-import animationData from "../lottie/114986-ultimate-trading-experience.json";
-import { NavLink } from "react-router-dom";
-import Footer from "../components/Footer.jsx";
-import { useAuthContext } from "../hooks/useAuthContext";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TrendingUp, Rocket, DollarSign } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import './Home.css';
 
-const Home = () => {
-    const { user } = useAuthContext();
+export default function LandingPage() {
+  const navigate = useNavigate();
+  const [scrollY, setScrollY] = useState(0);
 
-    const css = user ? "homepageLogin" : "homepage";
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    return (
-        <div className={css}>
-            <div>
-                <section id="intro">
-                    <div className="container-lg">
-                        <div className="row justify-content-center align-items-center">
-                            <div className="col-md-5 text-center text-md-start order-2 order-md-1 text-light">
-                                <h2 className="mb-1">
-                                    Interested in learning about the stock
-                                    market and improving your investment skills?
-                                    Well you are in luck, as we bring you, 'Wall
-                                    Street'
-                                    <br />
-                                </h2>
-                                <h4 className="fw-lighter mt-5 text-secondary">
-                                    The stock market is a device for
-                                    transferring money from the impatient to the
-                                    patient
-                                </h4>
-                                <h4 className="fw-lighter mb-5 text-secondary">
-                                    - Warren Buffett
-                                </h4>
+  const handleStartTrading = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+    navigate('/stocks');
+  };
 
-                                {!user && (
-                                    <NavLink
-                                        exact
-                                        to="/login"
-                                        className="text-decoration-none"
-                                    >
-                                        <btn className=" h5 align-items-center align-items-sm-start mt-5 mt-auto logoutbtn py-2 px-3">
-                                            {" "}
-                                            Get Started
-                                        </btn>
-                                    </NavLink>
-                                )}
+  const tickers = ['STRF', 'YOLO', '$LAMBOS', 'MOON', 'LFG', '$GECKO'];
 
-                                {user && (
-                                    <NavLink
-                                        exact
-                                        to="/rules"
-                                        className="text-decoration-none"
-                                    >
-                                        <btn className=" h5 align-items-center align-items-sm-start mt-5 mt-auto logoutbtn py-2 px-3">
-                                            {" "}
-                                            See Rules
-                                        </btn>
-                                    </NavLink>
-                                )}
-                            </div>
-
-                            <div className="col-md-5 text-center order-1 order-md-2 ms-md-5 mb-5 illustration">
-                                <Lottie
-                                    animationData={animationData}
-                                    loop={true}
-                                    autoplay={true}
-                                    speed={1}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <div className="d-block d-sm-none">
-                <br />
-                <br />
-            </div>
-
-            {user && (
-                <div>
-                    <footer className="fixed-bottom footerhome">
-                        <div className="container text-center d-flex justify-content-center">
-                            <p
-                                className="mb-0 text-light"
-                                style={{ marginRight: "5px" }}
-                            >
-                                Designed & developed by -
-                            </p>
-                            <NavLink className="text-decoration-none" to="">
-                                <p className="mb-0 text-light">
-                                    {" "}
-                                    <u> Web Team</u>{" "}
-                                </p>
-                            </NavLink>
-                        </div>
-                    </footer>
-                </div>
-            )}
+  return (
+    <div className="landing-page">
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div 
+          className="hero-bg"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80)',
+            transform: `translateY(${scrollY * 0.5}px)`,
+          }}
+        />
+        <div className="hero-content">
+          <h1 className="hero-title">Stacks to the Moon! 🚀</h1>
+          <p className="hero-description">
+            The most outrageous trading simulator this side of Wall Street
+          </p>
+          <button className="start-trading-button" onClick={handleStartTrading}>
+            <Rocket size={24} />
+            <span>Start Trading</span>
+          </button>
         </div>
-    );
-};
 
-export default Home;
+        {/* Floating Tickers */}
+        {tickers.map((ticker, i) => (
+          <div
+            key={ticker}
+            className="floating-ticker"
+            style={{
+              left: `${(i * 20) + 10}%`,
+              top: `${(i * 15) + 10}%`,
+              animationDuration: `${5 + i}s`,
+            }}
+          >
+            {ticker}
+          </div>
+        ))}
+      </div>
+
+      {/* How to Play Section */}
+      <div className="how-to-play">
+        <h2>
+          Pump and Dump 101 <span className="disclaimer">*Not Financial Advice</span>
+        </h2>
+        <div className="steps">
+          <div className="step">
+            <div className="step-icon">
+              <DollarSign size={48} />
+            </div>
+            <h3>Step 1: YOLO</h3>
+            <p>
+              Throw your virtual life savings into the most questionable stocks you can find.
+            </p>
+          </div>
+          <div className="step">
+            <div className="step-icon">
+              <TrendingUp size={48} />
+            </div>
+            <h3>Step 2: To The Moon</h3>
+            <p>
+              Watch your portfolio soar (or crash) in real-time with our totally realistic market simulator.
+            </p>
+          </div>
+          <div className="step">
+            <div className="step-icon">
+              <Rocket size={48} />
+            </div>
+            <h3>Step 3: Lambo Time</h3>
+            <p>
+              Earn badges, climb the leaderboard, and flex on the paper hands.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

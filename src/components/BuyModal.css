@@ -1,0 +1,187 @@
+/* Modal Overlay */
+.buy-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal Container */
+  .buy-modal {
+    background: #2d3748;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px 40px;
+    position: relative;
+    animation: slideDown 0.3s ease-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    color: #edf2f7;
+  }
+  
+  /* Slide Down Animation */
+  @keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  /* Close Button */
+  .modal-close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #a0aec0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .modal-close-button:hover {
+    color: #edf2f7;
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .modal-header h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  .modal-header p {
+    margin-top: 5px;
+    font-size: 1rem;
+    color: #a0aec0;
+  }
+  
+  /* Price Info Section */
+  .price-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .price-box {
+    background: #414141;
+    padding: 15px;
+    border-radius: 6px;
+    flex: 1;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+  }
+  .price-box:last-child {
+    margin-right: 0;
+  }
+  .price-box:hover {
+    transform: scale(1.03);
+  }
+  .price-label {
+    font-size: 0.9rem;
+    color: #a0aec0;
+    margin-bottom: 5px;
+  }
+  .price-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #edf2f7;
+  }
+  .price-change {
+    font-size: 1.4rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  .price-change.positive {
+    color: #38a169;
+  }
+  .price-change.negative {
+    color: #e53e3e;
+  }
+  
+  /* Order Form */
+  .order-form {
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #a0aec0;
+    margin-bottom: 5px;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    background: #414141;
+    color: #edf2f7;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  .form-group input:focus {
+    outline: none;
+    border-color: #5eb5f8;
+  }
+  
+  /* Transaction Summary */
+  .transaction-summary {
+    background: #414141;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .summary-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #a0aec0;
+  }
+  .summary-label svg {
+    margin-right: 5px;
+  }
+  .summary-value {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #edf2f7;
+  }
+  
+  /* Action Button */
+  .action-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .action-button:disabled {
+    background: #4a5568;
+    cursor: not-allowed;
+  }
+  .action-button:not(:disabled) {
+    background: #38a169;
+    color: #fff;
+  }
+  .action-button:not(:disabled):hover {
+    background: #2f855a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  

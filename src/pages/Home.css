@@ -1,0 +1,140 @@
+/* General Page Styles */
+.landing-page {
+    min-height: 100vh;
+    background-color: #1a202c;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.3);
+    z-index: 0;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+  
+  .hero-description {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #a0aec0;
+  }
+  
+  .start-trading-button {
+    background-color: #38a169;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .start-trading-button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Floating Tickers */
+  .floating-ticker {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgba(56, 161, 105, 0.5);
+    animation: float 5s infinite ease-in-out;
+  }
+  
+  /* Keyframes for float animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  /* How to Play Section */
+  .how-to-play {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 20px;
+    text-align: center;
+  }
+  
+  .how-to-play h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .disclaimer {
+    font-size: 0.75rem;
+    color: #a0aec0;
+    margin-left: 0.5rem;
+  }
+  
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .step {
+    background-color: #2d3748;
+    padding: 1.5rem;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .step-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #38a169;
+  }
+  
+  .step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .step p {
+    color: #a0aec0;
+    font-size: 1rem;
+  }
+  
