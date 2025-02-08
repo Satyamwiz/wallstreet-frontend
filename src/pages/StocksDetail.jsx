@@ -1,23 +1,13 @@
-
-// import {
-//     stockService,
-//     portfolioService,
-//     marketService,
-// } from "../services/apis";
-// import {
-//     stockService,
-//     portfolioService,
-//     marketService,
-// } from "../services/apis";
 import React, { useState, useEffect } from "react";
 import BuyModal from "../components/BuyModal";
 import SellModal from "../components/SellModal";
 import { useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import Chart from "chart.js/auto";
+import { ArrowUpRight, ArrowDownRight, Activity, TrendingUp, DollarSign, Building } from 'lucide-react';
 import { CategoryScale } from "chart.js";
 import LineChart from "../components/LineChart";
-import "./StocksDetail.css"; // Import our custom dark-mode styles
+import "./StocksDetail.css"; // Custom dark-mode & grow page styles
 
 Chart.register(CategoryScale);
 
@@ -30,7 +20,7 @@ export const stockService = {
       name: "Apple Inc.",
       current_price: 178.45,
       price_change: 2.3,
-      // Intraday price history
+      // Intraday price history (no longer used)
       price_history: [
         { datetime: "2025-02-01T00:00:00Z", price: 178.45 },
         { datetime: "2025-02-02T00:00:00Z", price: 180.00 },
@@ -38,7 +28,7 @@ export const stockService = {
         { datetime: "2025-02-04T00:00:00Z", price: 183.50 },
         { datetime: "2025-02-05T00:00:00Z", price: 185.75 },
       ],
-      // Delivery (long-term) price history
+      // Delivery (long-term) price history used for the chart
       delivery_price_history: [
         { datetime: "2025-01-01T00:00:00Z", price: 170.45 },
         { datetime: "2025-01-15T00:00:00Z", price: 172.00 },
@@ -74,10 +64,8 @@ const StocksDetail = () => {
   const [availableShares, setAvailableShares] = useState(0);
   const [chartData, setChartData] = useState(null);
   const [isMarketOpen, setIsMarketOpen] = useState(true);
-  // New mode state: "intraday" (default) or "delivery"
-  const [mode, setMode] = useState("intraday");
-
-  // Fetch stock details once on mount or when id changes
+  const [activeTab, setActiveTab] = useState('overview');
+  // Fetch stock details on mount or when id changes
   useEffect(() => {
     setTimeout(() => {
       stockService
@@ -102,16 +90,16 @@ const StocksDetail = () => {
     }, 900);
   }, [id]);
 
-  // Update chartData when stock data is available or when mode changes
+  // Update chartData when stock data is available
+  // Only delivery_price_history is used since intraday is removed
   useEffect(() => {
     if (stock) {
-      const selectedHistory =
-        mode === "intraday" ? stock.price_history : stock.delivery_price_history;
+      const selectedHistory = stock.delivery_price_history;
       setChartData({
         labels: selectedHistory.map((data) => data.datetime.slice(0, 10)),
         datasets: [
           {
-            label: mode === "intraday" ? "Intraday Price" : "Delivery Price",
+            label: "Delivery Price",
             data: selectedHistory.map((data) => data.price),
             backgroundColor: "rgba(75,192,192,0.6)",
             borderColor: "#5eb5f8",
@@ -120,7 +108,7 @@ const StocksDetail = () => {
         ],
       });
     }
-  }, [stock, mode]);
+  }, [stock]);
 
   return (
     <div className="stocks-detail-container">
@@ -144,22 +132,6 @@ const StocksDetail = () => {
               {stock.ticker} - {stock.name}
             </h1>
           </header>
-
-          {/* Toggle Section */}
-          <section className="toggle-section">
-            <button
-              className={`toggle-btn ${mode === "intraday" ? "active" : ""}`}
-              onClick={() => setMode("intraday")}
-            >
-              Intraday
-            </button>
-            <button
-              className={`toggle-btn ${mode === "delivery" ? "active" : ""}`}
-              onClick={() => setMode("delivery")}
-            >
-              Delivery
-            </button>
-          </section>
 
           {/* Chart Section */}
           {chartData && (
@@ -210,7 +182,7 @@ const StocksDetail = () => {
             )}
           </section>
 
-          {/* Additional Info Section */}
+          {/* Additional Info Section
           <section className="additional-info-section">
             <h2>Additional Information</h2>
             <div className="info-grid">
@@ -241,7 +213,143 @@ const StocksDetail = () => {
             </div>
           </section>
 
+
           {/* Stock Details Section */}
+
+            {/* Navigation Tabs */}
+      <nav className="tab-navigation">
+        <button
+          onClick={() => setActiveTab('overview')}
+          className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
+        >
+          <Activity className="tab-icon" size={20} />
+          Overview
+        </button>
+        <button
+          onClick={() => setActiveTab('fundamentals')}
+          className={`tab-button ${activeTab === 'fundamentals' ? 'active' : ''}`}
+        >
+          <TrendingUp className="tab-icon" size={20} />
+          Fundamentals
+        </button>
+        <button
+          onClick={() => setActiveTab('dividends')}
+          className={`tab-button ${activeTab === 'dividends' ? 'active' : ''}`}
+        >
+          <DollarSign className="tab-icon" size={20} />
+          Dividends
+        </button>
+        <button
+          onClick={() => setActiveTab('about')}
+          className={`tab-button ${activeTab === 'about' ? 'active' : ''}`}
+        >
+          <Building className="tab-icon" size={20} />
+          About Company
+        </button>
+      </nav>
+
+      {/* Content Sections */}
+      <div className="content-section">
+        {activeTab === 'overview' && (
+          <div className="overview-section">
+            {/* Today's Range */}
+            <div className="info-card range-card">
+              <h3>Today's Range</h3>
+              <div className="range-slider">
+                <div className="range-values">
+                  <span>${(stock.current_price - 10).toFixed(2)}</span>
+                  <span>${(stock.current_price + 10).toFixed(2)}</span>
+                </div>
+                <div className="range-bar">
+                  <div className="range-progress" style={{ width: '60%' }}></div>
+                  <div className="range-marker" style={{ left: '60%' }}></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Key Statistics */}
+            <div className="info-grid">
+              <div className="info-card">
+                <strong>Market Cap</strong>
+                <span>{stock.marketCap}</span>
+              </div>
+              <div className="info-card">
+                <strong>Volume</strong>
+                <span>12.5M</span>
+              </div>
+              <div className="info-card">
+                <strong>P/E Ratio</strong>
+                <span>{stock.peRatio}</span>
+              </div>
+              <div className="info-card">
+                <strong>52W Range</strong>
+                <span>${(stock.current_price - 50).toFixed(2)} - ${(stock.current_price + 50).toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'fundamentals' && (
+          <div className="fundamentals-section info-grid">
+            <div className="info-card">
+              <strong>Market Cap</strong>
+              <span>{stock.marketCap}</span>
+            </div>
+            <div className="info-card">
+              <strong>P/E Ratio</strong>
+              <span>{stock.peRatio}</span>
+            </div>
+            <div className="info-card">
+              <strong>Sector</strong>
+              <span>{stock.sector}</span>
+            </div>
+            <div className="info-card">
+              <strong>Industry</strong>
+              <span>{stock.industry}</span>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'dividends' && (
+          <div className="dividends-section info-grid">
+            <div className="info-card">
+              <strong>Dividend Yield</strong>
+              <span>{stock.dividendYield}%</span>
+            </div>
+            <div className="info-card">
+              <strong>Dividend Per Share</strong>
+              <span>${stock.dividendPerShare}</span>
+            </div>
+            <div className="info-card">
+              <strong>Ex-Dividend Date</strong>
+              <span>{stock.exDividendDate}</span>
+            </div>
+            <div className="info-card">
+              <strong>Payment Date</strong>
+              <span>{stock.paymentDate}</span>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'about' && (
+          <div className="about-section">
+            <div className="info-card">
+              <div className="company-description" dangerouslySetInnerHTML={{ __html: stock.details }} />
+              <div className="company-info">
+                <div>
+                  <strong>Sector</strong>
+                  <span>{stock.sector}</span>
+                </div>
+                <div>
+                  <strong>Industry</strong>
+                  <span>{stock.industry}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+          
           <section className="stock-details-section">
             <div
               className="stock-description"
@@ -250,7 +358,7 @@ const StocksDetail = () => {
           </section>
         </>
       )}
-    </div>
+    </div> 
   );
 };
 
