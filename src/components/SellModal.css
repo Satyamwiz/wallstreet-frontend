@@ -1,0 +1,185 @@
+/* Modal Overlay */
+.sell-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  
+  /* Modal Container */
+  .sell-modal__container {
+    background-color: #2d3748; /* Gray 800 */
+    border-radius: 8px;
+    width: 100%;
+    max-width: 448px;
+    padding: 24px;
+    position: relative;
+    transform: scale(1);
+    transition: all 300ms ease;
+  }
+  
+  /* Close Button */
+  .sell-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: #a0aec0; /* Gray 400 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 300ms ease;
+  }
+  .sell-modal__close:hover {
+    color: #ffffff;
+  }
+  
+  /* Header */
+  .sell-modal__header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .sell-modal__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 8px;
+  }
+  .sell-modal__subtitle {
+    color: #a0aec0; /* Gray 400 */
+    font-size: 0.875rem;
+  }
+  
+  /* Price Info Grid */
+  .sell-modal__price-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .sell-modal__price-card {
+    background-color: #4a5568; /* Gray 700 */
+    border-radius: 8px;
+    padding: 16px;
+    transition: transform 300ms ease;
+    cursor: pointer;
+  }
+  .sell-modal__price-card:hover {
+    transform: scale(1.05);
+  }
+  .sell-modal__price-label {
+    color: #a0aec0; /* Gray 400 */
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+  }
+  .sell-modal__price-value {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  /* 24h Change */
+  .sell-modal__change-value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  .sell-modal__change-value.positive {
+    color: #48bb78; /* Green 500 */
+  }
+  .sell-modal__change-value.negative {
+    color: #f56565; /* Red 500 */
+  }
+  
+  /* Order Form */
+  .sell-modal__form {
+    margin-bottom: 24px;
+  }
+  .sell-modal__form-group {
+    margin-bottom: 16px;
+  }
+  .sell-modal__label {
+    display: block;
+    color: #a0aec0; /* Gray 400 */
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+  }
+  .sell-modal__input {
+    width: 100%;
+    background-color: #4a5568; /* Gray 700 */
+    border: 1px solid #718096; /* Gray 600 */
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #ffffff;
+    transition: border-color 300ms ease;
+  }
+  .sell-modal__input:focus {
+    outline: none;
+    border-color: #4299e1; /* Blue 500 */
+  }
+  
+  /* Holdings Summary */
+  .sell-modal__holdings {
+    background-color: #4a5568; /* Gray 700 */
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .sell-modal__holdings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .sell-modal__holdings-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a0aec0; /* Gray 400 */
+  }
+  .sell-modal__holdings-shares {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  .sell-modal__holdings-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.125rem;
+    font-weight: bold;
+  }
+  .sell-modal__holdings-summary span:first-child {
+    color: #a0aec0; /* Gray 400 */
+  }
+  
+  /* Action Button */
+  .sell-modal__button {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: all 300ms ease;
+  }
+  .sell-modal__button--disabled {
+    background-color: #718096; /* Gray 600 */
+    cursor: not-allowed;
+  }
+  .sell-modal__button--active {
+    background-color: #f56565; /* Red 500 */
+  }
+  .sell-modal__button--active:hover {
+    background-color: #e53e3e; /* Red 600 */
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
