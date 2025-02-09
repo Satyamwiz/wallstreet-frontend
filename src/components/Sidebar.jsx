@@ -18,7 +18,10 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className="d-flex flex-column align-items-center align-items-sm-center px-3 pt-5 text-white min-vh-100 sidebar">
+      <div
+        className="d-flex flex-column align-items-center align-items-sm-center px-3 pt-5 text-white min-vh-100 sidebar"
+        style={{ backgroundColor: "black" }}
+      >
         <div className="d-flex flex-row">
           <NavLink
             to="/"
@@ -105,6 +108,7 @@ const Sidebar = () => {
         <button
           className="bi bi-bar-chart h5 bi bi-box-arrow-left align-items-center align-items-sm-start my-4 mt-auto logoutbtn py-2 px-3"
           onClick={handleLogout}
+          style={{ color: "black", border: "black" }}
         >
           {" "}
           Logout
