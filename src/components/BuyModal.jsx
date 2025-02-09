@@ -119,8 +119,10 @@ const BuyModal = ({
               <input
                 type="number"
                 className="stockquantity"
+                min="1"
+                step="1"
                 value={qty}
-                onChange={(e) => setQty(Number(e.target.value))}
+                onChange={(e) => setQty(parseInt(e.target.value, 10) || 0)}
               />
             </div>
           </div>

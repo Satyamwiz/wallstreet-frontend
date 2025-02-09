@@ -66,6 +66,7 @@ const StocksDetail = () => {
   const [isMarketOpen, setIsMarketOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [showBuyModal, setShowBuyModal] = useState(false);
+  const [showSellModal, setShowSellModal] = useState(false);
   // Fetch stock details on mount or when id changes
   useEffect(() => {
     setTimeout(() => {
@@ -164,18 +165,12 @@ const StocksDetail = () => {
                 <button
                   className="btn btn-sell"
                   data-toggle="modal"
+                  onClick={() => setShowSellModal(true)}
                   data-target={`#sellmodal${id}`}
                 >
                   Sell
                 </button>
-                <SellModal
-                  id={stock.id}
-                  ticker={stock.ticker}
-                  name={stock.name}
-                  current_price={stock.current_price}
-                  price_change={parseFloat(stock.price_change).toFixed(2)}
-                  shares={availableShares}
-                />
+                
               </div>
             ) : (
               <div className="market-closed">
@@ -195,6 +190,18 @@ const StocksDetail = () => {
               onClose={() => setShowBuyModal(false)}
             />
           )}
+          {showSellModal && (
+            <SellModal
+              id={stock.id}
+              ticker={stock.ticker}
+              name={stock.name}
+              shares={stock.shares}
+              current_price={stock.current_price+10}
+              price_change={stock.price_change}
+              onClose={() => setShowSellModal(false)}
+            />
+          )}
+          
 
          
 
@@ -231,116 +238,150 @@ const StocksDetail = () => {
       </nav>
 
       {/* Content Sections */}
-      <div className="content-section">
-        {activeTab === 'overview' && (
-          <div className="overview-section">
-            {/* Today's Range */}
-            <div className="info-card range-card">
-              <h3>Today's Range</h3>
-              <div className="range-slider">
-                <div className="range-values">
-                  <span>${(stock.current_price - 10).toFixed(2)}</span>
-                  <span>${(stock.current_price + 10).toFixed(2)}</span>
-                </div>
-                <div className="range-bar">
-                  <div className="range-progress" style={{ width: '60%' }}></div>
-                  <div className="range-marker" style={{ left: '60%' }}></div>
-                </div>
-              </div>
-            </div>
-            <div className="info-card range-card">
-              <h3>All Time Range</h3>
-              <div className="range-slider">
-                <div className="range-values">
-                  <span>${(stock.current_price - 10).toFixed(2)}</span>
-                  <span>${(stock.current_price + 10).toFixed(2)}</span>
-                </div>
-                <div className="range-bar">
-                  <div className="range-progress" style={{ width: '60%' }}></div>
-                  <div className="range-marker" style={{ left: '60%' }}></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Key Statistics */}
-            <div className="info-grid">
-              <div className="info-card">
-                <strong>Market Cap</strong>
-                <span>{stock.marketCap}</span>
-              </div>
-              <div className="info-card">
-                <strong>Volume</strong>
-                <span>12.5M</span>
-              </div>
-              <div className="info-card">
-                <strong>P/E Ratio</strong>
-                <span>{stock.peRatio}</span>
-              </div>
-              
-            </div>
+<div className="content-section">
+  {activeTab === 'overview' && (
+    <div className="overview-section">
+      {/* Today's Range */}
+      <div className="info-card range-card">
+        <h3>Today's Range</h3>
+        <div className="range-slider">
+          <div className="range-values">
+            <span>${(stock.current_price - 10).toFixed(2)}</span>
+            <span>${(stock.current_price + 10).toFixed(2)}</span>
           </div>
-        )}
-
-        {activeTab === 'fundamentals' && (
-          <div className="fundamentals-section info-grid">
-            <div className="info-card">
-              <strong>Market Cap</strong>
-              <span>{stock.marketCap}</span>
-            </div>
-            <div className="info-card">
-              <strong>P/E Ratio</strong>
-              <span>{stock.peRatio}</span>
-            </div>
-            <div className="info-card">
-              <strong>Sector</strong>
-              <span>{stock.sector}</span>
-            </div>
-            <div className="info-card">
-              <strong>Industry</strong>
-              <span>{stock.industry}</span>
-            </div>
+          <div className="range-bar">
+            <div className="range-progress" style={{ width: '60%' }}></div>
+            <div className="range-marker" style={{ left: '60%' }}></div>
           </div>
-        )}
-
-        {activeTab === 'dividends' && (
-          <div className="dividends-section info-grid">
-            <div className="info-card">
-              <strong>Dividend Yield</strong>
-              <span>{stock.dividendYield}%</span>
-            </div>
-            <div className="info-card">
-              <strong>Dividend Per Share</strong>
-              <span>${stock.dividendPerShare}</span>
-            </div>
-            <div className="info-card">
-              <strong>Ex-Dividend Date</strong>
-              <span>{stock.exDividendDate}</span>
-            </div>
-            <div className="info-card">
-              <strong>Payment Date</strong>
-              <span>{stock.paymentDate}</span>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'about' && (
-          <div className="about-section">
-            <div className="info-card">
-              <div className="company-description" dangerouslySetInnerHTML={{ __html: stock.details }} />
-              <div className="company-info">
-                <div>
-                  <strong>Sector</strong>
-                  <span>{stock.sector}</span>
-                </div>
-                <div>
-                  <strong>Industry</strong>
-                  <span>{stock.industry}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
+      {/* All Time Range */}
+      <div className="info-card range-card">
+        <h3>All Time Range</h3>
+        <div className="range-slider">
+          <div className="range-values">
+            <span>${(stock.current_price - 10).toFixed(2)}</span>
+            <span>${(stock.current_price + 10).toFixed(2)}</span>
+          </div>
+          <div className="range-bar">
+            <div className="range-progress" style={{ width: '60%' }}></div>
+            <div className="range-marker" style={{ left: '60%' }}></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Key Statistics */}
+      <div className="info-grid">
+        <div className="info-card">
+          <strong>Market Cap</strong>
+          <span>{stock.marketCap || "NA"}</span>
+        </div>
+        <div className="info-card">
+          <strong>Volume</strong>
+          <span>{stock.volume || "NA"}</span>
+        </div>
+        <div className="info-card">
+          <strong>P/E Ratio (TTM)</strong>
+          <span>{stock.peRatio || "NA"}</span>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {activeTab === 'fundamentals' && (
+    <div className="fundamentals-section info-grid">
+      <div className="info-card">
+        <strong>Market Cap</strong>
+        <span>{stock.marketCap || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>P/E Ratio (TTM)</strong>
+        <span>{stock.peRatio || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>ROE</strong>
+        <span>{stock.roe ? `${stock.roe}%` : "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Book Value</strong>
+        <span>{stock.bookValue || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Face Value</strong>
+        <span>{stock.faceValue || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Debt to Equity</strong>
+        <span>{stock.debtToEquity || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Industry P/E</strong>
+        <span>{stock.industryPE || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>EPS (TTM)</strong>
+        <span>{stock.epsTTM || "NA"}</span>
+      </div>
+    </div>
+  )}
+
+  {activeTab === 'dividends' && (
+    <div className="dividends-section info-grid">
+      <div className="info-card">
+        <strong>Dividend Yield</strong>
+        <span>{stock.dividendYield ? `${stock.dividendYield}%` : "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Dividend Per Share</strong>
+        <span>{stock.dividendPerShare ? `$${stock.dividendPerShare}` : "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Ex-Dividend Date</strong>
+        <span>{stock.exDividendDate || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Payment Date</strong>
+        <span>{stock.paymentDate || "NA"}</span>
+      </div>
+      <div className="info-card">
+        <strong>Dividend Frequency</strong>
+        <span>{stock.dividendFrequency || "NA"}</span>
+      </div>
+    </div>
+  )}
+
+  {activeTab === 'about' && (
+    <div className="about-section">
+      <div className="info-card">
+        <div
+          className="company-description"
+          dangerouslySetInnerHTML={{ __html: stock.details }}
+        />
+        <div className="company-info">
+          <div>
+            <strong>Parent Organisation</strong>
+            <span>{stock.parentOrganization || "NA"}</span>
+          </div>
+          <div>
+            <strong>Founded In</strong>
+            <span>{stock.foundedIn || "NA"}</span>
+          </div>
+          <div>
+            <strong>Line of Business</strong>
+            <span>{stock.lineOfBusiness || "NA"}</span>
+          </div>
+          <div>
+            <strong>CEO/MD</strong>
+            <span>{stock.ceo || "NA"}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+
+     
           
           <section className="stock-details-section">
             <div
