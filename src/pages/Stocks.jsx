@@ -1,120 +1,93 @@
 import React, { useEffect, useState } from "react";
-import StockCard from "../components/StockCard.jsx";
 import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-// import { stockService, portfolioService } from "../services/apis";
+import "./Stocks.css";
 
-
-
-// const Stocks = () => {
-//     const [stocks, setStocks] = useState(null);
-//     const [cash, setCash] = useState(0);
-
-//     useEffect(() => {
-//         setTimeout(() => {
-//             stockService
-//                 .getStocks()
-//                 .then((res) => setStocks(res))
-//                 .catch((err) => console.log(""));
-//             portfolioService
-//                 .getCash()
-//                 .then((res) => setCash(res.cash))
-//                 .catch((err) => console.log(""));
-//         }, 900);
-//     }, []);
-
-
-// Mock Data for stockService and portfolioService
-export const stockService = {
+const stockService = {
     getStocks: () =>
         Promise.resolve([
-            { id: 1, name: "Apple", symbol: "AAPL", price: 178.45, price_change: 2.3 },
-            { id: 2, name: "Microsoft", symbol: "MSFT", price: 365.12, price_change: -1.2 },
-            { id: 3, name: "Tesla", symbol: "TSLA", price: 215.67, price_change: 3.8 },
-            { id: 4, name: "Amazon", symbol: "AMZN", price: 132.78, price_change: 0.5 },
-            { id: 5, name: "Google", symbol: "GOOGL", price: 145.23, price_change: -0.9 }
+            { id: 1, name: "AMC Entertainment Holdings", symbol: "AMC", price: 7.34, price_change: -18.90, exchange: "TSE" },
+            { id: 2, name: "Adobe", symbol: "ADBE", price: 434.68, price_change: -0.26, exchange: "NASDAQ" },
+            { id: 3, name: "Advanced Micro Devices", symbol: "AMD", price: 102.16, price_change: -0.53, exchange: "NASDAQ" },
+            { id: 4, name: "Alliance Data Systems Corp", symbol: "ADS", price: 1119.87, price_change: 0.00, exchange: "TSE" },
+            { id: 5, name: "Amazon.com", symbol: "AMZN", price: 236.35, price_change: -0.04, exchange: "NASDAQ" }
         ]),
-};
-
-export const portfolioService = {
-    getCash: () => Promise.resolve({ cash: 5000.75 }),
 };
 
 const Stocks = () => {
     const [stocks, setStocks] = useState(null);
-    const [cash, setCash] = useState(0);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [darkMode, setDarkMode] = useState(
+        localStorage.getItem("theme") === "dark" || false
+    );
 
     useEffect(() => {
         setTimeout(() => {
             stockService
                 .getStocks()
                 .then((res) => setStocks(res))
-                .catch((err) => console.log("Error fetching stocks"));
-
-            portfolioService
-                .getCash()
-                .then((res) => setCash(res.cash))
-                .catch((err) => console.log("Error fetching cash"));
+                .catch(() => console.log("Error fetching stocks"));
         }, 900);
     }, []);
 
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+        }
+    }, [darkMode]);
+
     return (
-        <div className="container p-1 p-sm-5">
-            {/* Searchbar */}
-            <div className="mt-1 mb-4">
-                <div className="d-flex flex-row justify-content-between">
-                    <div className="form-outline mobilesearchbar">
-                        <input
-                            type="search"
-                            id="form1"
-                            className="searchbar ms-0 ms-sm-3 form-control shadow-lg py-2"
-                            placeholder="Search stocks by symbol"
-                            aria-label="Search"
-                            autoComplete="off"
-                        />
-                    </div>
-                    <div className="btnbalance px-3 me-3 text-center p-2 shadow bi bi-wallet d-none d-sm-block">
-                        {`₹ ${cash}`}
-                    </div>
-                </div>
-            </div>
+        <div className={`stocks-container ${darkMode ? "dark-mode" : "light-mode"}`}>
+            <label className="theme-toggle">
+                <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+                <span className="slider"></span>
+            </label>
+            
+            <h2 className="stocks-heading">Browse the market.</h2>
+            <p className="stocks-subheading">Explore our selection of the biggest names in the industry.</p>
+
+            <input
+                type="text"
+                className="search-bar"
+                placeholder="Search by ticker, company, description"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
 
             {!stocks && (
-                <ThreeDots
-                    height="55"
-                    width="55"
-                    color="#5eb5f8"
-                    ariaLabel="line-wave"
-                    wrapperClass="loader"
-                    visible={true}
-                />
+                <div className="loader">
+                    <ThreeDots height="55" width="55" color="#5eb5f8" />
+                </div>
             )}
 
-            {/* Columns */}
-            <div className="row row-cols-1 row-cols-xl-3 row-cols-md-2 g-2 mt-5">
-                {stocks && (
-                    <>
-                        {stocks.map((stock) => {
-                            const change = parseFloat(stock.price_change).toFixed(2);
-                            const color = change >= 0 ? "text-success" : "text-danger";
+            <div className="stock-grid">
+                {stocks &&
+                    stocks
+                        .filter((stock) =>
+                            stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            stock.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+                        )
+                        .map((stock) => {
+                            const change = stock.price_change.toFixed(2);
+                            const isPositive = stock.price_change >= 0;
                             return (
-                                <Link to={`/stocksdetail/${stock.id}`} key={stock.id}>
-                                    <div className="col">
-                                        <StockCard
-                                            {...stock}
-                                            change={change}
-                                            color={color}
-                                        />
+                                <Link to={`/stocksdetail/${stock.id}`} key={stock.id} className="stock-card">
+                                    <div className="stock-logo">{stock.symbol}</div>
+                                    <div className="stock-info">
+                                        <h3>{stock.name}</h3>
+                                        <p className="stock-exchange">{stock.exchange} : {stock.symbol}</p>
+                                        <span className={`stock-price ${isPositive ? "green" : "red"}`}>
+                                            ${stock.price} {isPositive ? `+${change}%` : `${change}%`}
+                                        </span>
                                     </div>
                                 </Link>
                             );
                         })}
-                    </>
-                )}
             </div>
-            <br />
-            <br />
-            <br />
         </div>
     );
 };
