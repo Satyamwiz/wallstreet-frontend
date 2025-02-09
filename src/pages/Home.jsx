@@ -93,7 +93,7 @@ export default function LandingPage() {
             </div>
             <h3>Step 3: Lambo Time</h3>
             <p>
-              Earn badges, climb the leaderboard, and flex on the paper hands.
+              Earn something climb the leaderboard, and flex on the paper hands.
             </p>
           </div>
         </div>
