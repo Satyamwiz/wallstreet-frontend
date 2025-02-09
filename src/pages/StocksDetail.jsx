@@ -383,12 +383,7 @@ const StocksDetail = () => {
 
      
           
-          <section className="stock-details-section">
-            <div
-              className="stock-description"
-              dangerouslySetInnerHTML={{ __html: stock.details }}
-            />
-          </section>
+        
         </>
       )}
     </div> 
