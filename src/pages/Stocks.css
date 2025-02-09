@@ -120,3 +120,84 @@
     justify-content: center;
     margin-top: 20px;
 }
+
+/* Toggle Switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px;
+    font-size: 18px;
+}
+
+/* Sun & Moon inside the button */
+.slider::before {
+    content: "☀️";
+    position: absolute;
+    left: 5px;
+    transition: 0.4s;
+}
+
+.slider::after {
+    content: "🌙";
+    position: absolute;
+    right: 5px;
+    transition: 0.4s;
+    opacity: 0;
+}
+
+input:checked + .slider {
+    background-color: #222222;
+}
+
+input:checked + .slider::before {
+    opacity: 0;
+}
+
+input:checked + .slider::after {
+    opacity: 1;
+}
+
+/* Toggle Switch Knob */
+.slider span {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+    left: 3px;
+}
+
+input:checked + .slider span {
+    transform: translateX(30px);
+}

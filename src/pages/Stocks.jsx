@@ -18,7 +18,7 @@ const Stocks = () => {
     const [stocks, setStocks] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [darkMode, setDarkMode] = useState(
-        localStorage.getItem("theme") === "dark" || false
+        localStorage.getItem("theme") === "dark"
     );
 
     useEffect(() => {
@@ -41,14 +41,23 @@ const Stocks = () => {
     }, [darkMode]);
 
     return (
-        <div className={`stocks-container ${darkMode ? "dark-mode" : "light-mode"}`}>
-            <label className="theme-toggle">
-                <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-                <span className="slider"></span>
-            </label>
-            
+        <div className="stocks-container">
+            {/* Toggle Switch for Dark Mode */}
+            <div className="toggle-container">
+                <label className="toggle-switch">
+                    <input
+                        type="checkbox"
+                        checked={darkMode}
+                        onChange={() => setDarkMode(!darkMode)}
+                    />
+                    <span className="slider"></span>
+                </label>
+            </div>
+
             <h2 className="stocks-heading">Browse the market.</h2>
-            <p className="stocks-subheading">Explore our selection of the biggest names in the industry.</p>
+            <p className="stocks-subheading">
+                Explore our selection of the biggest names in the industry.
+            </p>
 
             <input
                 type="text"
