@@ -27,7 +27,7 @@ const Login = () => {
             placeholder="Username"
             onChange={(e) => setName(e.target.value)}
             value={username}
-            required
+            required 
           />
         </div>
 

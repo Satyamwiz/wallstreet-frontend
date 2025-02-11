@@ -50,7 +50,7 @@
 }
 
 .input-icon {
-  position: absolute;
+  /* position: absolute; */
   align-items: center; /* Keep it close to the left */
   top: -22px;
   transform: translateY(-50%);
