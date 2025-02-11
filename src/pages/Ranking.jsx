@@ -3,6 +3,7 @@ import axios from "axios";
 import RankCard from "../components/RankCard"
 import { ThreeDots } from "react-loader-spinner";
 // import { rankService } from "../services/apis";
+
 export const rankService = {
   getRankings: () =>
     Promise.resolve([

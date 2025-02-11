@@ -17,7 +17,7 @@ import {useAuthContext} from "./hooks/useAuthContext"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Ranking from "./pages/Ranking.jsx";
-import LandingPage from './pages/LandingPage';
+
 
 /**
  * This is the main layout component where all the pages and navbar, sidebar are rendered
