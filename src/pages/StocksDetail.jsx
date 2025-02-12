@@ -9,6 +9,7 @@ import { CategoryScale } from "chart.js";
 import LineChart from "../components/LineChart";
 import "./StocksDetail.css"; // Custom dark-mode & grow page styles
 import TransactionHistory from "../components/TransactionHistory.jsx";
+import Overview from "../components/Overview.jsx";
 
 Chart.register(CategoryScale);
 
@@ -31,11 +32,11 @@ export const stockService = {
       ],
       // Delivery (long-term) price history used for the chart
       delivery_price_history: [
-        { datetime: "2025-01-01T00:00:00Z", price: 170.45 },
-        { datetime: "2025-01-15T00:00:00Z", price: 172.00 },
-        { datetime: "2025-02-01T00:00:00Z", price: 175.20 },
-        { datetime: "2025-02-15T00:00:00Z", price: 178.50 },
-        { datetime: "2025-03-01T00:00:00Z", price: 180.75 },
+        { datetime: "2025-01-01T00:00:00Z", price: 200.00 },
+        { datetime: "2025-01-15T00:00:00Z", price: 200.00 },
+        { datetime: "2025-02-01T00:00:00Z", price: 200.00 },
+        { datetime: "2025-02-15T00:00:00Z", price: 200.00 },
+        { datetime: "2025-03-01T00:00:00Z", price: 200.00 },
       ],
       details:
         "<p>Apple Inc. is a leading technology company known for its innovative products including the iPhone, Mac, and iPad.</p>",
@@ -108,7 +109,7 @@ const StocksDetail = () => {
   }, [id]);
 
   // Update chartData when stock data is available
-  // Only delivery_price_history is used since intraday is removed
+  // // Only delivery_price_history is used since intraday is removed
   useEffect(() => {
     if (stock) {
       const selectedHistory = stock.delivery_price_history;
@@ -264,52 +265,7 @@ const StocksDetail = () => {
       {/* Content Sections */}
 <div className="content-section">
   {activeTab === 'overview' && (
-    <div className="overview-section">
-      {/* Today's Range */}
-      <div className="info-card range-card">
-        <h3>Today's Range</h3>
-        <div className="range-slider">
-          <div className="range-values">
-            <span>${(stock.current_price - 10).toFixed(2)}</span>
-            <span>${(stock.current_price + 10).toFixed(2)}</span>
-          </div>
-          <div className="range-bar">
-            <div className="range-progress" style={{ width: '60%' }}></div>
-            <div className="range-marker" style={{ left: '60%' }}></div>
-          </div>
-        </div>
-      </div>
-      {/* All Time Range */}
-      <div className="info-card range-card">
-        <h3>All Time Range</h3>
-        <div className="range-slider">
-          <div className="range-values">
-            <span>${(stock.current_price - 10).toFixed(2)}</span>
-            <span>${(stock.current_price + 10).toFixed(2)}</span>
-          </div>
-          <div className="range-bar">
-            <div className="range-progress" style={{ width: '60%' }}></div>
-            <div className="range-marker" style={{ left: '60%' }}></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Key Statistics */}
-      <div className="info-grid">
-        <div className="info-card">
-          <strong>Market Cap</strong>
-          <span>{stock.marketCap || "NA"}</span>
-        </div>
-        <div className="info-card">
-          <strong>Volume</strong>
-          <span>{stock.volume || "NA"}</span>
-        </div>
-        <div className="info-card">
-          <strong>P/E Ratio (TTM)</strong>
-          <span>{stock.peRatio || "NA"}</span>
-        </div>
-      </div>
-    </div>
+     <Overview stock={stock} />
   )}
 
   {activeTab === 'fundamentals' && (
