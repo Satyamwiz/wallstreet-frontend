@@ -4,10 +4,11 @@ import SellModal from "../components/SellModal";
 import { useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import Chart from "chart.js/auto";
-import { ArrowUpRight, ArrowDownRight, Activity, TrendingUp, DollarSign, Building } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Activity, TrendingUp, DollarSign, Building, History } from 'lucide-react';
 import { CategoryScale } from "chart.js";
 import LineChart from "../components/LineChart";
 import "./StocksDetail.css"; // Custom dark-mode & grow page styles
+import TransactionHistory from "../components/TransactionHistory.jsx";
 
 Chart.register(CategoryScale);
 
@@ -67,6 +68,9 @@ const StocksDetail = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [showBuyModal, setShowBuyModal] = useState(false);
   const [showSellModal, setShowSellModal] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+
+
   // Fetch stock details on mount or when id changes
   useEffect(() => {
     setTimeout(() => {
@@ -84,7 +88,18 @@ const StocksDetail = () => {
 
       // Mock available shares
       setAvailableShares(100);
-
+      setTransactions([
+        {
+          id: 1,
+          ticker: "AAPL",
+          quantity: 10,
+          transaction_type: "buy",
+          traded_price: 182.5,
+          date: "2024-02-01",
+          trade_type: "delivery",
+        },
+        
+      ]);
       marketService
         .checkMarketStatus()
         .then((res) => setIsMarketOpen(res.is_open))
@@ -235,6 +250,15 @@ const StocksDetail = () => {
           <Building className="tab-icon" size={20} />
           About Company
         </button>
+         
+          <button 
+            onClick={() => setActiveTab('trancastions')}
+            className={`tab-button ${activeTab === 'trancastions' ? 'active' : ''}`}
+            >
+          
+          <History className="tab-icon" size={20} />
+          Transactions
+        </button>
       </nav>
 
       {/* Content Sections */}
@@ -376,6 +400,12 @@ const StocksDetail = () => {
           </div>
         </div>
       </div>
+    </div>
+  )}
+
+  {activeTab === 'trancastions' && (
+    <div className="transactions-section">
+    <TransactionHistory transactions={transactions} />
     </div>
   )}
 </div>
