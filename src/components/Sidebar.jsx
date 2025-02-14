@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types"; // 
 import { NavLink } from "react-router-dom";
 import image from "../assets/stockwhite.svg";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -14,39 +15,38 @@ import {
 } from "react-icons/fa";
 
 /**
- * Sidebar with on-click hamburger 
+ * Sidebar with on-click hamburger menu
  */
-const Sidebar = () => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const { user } = useAuthContext();
   const { logout } = useLogout();
-  const [isOpen, setIsOpen] = useState(false); // Sidebar visibility state
 
   // Function to handle click outside the sidebar
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
-        isOpen &&
+        sidebarOpen &&
         !event.target.closest(".sidebar") &&
         !event.target.closest(".hamburger")
       ) {
-        setIsOpen(false);
+        setSidebarOpen(false);
       }
     };
     document.addEventListener("click", handleOutsideClick);
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [isOpen]);
+  }, [sidebarOpen, setSidebarOpen]);
 
   const handleLogout = () => {
     logout();
-    setIsOpen(false); // Close sidebar on logout
+    setSidebarOpen(false); // Close sidebar on logout
   };
 
   return (
     <>
-      {/* Hamburger Icon (Click to Toggle) */}
-      {!isOpen && (
+      {/* Hamburger Icon - Only visible when sidebar is closed */}
+      {!sidebarOpen && (
         <div
           className="hamburger"
           style={{
@@ -56,22 +56,22 @@ const Sidebar = () => {
             zIndex: 1001,
             cursor: "pointer",
             fontSize: "30px",
-            color: "white", // White by default
+            color: "white",
             transition: "color 0.3s ease-in-out",
           }}
-          onClick={() => setIsOpen(true)}
+          onClick={() => setSidebarOpen(true)}
         >
           <FaBars />
         </div>
       )}
 
-      {/* Sidebar (Hidden by Default, Slides in on Click) */}
+      {/* Sidebar */}
       <div
         className="sidebar"
         style={{
           position: "fixed",
           top: 0,
-          left: isOpen ? "0" : "-250px",
+          left: sidebarOpen ? "0" : "-230px",
           width: "230px",
           height: "100vh",
           backgroundColor: "#191924",
@@ -176,6 +176,12 @@ const Sidebar = () => {
       </div>
     </>
   );
+};
+
+// ✅ Add PropTypes validation
+Sidebar.propTypes = {
+  sidebarOpen: PropTypes.bool.isRequired,
+  setSidebarOpen: PropTypes.func.isRequired,
 };
 
 // Common Style for Links
