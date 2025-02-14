@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useLogout } from "../hooks/useLogout"; 
 
 const API_URL = import.meta.env.VITE_BACKEND_URL; 
 console.log(API_URL, import.meta.env.VITE_BACKEND_URL);
@@ -21,6 +22,29 @@ axiosAuthInstance.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+// Add a response interceptor for the authenticated axios instance.
+axiosAuthInstance.interceptors.response.use(
+  (response) => {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    return response;
+  },
+  (error) => {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // if (error.response && error.response.status === 401) {
+    //   // Handle unauthorized error, e.g., redirect to login page
+    //   console.error("Unauthorized access - possibly invalid token");
+    // }
+    if(error.response && error.response.status===403){
+      console.log("logout");
+      // alert("log");
+      const logout= useLogout();
+      logout();
+      
+    }
+    return Promise.reject(error);
+  }
 );
 
 export { axiosAuthInstance, axiosNoAuthInstance };
