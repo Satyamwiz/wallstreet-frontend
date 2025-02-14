@@ -45,7 +45,15 @@ class SocketService {
     this.socket.on('high_price',callback);
   }
   onnonupdates(callback){
-    this.socket.on('low_prices',callback);
+    this.socket.on('low_price',callback);
+  }
+
+  getvolume(callback){
+    this.socket.on('sell_volume',callback);
+  }
+
+  get2volume(callback){
+    this.socket.on('buy_volume',callback);
   }
   
 

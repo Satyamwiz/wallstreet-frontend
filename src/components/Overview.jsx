@@ -2,86 +2,88 @@ import { useEffect, useState } from "react";
 import socketService from "../services/socket.js";
 
 const OverviewComponent = ({ stock }) => {
-  // Initialize with the stock's current price.
+  // Initialize state with the stock's current price and default range values.
   const [prices, setPrices] = useState(stock.current_price);
-
+  const [todaysMin, settodayMin] = useState(0);
+  const [todaysMax, settodayMax] = useState(0);
+  const [clampedTodaysPos, setClampedTodaysPos] = useState(0);
+  const [volume,setvolume]=useState(0);
+  // Effect for establishing the WebSocket connection and subscribing to events.
   useEffect(() => {
-    // Connect to the WebSocket server and subscribe to the company's market updates.
+    // Connect to the socket server and subscribe to the specific company's updates.
     socketService.connect();
     socketService.subscribeToCompany(stock.name);
+    console.log("Subscribed to stock:", stock);
 
-    // Log stock data for debugging.
-    console.log("data", stock);
-
-    // Handler for market updates: update the 'prices' state with the latest price.
+    // Handler to update the current price.
     const handleMarketUpdate = (data) => {
       setPrices(Number(data.price));
     };
 
-    // Register the handler for market update events.
-    socketService.onMarketUpdate(handleMarketUpdate);
+    const printdata=(data)=>{
+      setvolume(Number(data.buy_volume));
+    }
 
-    // Cleanup: remove listeners and disconnect on component unmount.
+  
+
+
+    // Handler to update today's low price.
+    const handleMinUpdate = (data) => {
+      console.log("Received min update:", data);
+      // Ensure that low_price represents the day's minimum value.
+      settodayMin(Number(data.low_price));
+    };
+
+    // Handler to update today's high price.
+    const handleMaxUpdate = (data) => {
+      console.log("Received max update:", data);
+      // Ensure that high_price represents the day's maximum value.
+      settodayMax(Number(data.high_price));
+    };
+
+    // Register the event handlers.
+    socketService.onMarketUpdate(handleMarketUpdate);
+    socketService.onnonupdates(handleMinUpdate);
+    socketService.onupdates(handleMaxUpdate);
+    socketService.get2volume(printdata);
+    socketService.getvolume(printdata);
+    // Cleanup: remove listeners and disconnect when the component unmounts.
     return () => {
       socketService.removeListeners();
       socketService.disconnect();
     };
   }, [stock]);
 
-  /*** Today's Range ***/
-  // Define static endpoints for today's range.
-  const todaysMin = 235;
-  const todaysMax = 265;
-  // Calculate the percentage position of the current price within today's range.
-  // Formula: ((currentPrice - min) / (max - min)) * 100.
-  const todaysPosition = ((prices - todaysMin) / (todaysMax - todaysMin)) * 100;
-  // Clamp the position between 0 and 100.
-  const clampedTodaysPos = Math.max(0, Math.min(100, todaysPosition));
+  // Effect to recalculate the current price's position within today's range.
+  useEffect(() => {
+    // Guard against division by zero by ensuring a valid range.
+    
 
-  /*** All Time Range ***/
-  // Define the range endpoints based on the initial current price.
-  // (These values can be replaced with actual all-time low/high values if available.)
-  // const allTimeMin = stock.current_price - 10;
-  // const allTimeMax = stock.current_price + 10;
-  // Calculate the current price's position within the all-time range.
-  // const allTimePosition = ((prices - allTimeMin) / (allTimeMax - allTimeMin)) * 100;
-  // const clampedAllTimePos = Math.max(0, Math.min(100, allTimePosition));
+    if (todaysMax !== todaysMin) {
+      const todaysPosition = ((prices - todaysMin) / (todaysMax - todaysMin)) * 100;
+      setClampedTodaysPos(Math.max(0, Math.min(100, todaysPosition)));
+    }
+  }, [prices, todaysMin, todaysMax]);
 
   return (
     <div className="overview-component">
-      {/* Today's Range */}
+      {/* Today's Range Display */}
       <div className="info-card range-card">
         <h3>Today's Range</h3>
         <div className="range-slider">
           <div className="range-values">
-            <span>${todaysMin}</span>
-            <span>${todaysMax}</span>
+            <span>${todaysMin.toFixed(2)}</span>
+            <span>${todaysMax.toFixed(2)}</span>
           </div>
           <div className="range-bar">
-            {/* The width of the progress bar is set to the calculated percentage */}
+            {/* The progress bar's width and marker's left offset correspond to the calculated percentage */}
             <div className="range-progress" style={{ width: `${clampedTodaysPos}%` }}></div>
-            {/* The marker's position is set to the same percentage */}
             <div className="range-marker" style={{ left: `${clampedTodaysPos}%` }}></div>
           </div>
         </div>
       </div>
 
-      {/* All Time Range */}
-      {/* <div className="info-card range-card">
-        <h3>All Time Range</h3>
-        <div className="range-slider">
-          <div className="range-values">
-            <span>${100}</span>
-            <span>${1000}</span>
-          </div>
-          <div className="range-bar">
-            <div className="range-progress" style={{ width: `${clampedAllTimePos}%` }}></div>
-            <div className="range-marker" style={{ left: `${clampedAllTimePos}%` }}></div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Key Statistics */}
+      {/* Key Statistics Display */}
       <div className="info-grid">
         <div className="info-card">
           <strong>Market Cap</strong>

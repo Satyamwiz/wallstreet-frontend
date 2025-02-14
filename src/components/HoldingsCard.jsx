@@ -38,7 +38,7 @@ const HoldingsCard = ({ holdings = [] }) => {
     };
 
     // Register the market update listener.
-
+    
     socketService.onMarketUpdate(handleMarketUpdate);
 
     // Cleanup: remove listeners and disconnect on unmount.
