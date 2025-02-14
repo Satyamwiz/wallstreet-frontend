@@ -1,152 +1,154 @@
 /* Always dark mode styling */
 :root {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --accent-color: #484846; /* Warm orange accent */
-    --card-bg: #1e1e1e;
-    --card-shadow: rgba(0, 0, 0, 0.7);
-  }
-  
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .stocks-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* Headings and Subheading */
-  .stocks-heading {
-    font-size: 36px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .stocks-subheading {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 18px;
-  }
-  
-  /* Search Bar */
-  .search-bar {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto 30px auto;
-    display: block;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 2px solid var(--accent-color);
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.3s;
-    background-color: var(--card-bg);
-    color: var(--text-color);
-  }
-  
-  .search-bar:focus {
-    border-color: var(--accent-color);
-  }
-  
-  /* Loader */
-  .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-  }
-  
-  /* Stock Grid Layout */
-  .stock-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  
-  /* Stock Card Styling */
-  .stock-card {
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px var(--card-shadow);
-    text-decoration: none;
-    color: var(--text-color);
-    transition: transform 0.2s, box-shadow 0.2s;
-    overflow: hidden;
-  }
-  
-  .stock-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px var(--card-shadow);
-  }
-  
-  /* Stock Logo (Top Section) */
-  .stock-logo {
-    background-color: var(--accent-color);
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  /* Stock Information */
-  .stock-info {
-    padding: 15px;
-  }
-  
-  .stock-info h3 {
-    margin: 0 0 5px;
-    font-size: 20px;
-  }
-  
-  .stock-exchange {
-    margin: 0 0 10px;
-    font-size: 14px;
-  }
-  
-  /* Price and Change Styling */
-  .stock-price-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .stock-price {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .stock-change {
-    font-size: 16px;
-  }
-  
-  /* Price Change Colors */
-  .green {
-    color: #28a745;
-  }
-  
-  .red {
-    color: #dc3545;
-  }
-  
-  /* New styling for the card header layout */
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --accent-color: #484846; /* Warm orange accent */
+  --card-bg: #1e1e1e;
+  --card-shadow: rgba(0, 0, 0, 0.7);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.stocks-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Headings and Subheading */
+.stocks-heading {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.stocks-subheading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  display: block;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid var(--accent-color);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+.search-bar:focus {
+  border-color: var(--accent-color);
+}
+
+/* Loader */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Stock Grid Layout */
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Stock Card Styling */
+.stock-card {
+  background-color: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  text-decoration: none;
+  color: var(--text-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.stock-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px var(--card-shadow);
+}
+
+/* Stock Logo (Top Section) */
+.stock-logo {
+  background-color: var(--accent-color);
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Stock Information */
+.stock-info {
+  padding: 15px;
+}
+
+.stock-info h3 {
+  margin: 0 0 5px;
+  font-size: 20px;
+}
+
+.stock-exchange {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+/* Price and Change Styling */
+/* Price and Change Styling */
+.stock-price-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack price and change vertically */
+  align-items: left;
+  gap: 5px;
+}
+
+.stock-price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stock-change {
+  font-size: 16px;
+  margin-top: -5px; /* Adjust spacing if needed */
+}
+
+/* Price Change Colors */
+.green {
+  color: #28a745;
+}
+
+.red {
+  color: #dc3545;
+}
+
+/* New styling for the card header layout */
 .stock-card-header {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid var(--card-shadow);
-  }
-  
-  /* Styling for the ranking number badge */
-  .stock-rank {
-    font-size: 16px;
-    font-weight: bold;
-    margin-right: 10px;
-    color: var(--accent-color);
-  }
-  
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--card-shadow);
+}
+
+/* Styling for the ranking number badge */
+.stock-rank {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+  color: var(--accent-color);
+}
