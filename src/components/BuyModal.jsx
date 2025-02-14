@@ -1,63 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowUpRight, ArrowDownRight, Wallet, X } from "lucide-react";
-// import { stockService } from "../services/apis";
+import { stockService } from "../services/apis";
 import { toast } from "react-toastify";
+import socketService from "../services/socket.js";
 import "./BuyModal.css";
-// export const stockService = {
-//     getStockDetail: (id) =>
-//       Promise.resolve({
-//         id: id,
-//         ticker: "AAPL",
-//         name: "Apple Inc.",
-//         current_price: 178.45,
-//         price_change: 2.3,
-//         // Intraday price history (no longer used)
-//         price_history: [
-//           { datetime: "2025-02-01T00:00:00Z", price: 178.45 },
-//           { datetime: "2025-02-02T00:00:00Z", price: 180.00 },
-//           { datetime: "2025-02-03T00:00:00Z", price: 182.20 },
-//           { datetime: "2025-02-04T00:00:00Z", price: 183.50 },
-//           { datetime: "2025-02-05T00:00:00Z", price: 185.75 },
-//         ],
-//         // Delivery (long-term) price history used for the chart
-//         delivery_price_history: [
-//           { datetime: "2025-01-01T00:00:00Z", price: 170.45 },
-//           { datetime: "2025-01-15T00:00:00Z", price: 172.00 },
-//           { datetime: "2025-02-01T00:00:00Z", price: 175.20 },
-//           { datetime: "2025-02-15T00:00:00Z", price: 178.50 },
-//           { datetime: "2025-03-01T00:00:00Z", price: 180.75 },
-//         ],
-//         details:
-//           "<p>Apple Inc. is a leading technology company known for its innovative products including the iPhone, Mac, and iPad.</p>",
-//         dividendYield: 1.5,          // in percentage
-//         dividendPerShare: 0.82,       // in dollars
-//         exDividendDate: "2025-02-15",
-//         paymentDate: "2025-03-01",
-//         marketCap: "2.3T",           // trillion dollars representation
-//         peRatio: 28.5,
-//         sector: "Technology",
-//         industry: "Consumer Electronics",
-//       }),
-//   };
-const BuyModal = ({
-  id,
-  ticker,
-  name,
-  cash,
-  current_price,
-  price_change,
-  onClose,
-}) => {
+
+const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
   const [qty, setQty] = useState(0);
   const [bidPrice, setBidPrice] = useState(current_price);
   const sign = price_change > 0 ? "+" : "";
   const color = price_change >= 0 ? "text-success" : "text-danger";
   const totalValue = bidPrice * qty;
 
+  useEffect(() => {
+    // Connect and subscribe to market updates for the given company name
+    socketService.connect();
+    console.log(name);
+    socketService.subscribeToCompany(name);
+
+    const handleMarketUpdate = (data) => {
+      // Update bidPrice when new market data arrives
+      setBidPrice(Number(data.price));
+    };
+
+    socketService.onMarketUpdate(handleMarketUpdate);
+
+    // Cleanup function to remove listeners and disconnect
+    return () => {
+      socketService.removeListeners();
+      socketService.disconnect();
+    };
+  }, [name]);
+
+  // Define handleBuy outside the useEffect so it is available in the JSX
   const handleBuy = (e) => {
     e.preventDefault();
     const tid = toast.loading("Please wait...");
     const buyOrderData = { price: bidPrice, quantity: qty };
+
     stockService
       .buyStock(id, buyOrderData)
       .then((res) => {
@@ -86,9 +66,7 @@ const BuyModal = ({
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
       >
         <div className="modal-header">
-          <h3 className="modal-title">
-            {ticker} - {name}
-          </h3>
+          <h3 className="modal-title">{name}</h3>
           <button className="modal-close-btn" onClick={onClose} aria-label="Close">
             <X size={24} />
           </button>
@@ -132,11 +110,11 @@ const BuyModal = ({
             <div className="summary-label">
               <Wallet size={20} /> Cash
             </div>
-            <div className="summary-value">{`₹ ${cash.toFixed(2)}`}</div>
+            <div className="summary-value">{`₹ ${Number(cash).toFixed(2)}`}</div>
           </div>
           <div className="summary-row">
             <div className="summary-label">Total Value</div>
-            <div className="summary-value">{`₹ ${totalValue.toFixed(2)}`}</div>
+            <div className="summary-value">{`₹ ${Number(totalValue).toFixed(2)}`}</div>
           </div>
         </div>
         <div className="modal-footer">

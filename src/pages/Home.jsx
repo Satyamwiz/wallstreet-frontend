@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, Rocket, DollarSign } from 'lucide-react';
-import confetti from 'canvas-confetti';
+
 import './Home.css';
 
 export default function LandingPage() {
@@ -15,11 +15,7 @@ export default function LandingPage() {
   }, []);
 
   const handleStartTrading = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-    });
+    
     navigate('/stocks');
   };
 
