@@ -19,19 +19,15 @@ import { Car } from "lucide-react";
 
 socketService.connect();
 
-
-
-
 const Portfolio = () => {
   const [cash, setCash] = useState(0);
   const [networth, setNetworth] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [holdings, setHoldings] = useState(null);
-  
+
   const [activeTab, setActiveTab] = useState("holdings");
 
   useEffect(() => {
-   
     setTimeout(() => {
       // Fetch data from API
       /*
@@ -48,30 +44,21 @@ const Portfolio = () => {
       */
 
       // Static fallback data (for development/testing)
-      
+
       portfolioService.getCash().then((res) => {
-        
         setCash(res.cash);
       });
 
       portfolioService.getholdingdetails().then((res) => {
-       
-        const response=res;
-        for(let i=0;i<response.length;i++){
-          
-          
-          
-          response[i].stock__current_price=185.26;
+        const response = res;
+        for (let i = 0; i < response.length; i++) {
+          response[i].stock__current_price = 185.26;
         }
-        
-        setHoldings(response);
 
-     
+        setHoldings(response);
       });
 
-   
-
-       setNetworth(154300.75);
+      setNetworth(154300.75);
       //  setHoldings([
       //   {
       //     id: 1,
@@ -101,8 +88,6 @@ const Portfolio = () => {
       //     trade_type: "delivery",
       //   },
       // ]);
-      
-     
     }, 900);
   }, []);
 
@@ -163,12 +148,8 @@ const Portfolio = () => {
         <div className="component-container">
           {activeTab === "holdings" && <HoldingsCard holdings={holdings} />}
           {/* {activeTab === "pnl" && <CompanyWisePnL holdings={holdings} />} */}
-          {activeTab === "orders" && (
-            <OrderDetails pendingTransactions />
-          )}
-          {activeTab === "transactions" && (
-            <TransactionHistory transactions />
-          )}
+          {activeTab === "orders" && <OrderDetails pendingTransactions />}
+          {activeTab === "transactions" && <TransactionHistory transactions />}
         </div>
       )}
     </div>

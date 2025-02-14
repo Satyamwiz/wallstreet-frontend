@@ -1,0 +1,96 @@
+/* Sidebar */
+.sidebar {
+  width: 250px; /* Show only the logo by default */
+  position: fixed;
+  height: 100vh;
+  background-color: #191924;
+  overflow-y: auto;
+  transition: width 0.3s ease-in-out;
+  right: 0; /* Align to the right */
+  top: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/* Expand the sidebar on hover or toggle */
+.sidebar.open {
+  width: 250px;
+}
+
+/* Logo container */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Logo */
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+/* Sidebar Toggle Button */
+.toggle-btn {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Navigation Links */
+.nav-links {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.nav-item {
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #5eb5f8;
+  border-radius: 8px;
+}
+
+/* Logout button */
+.logoutbtn {
+  background: none;
+  border: 2px solid #5eb5f8;
+  color: #5eb5f8;
+  border-radius: 12px;
+  padding: 8px 16px;
+  margin-top: auto;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logoutbtn:hover {
+  background-color: #5eb5f8;
+  color: #fff;
+}

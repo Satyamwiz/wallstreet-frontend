@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import image from "../assets/stockwhite.svg";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -14,12 +14,29 @@ import {
 } from "react-icons/fa";
 
 /**
- * Sidebar with hamburger hover effect and improved UI
+ * Sidebar with on-click hamburger menu
  */
 const Sidebar = () => {
   const { user } = useAuthContext();
   const { logout } = useLogout();
   const [isOpen, setIsOpen] = useState(false); // Sidebar visibility state
+
+  // Function to handle click outside the sidebar
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        isOpen &&
+        !event.target.closest(".sidebar") &&
+        !event.target.closest(".hamburger")
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [isOpen]);
 
   const handleLogout = () => {
     logout();
@@ -28,24 +45,29 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Hamburger Icon (Hover to Open) */}
-      <div
-        style={{
-          position: "fixed",
-          top: "10px",
-          left: "15px",
-          zIndex: 1001,
-          cursor: "pointer",
-          fontSize: "30px",
-          color: "white",
-        }}
-        onMouseEnter={() => setIsOpen(true)}
-      >
-        <FaBars />
-      </div>
+      {/* Hamburger Icon (Click to Toggle) */}
+      {!isOpen && (
+        <div
+          className="hamburger"
+          style={{
+            position: "fixed",
+            top: "10px",
+            left: "15px",
+            zIndex: 1001,
+            cursor: "pointer",
+            fontSize: "30px",
+            color: "white", // White by default
+            transition: "color 0.3s ease-in-out",
+          }}
+          onClick={() => setIsOpen(true)}
+        >
+          <FaBars />
+        </div>
+      )}
 
-      {/* Sidebar (Hidden by Default, Slides in on Hover) */}
+      {/* Sidebar (Hidden by Default, Slides in on Click) */}
       <div
+        className="sidebar"
         style={{
           position: "fixed",
           top: 0,
@@ -58,10 +80,9 @@ const Sidebar = () => {
           display: "flex",
           flexDirection: "column",
           padding: "20px",
-          paddingTop: "15px", // Moves everything up
+          paddingTop: "15px",
           borderRadius: "5px",
         }}
-        onMouseLeave={() => setIsOpen(false)}
       >
         {/* Logo */}
         <NavLink
@@ -87,7 +108,7 @@ const Sidebar = () => {
             style={{
               fontSize: "22px",
               fontWeight: "bold",
-              whiteSpace: "nowrap", // Ensures single-line text
+              whiteSpace: "nowrap",
             }}
           >
             Wall Street
@@ -95,13 +116,7 @@ const Sidebar = () => {
         </NavLink>
 
         {/* Navigation Links */}
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            width: "100%",
-          }}
-        >
+        <ul style={{ listStyle: "none", padding: 0, width: "100%" }}>
           {user && (
             <li style={menuItemStyle}>
               <NavLink to="/stocks" style={navLinkStyle}>
@@ -144,7 +159,6 @@ const Sidebar = () => {
           onClick={handleLogout}
           style={{
             background: "white",
-
             padding: "12px",
             color: "black",
             fontSize: "18px",

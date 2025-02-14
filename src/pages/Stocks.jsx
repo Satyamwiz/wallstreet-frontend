@@ -79,6 +79,15 @@ const Stocks = () => {
     console.log("Current search query:", searchQuery);
   }, [searchQuery]);
 
+  // Improved search filtering
+  const filteredStocks = stocks.filter((stock) => {
+    const lowerQuery = searchQuery.toLowerCase().trim();
+    return (
+      stock.name?.toLowerCase().includes(lowerQuery) ||
+      stock.symbol?.toLowerCase().includes(lowerQuery)
+    );
+  });
+
   return (
     <div className="stocks-container">
       <h2 className="stocks-heading">Browse the Market</h2>
@@ -102,53 +111,51 @@ const Stocks = () => {
         </div>
       ) : (
         <div className="stock-grid">
-          {stocks
-            .filter(
-              (stock) =>
-                stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                stock.symbol.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((stock, index) => {
-              // Opening price is stock.price.
-              // Live price is taken from the socket if available, otherwise fallback to the opening price.
-              const currentPrice =
-                livePrices[stock.name] !== undefined ? livePrices[stock.name] : stock.price;
-              const displayPrice =
-                currentPrice !== undefined ? `$${currentPrice}` : "N/A";
+          {filteredStocks.map((stock, index) => {
+            // Opening price is stock.price.
+            // Live price is taken from the socket if available, otherwise fallback to the opening price.
+            const currentPrice =
+              livePrices[stock.name] !== undefined
+                ? livePrices[stock.name]
+                : stock.price;
+            const displayPrice =
+              currentPrice !== undefined ? `$${currentPrice}` : "N/A";
 
-              // Calculate the percentage change from the opening price (stock.price)
-              let changePercentage = 0;
-              if (stock.price && currentPrice !== undefined) {
-                changePercentage = ((currentPrice - stock.price) / stock.price) * 100;
-              }
-              const isPositive = changePercentage >= 0;
-              const formattedChange = changePercentage.toFixed(2);
+            // Calculate the percentage change from the opening price (stock.price)
+            let changePercentage = 0;
+            if (stock.price && currentPrice !== undefined) {
+              changePercentage =
+                ((currentPrice - stock.price) / stock.price) * 100;
+            }
+            const isPositive = changePercentage >= 0;
+            const formattedChange = changePercentage.toFixed(2);
 
-              return (
-                <Link
-                  to={`/stocksdetail/${stock.id}`}
-                  key={stock.id}
-                  className="stock-card"
-                >
-                  <div className="stock-card-header">
-                    <div className="stock-rank">{index + 1}</div>
-                    <div className="stock-logo">{stock.symbol}</div>
-                  </div>
-                  <div className="stock-info">
-                    <h3>{stock.name}</h3>
-                    {/* <p className="stock-exchange">
-                      {stock.exchange} &bull; {stock.symbol}
-                    </p> */}
-                    <div className="stock-price-wrapper">
-                      <div className="stock-price">{displayPrice}</div>
-                      <div className={`stock-change ${isPositive ? "green" : "red"}`}>
-                        {isPositive ? `+${formattedChange}%` : `${formattedChange}%`}
-                      </div>
+            return (
+              <Link
+                to={`/stocksdetail/${stock.id}`}
+                key={stock.id}
+                className="stock-card"
+              >
+                <div className="stock-card-header">
+                  <div className="stock-rank">{index + 1}</div>
+                  <div className="stock-logo">{stock.symbol}</div>
+                </div>
+                <div className="stock-info">
+                  <h3>{stock.name}</h3>
+                  <div className="stock-price-wrapper">
+                    <div className="stock-price">{displayPrice}</div>
+                    <div
+                      className={`stock-change ${isPositive ? "green" : "red"}`}
+                    >
+                      {isPositive
+                        ? `+${formattedChange}%`
+                        : `${formattedChange}%`}
                     </div>
                   </div>
-                </Link>
-              );
-            })}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
