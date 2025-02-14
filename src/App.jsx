@@ -10,7 +10,6 @@ import Stocks from "./pages/Stocks.jsx";
 import StocksDetail from "./pages/StocksDetail.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Login from "./pages/Login.jsx";
-import CommingSoon from "./components/CommingSoon.jsx";
 import { useAuthContext } from "./hooks/useAuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,48 +19,57 @@ import Ranking from "./pages/Ranking.jsx";
  * This is the main layout component where all the pages and navbar, sidebar are rendered
  */
 function App() {
+  const { user } = useAuthContext();
+  const [sidebarOpen, setSidebarOpen] = useState(false); // ✅ Track sidebar state
 
-    const { user } = useAuthContext()
-    
-    const css = user ? "col-md-9 col-xl-10 col-12 content" : "col-12 content";
-    
-    return (
-        <div>
+  return (
+    <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
 
-            <ToastContainer position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            />
-
-      {/* MOBILE NAVBAR - Only rendered for mobile devices */}
+      {/* MOBILE NAVBAR - Only for small screens */}
       <div className="d-sm-none">
         <Navbar />
       </div>
 
-      {/* DESKTOP NAVBAR - Rendered only on desktop devices if user is not logged in */}
+      {/* DESKTOP NAVBAR - Only when user is not logged in */}
       <div className="d-none d-sm-block">{!user && <DesktopNavbar />}</div>
 
       {!user && <Footer />}
 
       <div className="d-flex flex-row flex-grow-1">
-        {/* SIDEBAR - Rendered only on desktop devices if user is logged in */}
+        {/* SIDEBAR - Rendered for logged-in users */}
         {user && (
           <div className="d-none d-sm-block">
-            <Sidebar />
+            <Sidebar
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+            />
           </div>
         )}
 
-        {/* CONTENT AREA - Takes full width when sidebar is hidden */}
+        {/* CONTENT AREA - Adjusts dynamically based on sidebar state */}
         <div
           className="flex-grow-1 px-4"
-          style={{ width: user ? "calc(100% - 210px)" : "100%" }}
+          style={{
+            width: user
+              ? sidebarOpen
+                ? "calc(100% - 230px)"
+                : "100%"
+              : "100%",
+            marginLeft: user ? (sidebarOpen ? "230px" : "0") : "0",
+            transition: "width 0.3s ease-in-out, margin-left 0.3s ease-in-out",
+          }}
         >
           <Routes>
             <Route exact path="/" element={<Home />} />
