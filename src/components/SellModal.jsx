@@ -8,6 +8,7 @@ import "./SellModal.css";
 const SellModal = ({ id, name, current_price, price_change, shares, onClose }) => {
   // Initialize sellPrice state with the baseline current_price received as a prop
   const [sellPrice, setSellPrice] = useState(current_price);
+  const [sp,setsp]=useState(0);
   // Quantity of shares user wants to sell
   const [qty, setQty] = useState(0);
 
@@ -17,7 +18,7 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
   // isPositive flag to determine if the price change is upward or downward.
   const isPositive = dynamicPriceChange >= 0;
   // Calculate the total value of the sell order.
-  const totalValue = sellPrice * qty;
+  const totalValue = sp * qty;
 
   // useEffect to handle WebSocket connection and subscription for live market updates
   useEffect(() => {
@@ -40,13 +41,13 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
       socketService.removeListeners();
       socketService.disconnect();
     };
-  }, [name]);
+  }, [name,sp]);
 
   // Function to handle the sell order submission
   const handleSell = (e) => {
     e.preventDefault();
     const tid = toast.loading("Processing your order...");
-    const sellOrderData = { price: sellPrice, quantity: qty };
+    const sellOrderData = { price: sellPrice, quantity: qty, companyName:name };
 
     stockService
       .sellStock(id, sellOrderData)
@@ -109,8 +110,8 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
               <label>Sell Price ($)</label>
               <input
                 type="number"
-                value={sellPrice}
-                onChange={(e) => setSellPrice(Number(e.target.value))}
+                
+                onChange={(e) => setsp(Number(e.target.value))}
                 step="0.01"
               />
             </div>
@@ -118,7 +119,7 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
               <label>Quantity</label>
               <input
                 type="number"
-                value={qty}
+                
                 onChange={(e) => setQty(parseInt(e.target.value, 10) || 0)}
                 min="1"
                 step="1"

@@ -55,21 +55,21 @@ const stockService = {
         })
     },
     buyStock: (id, buyOrderData) => {
-        return axiosAuthInstance.post(`/stocks/buy/${id}`, buyOrderData)
+        return axiosAuthInstance.post(`/order/buy`, buyOrderData)
         .then(res => res.data)
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+           
         })
     },
     sellStock: (id, sellOrderData) => {
-        return axiosAuthInstance.post(`/stocks/sell/${id}`, sellOrderData)
+        return axiosAuthInstance.post(`/order/sell`, sellOrderData)
         .then(res => res.data)
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+            
         })
     },
     deleteOrder: (id) => {

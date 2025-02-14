@@ -8,9 +8,9 @@ import "./BuyModal.css";
 const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
   const [qty, setQty] = useState(0);
   const [bidPrice, setBidPrice] = useState(current_price);
-  const totalValue = bidPrice * qty;
+  const [buyprice, setbuyprice]= useState(0);
   const isPositive = price_change >= 0;
-
+  const totalValue= buyprice*qty;
   useEffect(() => {
     // Connect and subscribe to market updates for the given company name
     socketService.connect();
@@ -28,12 +28,12 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
       socketService.removeListeners();
       socketService.disconnect();
     };
-  }, [name]);
+  }, [name,buyprice]);
 
   const handleBuy = (e) => {
     e.preventDefault();
     const tid = toast.loading("Please wait...");
-    const buyOrderData = { price: bidPrice, quantity: qty };
+    const buyOrderData = { price: bidPrice, quantity: qty, companyName : name  };
 
     stockService
       .buyStock(id, buyOrderData)
@@ -72,7 +72,7 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
           <div className="price-info">
             <div className="price-box">
               <p className="price-label">Current Price</p>
-              <p className="price-value">{`₹ ${current_price}`}</p>
+              <p className="price-value">{`₹ ${Number(bidPrice).toFixed(2)}`}</p>
             </div>
             <div className="price-box">
               <p className="price-label">24h Change</p>
@@ -91,8 +91,8 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
               <label>Bid Price (₹)</label>
               <input
                 type="number"
-                value={bidPrice}
-                onChange={(e) => setBidPrice(Number(e.target.value))}
+                
+                onChange={(e) => setbuyprice(Number(e.target.value))}
                 step="0.01"
               />
             </div>
@@ -100,7 +100,7 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
               <label>Quantity</label>
               <input
                 type="number"
-                value={qty}
+               
                 onChange={(e) => setQty(parseInt(e.target.value, 10) || 0)}
                 min="1"
                 step="1"

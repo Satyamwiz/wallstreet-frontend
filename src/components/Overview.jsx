@@ -1,26 +1,51 @@
-// import React from "react";
-// import PropTypes from "prop-types";
-// OverviewComponent.propTypes = {
-//   stock: PropTypes.shape({
-//     current_price: PropTypes.number.isRequired,
-//     marketCap: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//     volume: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//     peRatio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//   }).isRequired,
-// };
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import socketService from "../services/socket.js";
 
 const OverviewComponent = ({ stock }) => {
-  const [prices,Setprices]=useState(0);
-  
+  // Initialize with the stock's current price.
+  const [prices, setPrices] = useState(stock.current_price);
 
-  useEffect(()=>{
+  useEffect(() => {
+    // Connect to the WebSocket server and subscribe to the company's market updates.
     socketService.connect();
+    socketService.subscribeToCompany(stock.name);
 
-    console.log(stock);
-  },[stock]);
+    // Log stock data for debugging.
+    console.log("data", stock);
 
+    // Handler for market updates: update the 'prices' state with the latest price.
+    const handleMarketUpdate = (data) => {
+      setPrices(Number(data.price));
+    };
+
+    // Register the handler for market update events.
+    socketService.onMarketUpdate(handleMarketUpdate);
+
+    // Cleanup: remove listeners and disconnect on component unmount.
+    return () => {
+      socketService.removeListeners();
+      socketService.disconnect();
+    };
+  }, [stock]);
+
+  /*** Today's Range ***/
+  // Define static endpoints for today's range.
+  const todaysMin = 100;
+  const todaysMax = 1000;
+  // Calculate the percentage position of the current price within today's range.
+  // Formula: ((currentPrice - min) / (max - min)) * 100.
+  const todaysPosition = ((prices - todaysMin) / (todaysMax - todaysMin)) * 100;
+  // Clamp the position between 0 and 100.
+  const clampedTodaysPos = Math.max(0, Math.min(100, todaysPosition));
+
+  /*** All Time Range ***/
+  // Define the range endpoints based on the initial current price.
+  // (These values can be replaced with actual all-time low/high values if available.)
+  // const allTimeMin = stock.current_price - 10;
+  // const allTimeMax = stock.current_price + 10;
+  // Calculate the current price's position within the all-time range.
+  // const allTimePosition = ((prices - allTimeMin) / (allTimeMax - allTimeMin)) * 100;
+  // const clampedAllTimePos = Math.max(0, Math.min(100, allTimePosition));
 
   return (
     <div className="overview-component">
@@ -29,29 +54,33 @@ const OverviewComponent = ({ stock }) => {
         <h3>Today's Range</h3>
         <div className="range-slider">
           <div className="range-values">
-            <span>${Number(stock.current_price - 10).toFixed(2)}</span>
-            <span>${Number(stock.current_price + 10).toFixed(2)}</span>
+            <span>${todaysMin}</span>
+            <span>${todaysMax}</span>
           </div>
           <div className="range-bar">
-            <div className="range-progress" style={{ width: "60%" }}></div>
-            <div className="range-marker" style={{ left: "60%" }}></div>
+            {/* The width of the progress bar is set to the calculated percentage */}
+            <div className="range-progress" style={{ width: `${clampedTodaysPos}%` }}></div>
+            {/* The marker's position is set to the same percentage */}
+            <div className="range-marker" style={{ left: `${clampedTodaysPos}%` }}></div>
           </div>
         </div>
       </div>
+
       {/* All Time Range */}
-      <div className="info-card range-card">
+      {/* <div className="info-card range-card">
         <h3>All Time Range</h3>
         <div className="range-slider">
           <div className="range-values">
-            <span>${Number(stock.current_price - 10).toFixed(2)}</span>
-            <span>${Number(stock.current_price + 10).toFixed(2)}</span>
+            <span>${100}</span>
+            <span>${1000}</span>
           </div>
           <div className="range-bar">
-            <div className="range-progress" style={{ width: "60%" }}></div>
-            <div className="range-marker" style={{ left: "60%" }}></div>
+            <div className="range-progress" style={{ width: `${clampedAllTimePos}%` }}></div>
+            <div className="range-marker" style={{ left: `${clampedAllTimePos}%` }}></div>
           </div>
         </div>
-      </div>
+      </div> */}
+
       {/* Key Statistics */}
       <div className="info-grid">
         <div className="info-card">

@@ -82,7 +82,7 @@ const OrderDetails = () => {
                 >
                   {transaction.order_type.toUpperCase()}
                 </td>
-                <td>{transaction.price}</td>
+                <td>{Number(transaction.price).toFixed(2)}</td>
                 <td>{transaction.status}</td>
                 <td>{new Date(transaction.datetimePlaced).toLocaleString()}</td>
                 <td>
