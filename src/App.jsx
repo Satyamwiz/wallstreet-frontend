@@ -25,6 +25,7 @@ import Ranking from "./pages/Ranking.jsx";
 function App() {
 
     const { user } = useAuthContext()
+    
     const css = user ? "col-md-9 col-xl-10 col-12 content" : "col-12 content";
     
     return (

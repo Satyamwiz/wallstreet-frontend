@@ -1,33 +1,36 @@
-import {axiosAuthInstance, axiosNoAuthInstance} from "./axiosInstance";
-
+import {axiosAuthInstance, axiosNoAuthInstance} from "../services/axiosInstance.js";
+// import axios from "axios";
 const userService = {
     loginUser: (loginData) => {
-        return axiosNoAuthInstance.post("/auth/token/login/", loginData)
+        console.log(loginData);
+        
+        return axiosNoAuthInstance.post("/auth/login", loginData)
         .then(res => res.data)
         .catch(err => {
-            console.clear()
+            console.log(err.response)
+            // console.clear()
             throw err.response
-            console.clear()
-        })
-    },
-    logoutUser: () => {
-        return axiosAuthInstance.post("/auth/token/logout/")
-        .then(res => res.data)
-        .catch(err => {
-            console.clear()
-            throw err.response
-            console.clear()
-        })
-    },
-    registerUser: (registerData) => {
-        return axiosNoAuthInstance.post("/auth/users/", registerData)
-        .then(res => res.data)
-        .catch(err => {
-            console.clear()
-            throw err.response
-            console.clear()
+            // console.clear()
         })
     }
+    // logoutUser: () => {
+    //     return axiosAuthInstance.post("/auth/token/logout/")
+    //     .then(res => res.data)
+    //     .catch(err => {
+    //         console.clear()
+    //         throw err.response
+    //         console.clear()
+    //     })
+    // },
+    // registerUser: (registerData) => {
+    //     return axiosNoAuthInstance.post("/auth/users/", registerData)
+    //     .then(res => res.data)
+    //     .catch(err => {
+    //         console.clear()
+    //         throw err.response
+    //         console.clear()
+    //     })
+    // }
 }
 
 
@@ -69,13 +72,22 @@ const stockService = {
             console.clear()
         })
     },
+    deleteOrder: (id) => {
+        return axiosAuthInstance.delete(`/order/delete`,  {order_id: id})
+        .then(res => res.data)
+        .catch(err => {
+            console.clear()
+            throw err.response
+           
+        })
+    },
     getQuantity: (id) => {
         return axiosAuthInstance.get(`/availablequantity/${id}`)
         .then(res => res.data)
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+            
         })
     }
 }
@@ -91,7 +103,8 @@ const portfolioService = {
         })
     },
     getCash: () => {
-        return axiosAuthInstance.get("/cash/")
+        
+        return axiosAuthInstance.get("/portfolio/cash")
         .then(res => res.data)
         .catch(err => {
             console.clear()
@@ -100,13 +113,32 @@ const portfolioService = {
         })
     },
     getTransactions: () => {
-        return axiosAuthInstance.get("/transactions/")
+        return axiosAuthInstance.get("/portfolio/completedOrders/")
         .then(res => res.data)
         .catch(err => {
             console.clear()
             throw err.response
             console.clear()
         })
+    },
+    getPendingTransactions: () => {
+        return axiosAuthInstance.get("/portfolio/pendingOrders")
+        .then(res => res.data)
+        .catch(err => {
+            console.clear()
+            throw err.response
+            
+        })
+    },
+
+    getholdingdetails: () => {
+        return axiosAuthInstance.get("/portfolio/holdingDetail/")
+        .then(res => res.data)
+        .catch(err => {
+            console.clear()
+            throw err.response
+        }
+        )
     }
 }
 

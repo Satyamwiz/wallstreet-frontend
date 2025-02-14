@@ -1,36 +1,55 @@
-/* TransactionHistory.css */
+/* Outer container with improved spacing and a dark theme */
 .transaction-history {
   padding: 20px;
-  background-color: #fff;
+  background-color: #2d3748;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  color: #f7fafc; /* Light text for contrast */
 }
 
+/* Heading styling with more breathing room */
 .transaction-history h2 {
-  font-size: 24px;
-  color: #333;
+  font-size: 28px;
+  color: #f7fafc;
+  margin-bottom: 20px;
 }
 
-.transaction-history ul {
-  list-style-type: none;
-  padding: 0;
+/* Container for the table to enable vertical scrolling with extra margin */
+.transaction-table-container {
+  max-height: 400px;    /* Adjust as needed */
+  overflow-y: auto;     /* Enables vertical scrolling */
+  -webkit-overflow-scrolling: touch;
+  margin-top: 10px;
 }
 
-.transaction-history li {
-  padding: 10px;
-  border-bottom: 1px solid #e2e8f0;
+/* Table styling with separate borders for row spacing */
+.transaction-history table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;  /* Adds vertical space between rows */
 }
 
-.transaction-history li:last-child {
-  border-bottom: none;
+/* Table header styling with your original header color accent */
+.transaction-history th {
+  background-color: #2d3748;
+  color: #5eb5f8;  /* Original accent color */
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 2px solid #5eb5f8;
 }
 
-.transaction-history .transaction-date {
-  font-size: 14px;
-  color: #718096;
+/* Table cell styling with increased padding and a subtle border */
+.transaction-history td {
+  background-color: #1a202c;
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #4a5568;
 }
 
-.transaction-history .transaction-details {
-  font-size: 16px;
+/* Hover effect on rows for a modern interactive feel */
+.transaction-history tbody tr:hover td {
+  background-color: #2d3748;
+  transition: background-color 0.3s;
 }
