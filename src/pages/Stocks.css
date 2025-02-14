@@ -1,204 +1,136 @@
+/* Always dark mode styling */
 :root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --subtext-color: #555555;
-    --search-bg: #f0f0f0;
-    --search-text: #000000;
-    --card-bg: #efefef;
-    --card-text: #000000;
-    --card-hover: #f8f8f8;
-    --green-bg: rgba(0, 255, 0, 0.2);
-    --green-text: #008000;
-    --red-bg: rgba(255, 0, 0, 0.2);
-    --red-text: #800000;
-}
-
-.dark {
     --bg-color: #121212;
-    --text-color: white;
-    --subtext-color: #aaaaaa;
-    --search-bg: #1c1c1c;
-    --search-text: white;
-    --card-bg: #1c1c1c;
-    --card-text: white;
-    --card-hover: #222222;
-    --green-bg: rgba(0, 255, 0, 0.2);
-    --green-text: #00ff00;
-    --red-bg: rgba(255, 0, 0, 0.2);
-    --red-text: #ff0000;
-}
-
-.stocks-container {
-    background-color: #1a202c;  
+    --text-color: #e0e0e0;
+    --accent-color: #484846; /* Warm orange accent */
+    --card-bg: #1e1e1e;
+    --card-shadow: rgba(0, 0, 0, 0.7);
+  }
+  
+  body {
+    background-color: var(--bg-color);
     color: var(--text-color);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .stocks-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Headings and Subheading */
+  .stocks-heading {
+    font-size: 36px;
     text-align: center;
-    padding: 30px;
-    height:100vh;
-}
-
-.stocks-heading {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.stocks-subheading {
-    font-size: 16px;
-    color: var(--subtext-color);
+    margin-bottom: 10px;
+  }
+  
+  .stocks-subheading {
+    text-align: center;
     margin-bottom: 20px;
-}
-
-.search-bar {
-    width: 50%;
-    padding: 10px;
+    font-size: 18px;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    display: block;
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    background-color: var(--search-bg);
-    color: var(--search-text);
+    border: 2px solid var(--accent-color);
+    border-radius: 4px;
     outline: none;
-    margin-bottom: 20px;
-}
-
-.stock-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    transition: border-color 0.3s;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
+  
+  .search-bar:focus {
+    border-color: var(--accent-color);
+  }
+  
+  /* Loader */
+  .loader {
+    display: flex;
     justify-content: center;
-    padding: 20px;
-}
-
-.stock-card {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    color: var(--card-text);
+    align-items: center;
+    height: 200px;
+  }
+  
+  /* Stock Grid Layout */
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Stock Card Styling */
+  .stock-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px var(--card-shadow);
     text-decoration: none;
-    transition: 0.3s;
-}
-
-.stock-card:hover {
-    background: var(--card-hover);
-    transform: scale(1.05);
-}
-
-.stock-logo {
+    color: var(--text-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+  
+  .stock-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px var(--card-shadow);
+  }
+  
+  /* Stock Logo (Top Section) */
+  .stock-logo {
+    background-color: var(--accent-color);
+    color: #fff;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.stock-info h3 {
-    margin: 5px 0;
-    font-size: 18px;
-}
-
-.stock-exchange {
-    color: var(--subtext-color);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Stock Information */
+  .stock-info {
+    padding: 15px;
+  }
+  
+  .stock-info h3 {
+    margin: 0 0 5px;
+    font-size: 20px;
+  }
+  
+  .stock-exchange {
+    margin: 0 0 10px;
     font-size: 14px;
-}
-
-.stock-price {
-    display: inline-block;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.stock-price.green {
-    background: var(--green-bg);
-    color: var(--green-text);
-}
-
-.stock-price.red {
-    background: var(--red-bg);
-    color: var(--red-text);
-}
-
-.loader {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-/* Toggle Switch */
-.toggle-container {
+  }
+  
+  /* Price and Change Styling */
+  .stock-price-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-}
-
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 3px;
+    gap: 10px;
+  }
+  
+  .stock-price {
     font-size: 18px;
-}
-
-/* Sun & Moon inside the button */
-.slider::before {
-    content: "☀️";
-    position: absolute;
-    left: 5px;
-    transition: 0.4s;
-}
-
-.slider::after {
-    content: "🌙";
-    position: absolute;
-    right: 5px;
-    transition: 0.4s;
-    opacity: 0;
-}
-
-input:checked + .slider {
-    background-color: #222222;
-}
-
-input:checked + .slider::before {
-    opacity: 0;
-}
-
-input:checked + .slider::after {
-    opacity: 1;
-}
-
-/* Toggle Switch Knob */
-.slider span {
-    position: absolute;
-    height: 24px;
-    width: 24px;
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.4s;
-    left: 3px;
-}
-
-input:checked + .slider span {
-    transform: translateX(30px);
-}
+    font-weight: bold;
+  }
+  
+  .stock-change {
+    font-size: 16px;
+  }
+  
+  /* Price Change Colors */
+  .green {
+    color: #28a745;
+  }
+  
+  .red {
+    color: #dc3545;
+  }
+  

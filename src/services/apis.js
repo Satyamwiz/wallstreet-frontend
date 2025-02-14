@@ -37,12 +37,12 @@ const userService = {
 
 const stockService = {
     getStocks: () => {
-        return axiosAuthInstance.get("/stocks/")
+        return axiosAuthInstance.get("/company/all")
         .then(res => res.data)
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+           
         })
     },
     getStockDetail: (id) => {
