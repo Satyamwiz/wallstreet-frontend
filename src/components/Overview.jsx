@@ -1,5 +1,13 @@
-import React from "react";
-
+// import React from "react";
+// import PropTypes from "prop-types";
+// OverviewComponent.propTypes = {
+//   stock: PropTypes.shape({
+//     current_price: PropTypes.number.isRequired,
+//     marketCap: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+//     volume: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+//     peRatio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+//   }).isRequired,
+// };
 
 const OverviewComponent = ({ stock }) => {
   return (
@@ -9,8 +17,8 @@ const OverviewComponent = ({ stock }) => {
         <h3>Today's Range</h3>
         <div className="range-slider">
           <div className="range-values">
-            <span>${(stock.current_price - 10).toFixed(2)}</span>
-            <span>${(stock.current_price + 10).toFixed(2)}</span>
+            <span>${Number(stock.current_price - 10).toFixed(2)}</span>
+            <span>${Number(stock.current_price + 10).toFixed(2)}</span>
           </div>
           <div className="range-bar">
             <div className="range-progress" style={{ width: "60%" }}></div>
@@ -23,8 +31,8 @@ const OverviewComponent = ({ stock }) => {
         <h3>All Time Range</h3>
         <div className="range-slider">
           <div className="range-values">
-            <span>${(stock.current_price - 10).toFixed(2)}</span>
-            <span>${(stock.current_price + 10).toFixed(2)}</span>
+            <span>${Number(stock.current_price - 10).toFixed(2)}</span>
+            <span>${Number(stock.current_price + 10).toFixed(2)}</span>
           </div>
           <div className="range-bar">
             <div className="range-progress" style={{ width: "60%" }}></div>
