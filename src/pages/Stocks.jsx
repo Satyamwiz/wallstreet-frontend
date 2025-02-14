@@ -107,7 +107,7 @@ const Stocks = () => {
       {/* Loader */}
       {stocks.length === 0 ? (
         <div className="loader">
-          <ThreeDots height="55" width="55" color="#ff9800" />
+          <ThreeDots height="55" width="55" color="#5eb5f8" />
         </div>
       ) : (
         <div className="stock-grid">
