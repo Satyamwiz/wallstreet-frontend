@@ -37,17 +37,19 @@ const OrderDetails = () => {
 
   const handleCancelTransaction = (order_id) => {
     // Your cancellation logic here, e.g., calling portfolioService.cancelOrder(order_id)
-    
+  
     stockService.deleteOrder(order_id)
       .then(() => {
       
+
+        console.log("hello ", order_id);
         toast.info(" Requested Cancel Order");
         setPendingTransactions((prevTransactions) =>
           prevTransactions.filter((transaction) => transaction.order_id !== order_id)
         );
       })
       .catch((error) => {
-        console.error("Error cancelling order:", error);
+        console.log("ello ", order_id);
         toast.error("Error cancelling order!");
       });
   };
@@ -71,6 +73,7 @@ const OrderDetails = () => {
           <tbody>
             {pendingTransactions.map((transaction) => (
               <tr key={transaction.order_id}>
+                <td>{transaction.order_id}</td>
                 <td>{transaction.companyName}</td>
                 <td>{transaction.quantity}</td>
                 <td

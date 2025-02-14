@@ -47,7 +47,7 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
   const handleSell = (e) => {
     e.preventDefault();
     const tid = toast.loading("Processing your order...");
-    const sellOrderData = { price: sellPrice, quantity: qty, companyName:name };
+    const sellOrderData = { price: sp, quantity: qty, companyName:name };
 
     stockService
       .sellStock(id, sellOrderData)
@@ -128,22 +128,22 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
           </div>
         </div>
 
-        {/* Holdings Summary */}
-        <div className="modal-summary">
-          <div className="summary-row">
-            <div className="summary-label">
-              <PieChart size={20} />
-              <span>Current Holdings</span>
+         Holdings Summary 
+          <div className="modal-summary">
+            <div className="summary-row">
+              <div className="summary-label">
+                <PieChart size={20} />
+                <span>Current Holdings</span>
+              </div>
+              <div className="summary-value">{`${shares ?? 0} shares`}</div>
             </div>
-            <div className="summary-value">{`${shares} shares`}</div>
+            <div className="summary-row">
+              <div className="summary-label">Total Value</div>
+              <div className="summary-value">{`$${Number(totalValue).toFixed(2)}`}</div>
+            </div>
           </div>
-          <div className="summary-row">
-            <div className="summary-label">Total Value</div>
-            <div className="summary-value">{`$${Number(totalValue).toFixed(2)}`}</div>
-          </div>
-        </div>
 
-        {/* Modal Footer / Action Button */}
+          {/* Modal Footer / Action Button */}
         <div className="modal-footer">
           <button
             onClick={handleSell}

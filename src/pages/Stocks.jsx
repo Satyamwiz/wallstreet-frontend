@@ -123,6 +123,7 @@ const Stocks = () => {
 
             // Calculate the percentage change from the opening price (stock.price)
             let changePercentage = 0;
+            
             if (stock.price && currentPrice !== undefined) {
               changePercentage =
                 ((currentPrice - stock.price) / stock.price) * 100;

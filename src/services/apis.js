@@ -73,10 +73,13 @@ const stockService = {
         })
     },
     deleteOrder: (id) => {
-        return axiosAuthInstance.delete(`/order/delete`,  {order_id: id})
+        // console.log("working",id);
+        const req={order_id:id };
+        console.log(req);
+        return axiosAuthInstance.post(`/order/delete`,  req)
         .then(res => res.data)
         .catch(err => {
-            console.clear()
+            
             throw err.response
            
         })

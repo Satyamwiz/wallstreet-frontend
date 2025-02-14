@@ -33,7 +33,7 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
   const handleBuy = (e) => {
     e.preventDefault();
     const tid = toast.loading("Please wait...");
-    const buyOrderData = { price: bidPrice, quantity: qty, companyName : name  };
+    const buyOrderData = { price: buyprice, quantity: qty, companyName : name  };
 
     stockService
       .buyStock(id, buyOrderData)

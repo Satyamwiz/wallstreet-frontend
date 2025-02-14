@@ -30,8 +30,8 @@ const OverviewComponent = ({ stock }) => {
 
   /*** Today's Range ***/
   // Define static endpoints for today's range.
-  const todaysMin = 100;
-  const todaysMax = 1000;
+  const todaysMin = 235;
+  const todaysMax = 265;
   // Calculate the percentage position of the current price within today's range.
   // Formula: ((currentPrice - min) / (max - min)) * 100.
   const todaysPosition = ((prices - todaysMin) / (todaysMax - todaysMin)) * 100;

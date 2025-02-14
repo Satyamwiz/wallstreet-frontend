@@ -41,6 +41,12 @@ class SocketService {
     // callback({company: "Google", price: 100});
   }
 
+  onupdates(callback){
+    this.socket.on('high_price',callback);
+  }
+
+  
+
 //   onBuyLiquidUpdate(callback){
 //     this.socket.on("buy_liquid", callback)
 //   }
