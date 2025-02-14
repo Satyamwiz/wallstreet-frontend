@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa";
 
 /**
- * Sidebar with on-click hamburger menu
+ * Sidebar with on-click hamburger
  */
 const Sidebar = () => {
   const { user } = useAuthContext();
