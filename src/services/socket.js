@@ -44,7 +44,9 @@ class SocketService {
   onupdates(callback){
     this.socket.on('high_price',callback);
   }
-
+  onnonupdates(callback){
+    this.socket.on('low_prices',callback);
+  }
   
 
 //   onBuyLiquidUpdate(callback){
