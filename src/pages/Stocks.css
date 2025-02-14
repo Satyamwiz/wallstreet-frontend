@@ -134,3 +134,19 @@
     color: #dc3545;
   }
   
+  /* New styling for the card header layout */
+.stock-card-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--card-shadow);
+  }
+  
+  /* Styling for the ranking number badge */
+  .stock-rank {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: var(--accent-color);
+  }
+  

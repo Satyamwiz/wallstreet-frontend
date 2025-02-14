@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import "./Stocks.css";
 import { stockService } from "../services/apis.js";
-import  socketService  from "../services/socket.js";
+import socketService from "../services/socket.js";
 
 const Stocks = () => {
-  const [stocks, setStocks] = useState(null);
+  // Set stocks initial state to an empty array to simplify filtering.
+  const [stocks, setStocks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   // Live prices keyed by company name
   const [livePrices, setLivePrices] = useState({});
@@ -33,12 +34,12 @@ const Stocks = () => {
 
   // Setup socket connection for live price updates once stocks are loaded
   useEffect(() => {
-    if (!stocks) return;
+    if (stocks.length === 0) return;
 
     // Connect to the socket server
     socketService.connect();
 
-    // Subscribe to updates for each stock (using companyName as identifier)
+    // Subscribe to updates for each stock (using stock name as identifier)
     stocks.forEach((stock) => {
       socketService.subscribeToCompany(stock.name);
     });
@@ -60,7 +61,7 @@ const Stocks = () => {
       // We assume payload.company matches stock.name and payload.price is a number.
       setLivePrices((prev) => ({
         ...prev,
-        [payload.company]: Number(payload.price),
+        [payload.company]: Number(payload.price).toFixed(2),
       }));
     };
 
@@ -72,6 +73,11 @@ const Stocks = () => {
       socketService.disconnect();
     };
   }, [stocks]);
+
+  // Debug: log the search query whenever it changes
+  useEffect(() => {
+    console.log("Current search query:", searchQuery);
+  }, [searchQuery]);
 
   return (
     <div className="stocks-container">
@@ -90,7 +96,7 @@ const Stocks = () => {
       />
 
       {/* Loader */}
-      {!stocks ? (
+      {stocks.length === 0 ? (
         <div className="loader">
           <ThreeDots height="55" width="55" color="#ff9800" />
         </div>
@@ -102,19 +108,18 @@ const Stocks = () => {
                 stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 stock.symbol.toLowerCase().includes(searchQuery.toLowerCase())
             )
-            .map((stock) => {
-              // Determine the live price, falling back to the original price if no update yet.
-              const updatedPrice = livePrices[stock.name] !== undefined
-                  ? livePrices[stock.name]
-                  : stock.price;
-              // If no price is available, show "N/A"
+            .map((stock, index) => {
+              // Opening price is stock.price.
+              // Live price is taken from the socket if available, otherwise fallback to the opening price.
+              const currentPrice =
+                livePrices[stock.name] !== undefined ? livePrices[stock.name] : stock.price;
               const displayPrice =
-                updatedPrice !== undefined ? `$${updatedPrice}` : "N/A";
+                currentPrice !== undefined ? `$${currentPrice}` : "N/A";
 
-              // Calculate the percentage change from the initial price
+              // Calculate the percentage change from the opening price (stock.price)
               let changePercentage = 0;
-              if (stock.price && updatedPrice !== undefined) {
-                changePercentage = ((updatedPrice - stock.price) / stock.price) * 100;
+              if (stock.price && currentPrice !== undefined) {
+                changePercentage = ((currentPrice - stock.price) / stock.price) * 100;
               }
               const isPositive = changePercentage >= 0;
               const formattedChange = changePercentage.toFixed(2);
@@ -125,17 +130,20 @@ const Stocks = () => {
                   key={stock.id}
                   className="stock-card"
                 >
-                  <div className="stock-logo">{stock.symbol}</div>
+                  <div className="stock-card-header">
+                    <div className="stock-rank">{index + 1}</div>
+                    <div className="stock-logo">{stock.symbol}</div>
+                  </div>
                   <div className="stock-info">
                     <h3>{stock.name}</h3>
-                    <p className="stock-exchange">
+                    {/* <p className="stock-exchange">
                       {stock.exchange} &bull; {stock.symbol}
-                    </p>
+                    </p> */}
                     <div className="stock-price-wrapper">
-                      <span className="stock-price">{displayPrice}</span>
-                      <span className={`stock-change ${isPositive ? "green" : "red"}`}>
+                      <div className="stock-price">{displayPrice}</div>
+                      <div className={`stock-change ${isPositive ? "green" : "red"}`}>
                         {isPositive ? `+${formattedChange}%` : `${formattedChange}%`}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </Link>

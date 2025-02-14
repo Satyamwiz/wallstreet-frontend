@@ -7,7 +7,7 @@ const userService = {
         return axiosNoAuthInstance.post("/auth/login", loginData)
         .then(res => res.data)
         .catch(err => {
-            console.log(err.response)
+            // console.log(err.response)
             // console.clear()
             throw err.response
             // console.clear()
