@@ -20,25 +20,25 @@ import Ranking from "./pages/Ranking.jsx";
  * This is the main layout component where all the pages and navbar, sidebar are rendered
  */
 function App() {
-  const { user } = useAuthContext();
 
-  return (
-    <div
-      className="d-flex flex-column"
-      style={{ width: "100%", minHeight: "100%" }}
-    >
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
+    const { user } = useAuthContext()
+    
+    const css = user ? "col-md-9 col-xl-10 col-12 content" : "col-12 content";
+    
+    return (
+        <div>
+
+            <ToastContainer position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            />
 
       {/* MOBILE NAVBAR - Only rendered for mobile devices */}
       <div className="d-sm-none">

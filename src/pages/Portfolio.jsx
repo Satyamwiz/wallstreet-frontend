@@ -13,17 +13,25 @@ import HoldingsCard from "../components/HoldingsCard.jsx";
 import OrderDetails from "../components/OrderDetails.jsx";
 import TransactionHistory from "../components/TransactionHistory.jsx";
 import "./Portfolio.css";
+import { portfolioService } from "../services/apis";
+import socketService from "../services/socket.js";
+import { Car } from "lucide-react";
+
+socketService.connect();
+
+
+
 
 const Portfolio = () => {
   const [cash, setCash] = useState(0);
   const [networth, setNetworth] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [holdings, setHoldings] = useState(null);
-  const [pendingTransactions, setPendingTransactions] = useState([]);
+  
   const [activeTab, setActiveTab] = useState("holdings");
 
   useEffect(() => {
-    // Simulating API call delay
+   
     setTimeout(() => {
       // Fetch data from API
       /*
@@ -40,77 +48,61 @@ const Portfolio = () => {
       */
 
       // Static fallback data (for development/testing)
-      setCash(25000.5);
-      setNetworth(154300.75);
-      setHoldings([
-        {
-          id: 1,
-          stock__ticker: "AAPL",
-          total_quantity: 50,
-          avg_price: 145.3,
-          stock__current_price: 185.45,
-          profit_loss: 2007.5,
-          trade_type: "delivery",
-        },
-        {
-          id: 2,
-          stock__ticker: "TSLA",
-          total_quantity: 25,
-          avg_price: 220.5,
-          stock__current_price: 275.8,
-          profit_loss: 1382.5,
-          trade_type: "intraday",
-        },
-        {
-          id: 3,
-          stock__ticker: "MSFT",
-          total_quantity: 40,
-          avg_price: 245.75,
-          stock__current_price: 310.2,
-          profit_loss: 2578.0,
-          trade_type: "delivery",
-        },
-      ]);
-      setTransactions([
-        {
-          id: 1,
-          ticker: "AAPL",
-          quantity: 10,
-          transaction_type: "buy",
-          traded_price: 182.5,
-          date: "2024-02-01",
-          trade_type: "delivery",
-        },
-        {
-          id: 2,
-          ticker: "TSLA",
-          quantity: 5,
-          transaction_type: "sell",
-          traded_price: 270.25,
-          date: "2024-02-01",
-          trade_type: "intraday",
-        },
-      ]);
-      setPendingTransactions([
-        {
-          id: 1,
-          ticker: "MSFT",
-          quantity: 15,
-          transaction_type: "buy",
-          traded_price: 305.0,
-          date: "2024-02-02",
-          trade_type: "delivery",
-        },
-        {
-          id: 2,
-          ticker: "NVDA",
-          quantity: 5,
-          transaction_type: "sell",
-          traded_price: 580.25,
-          date: "2024-02-02",
-          trade_type: "intraday",
-        },
-      ]);
+      
+      portfolioService.getCash().then((res) => {
+        
+        setCash(res.cash);
+      });
+
+      portfolioService.getholdingdetails().then((res) => {
+       
+        const response=res;
+        for(let i=0;i<response.length;i++){
+          
+          
+          
+          response[i].stock__current_price=185.26;
+        }
+        
+        setHoldings(response);
+
+     
+      });
+
+   
+
+       setNetworth(154300.75);
+      //  setHoldings([
+      //   {
+      //     id: 1,
+      //     stock__ticker: "AAPL",
+      //     total_quantity: 50,
+      //     avg_price: 145.3,
+      //     stock__current_price: 185.45,
+      //     profit_loss: 2007.5,
+      //     trade_type: "delivery",
+      //   },
+      //   {
+      //     id: 2,
+      //     stock__ticker: "TSLA",
+      //     total_quantity: 25,
+      //     avg_price: 220.5,
+      //     stock__current_price: 275.8,
+      //     profit_loss: 1382.5,
+      //     trade_type: "intraday",
+      //   },
+      //   {
+      //     id: 3,
+      //     stock__ticker: "MSFT",
+      //     total_quantity: 40,
+      //     avg_price: 245.75,
+      //     stock__current_price: 310.2,
+      //     profit_loss: 2578.0,
+      //     trade_type: "delivery",
+      //   },
+      // ]);
+      
+     
     }, 900);
   }, []);
 
@@ -130,7 +122,7 @@ const Portfolio = () => {
           <h5>
             <FaWallet /> Cash
           </h5>
-          <p>₹ {cash.toFixed(2)}</p>
+          <p>₹ {cash}</p>
         </div>
       </div>
 
@@ -142,12 +134,12 @@ const Portfolio = () => {
         >
           <FaListAlt /> Holdings
         </button>
-        <button
+        {/* <button
           className={activeTab === "pnl" ? "active" : ""}
           onClick={() => setActiveTab("pnl")}
         >
           <FaBuilding /> Company-Wise PnL
-        </button>
+        </button> */}
         <button
           className={activeTab === "orders" ? "active" : ""}
           onClick={() => setActiveTab("orders")}
@@ -170,12 +162,12 @@ const Portfolio = () => {
       ) : (
         <div className="component-container">
           {activeTab === "holdings" && <HoldingsCard holdings={holdings} />}
-          {activeTab === "pnl" && <CompanyWisePnL holdings={holdings} />}
+          {/* {activeTab === "pnl" && <CompanyWisePnL holdings={holdings} />} */}
           {activeTab === "orders" && (
-            <OrderDetails pendingTransactions={pendingTransactions} />
+            <OrderDetails pendingTransactions />
           )}
           {activeTab === "transactions" && (
-            <TransactionHistory transactions={transactions} />
+            <TransactionHistory transactions />
           )}
         </div>
       )}
