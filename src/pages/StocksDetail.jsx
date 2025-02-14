@@ -40,10 +40,11 @@ const StocksDetail = () => {
 
   // Fetch stock details if not available via state
   useEffect(() => {
-    console.log(passedState.stock.name);
+    // console.log(passedState.stock.name);
+    setStock(passedState.stock)
     if (!passedState || !passedState.stock) {
       stockService
-        .getStockDetail()
+        .getStockDetail(stock.name)
         .then((res) => {
           console.warn("hi");
           console.log("details",res);

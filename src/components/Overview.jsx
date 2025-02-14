@@ -8,8 +8,20 @@
 //     peRatio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 //   }).isRequired,
 // };
+import { useEffect,useState } from "react";
+import socketService from "../services/socket.js";
 
 const OverviewComponent = ({ stock }) => {
+  const [prices,Setprices]=useState(0);
+  
+
+  useEffect(()=>{
+    socketService.connect();
+
+    console.log(stock);
+  },[stock]);
+
+
   return (
     <div className="overview-component">
       {/* Today's Range */}

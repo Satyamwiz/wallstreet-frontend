@@ -8,14 +8,12 @@ import "./BuyModal.css";
 const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
   const [qty, setQty] = useState(0);
   const [bidPrice, setBidPrice] = useState(current_price);
-  const sign = price_change > 0 ? "+" : "";
-  const color = price_change >= 0 ? "text-success" : "text-danger";
   const totalValue = bidPrice * qty;
+  const isPositive = price_change >= 0;
 
   useEffect(() => {
     // Connect and subscribe to market updates for the given company name
     socketService.connect();
-    console.log(name);
     socketService.subscribeToCompany(name);
 
     const handleMarketUpdate = (data) => {
@@ -32,7 +30,6 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
     };
   }, [name]);
 
-  // Define handleBuy outside the useEffect so it is available in the JSX
   const handleBuy = (e) => {
     e.preventDefault();
     const tid = toast.loading("Please wait...");
@@ -40,7 +37,7 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
 
     stockService
       .buyStock(id, buyOrderData)
-      .then((res) => {
+      .then(() => {
         toast.update(tid, {
           render: "Buy order placed successfully!",
           type: "success",
@@ -61,16 +58,16 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
 
   return (
     <div className="buy-modal-overlay" onClick={onClose}>
-      <div
-        className="buy-modal"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
-      >
+      <div className="buy-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
         <div className="modal-header">
-          <h3 className="modal-title">{name}</h3>
+          <h3 className="modal-title">Buy {name}</h3>
           <button className="modal-close-btn" onClick={onClose} aria-label="Close">
             <X size={24} />
           </button>
         </div>
+
+        {/* Body */}
         <div className="modal-body">
           <div className="price-info">
             <div className="price-box">
@@ -78,33 +75,41 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
               <p className="price-value">{`₹ ${current_price}`}</p>
             </div>
             <div className="price-box">
-              <p className="price-label">% Change</p>
-              <p className={color}>{`${sign}${price_change}%`}</p>
+              <p className="price-label">24h Change</p>
+              <p className={`price-change ${isPositive ? "positive" : "negative"}`}>
+                {isPositive ? (
+                  <ArrowUpRight size={20} />
+                ) : (
+                  <ArrowDownRight size={20} />
+                )}
+                {Math.abs(price_change)}%
+              </p>
             </div>
           </div>
           <div className="order-form">
             <div className="form-group">
-              <label>Bid Price</label>
+              <label>Bid Price (₹)</label>
               <input
                 type="number"
-                className="stockquantity"
                 value={bidPrice}
                 onChange={(e) => setBidPrice(Number(e.target.value))}
+                step="0.01"
               />
             </div>
             <div className="form-group">
               <label>Quantity</label>
               <input
                 type="number"
-                className="stockquantity"
-                min="1"
-                step="1"
                 value={qty}
                 onChange={(e) => setQty(parseInt(e.target.value, 10) || 0)}
+                min="1"
+                step="1"
               />
             </div>
           </div>
         </div>
+
+        {/* Summary */}
         <div className="modal-summary">
           <div className="summary-row">
             <div className="summary-label">
@@ -117,14 +122,16 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
             <div className="summary-value">{`₹ ${Number(totalValue).toFixed(2)}`}</div>
           </div>
         </div>
+
+        {/* Footer / Action */}
         <div className="modal-footer">
           <button
             type="button"
-            className="btn btn-success"
+            className="action-button"
             onClick={handleBuy}
             disabled={totalValue > cash || qty <= 0}
           >
-            {totalValue > cash ? "Insufficient Funds" : "Buy"}
+            {totalValue > cash ? "Insufficient Funds" : "Place Buy Order"}
           </button>
         </div>
       </div>

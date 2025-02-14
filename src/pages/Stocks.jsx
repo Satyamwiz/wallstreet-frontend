@@ -134,6 +134,7 @@ const Stocks = () => {
               <Link
                 to={`/stocksdetail/${stock.id}`}
                 key={stock.id}
+                state={{stock}}
                 className="stock-card"
               >
                 <div className="stock-card-header">
