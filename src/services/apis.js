@@ -152,7 +152,7 @@ const marketService = {
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+            
         })
     }
 }

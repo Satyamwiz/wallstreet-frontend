@@ -199,10 +199,10 @@ const StocksDetail = () => {
           {showBuyModal && (
             <BuyModal
               id={stock.id}
-              ticker={stock.ticker}
-              name={stock.name}
               cash={cash}
-              current_price={stock.current_price}
+              name={stock.name}
+             
+              price={stock.price}
               price_change={stock.price_change}
               onClose={() => setShowBuyModal(false)}
             />
@@ -213,7 +213,7 @@ const StocksDetail = () => {
               ticker={stock.ticker}
               name={stock.name}
               shares={stock.shares}
-              current_price={stock.current_price}
+              price={stock.price}
               price_change={stock.price_change}
               onClose={() => setShowSellModal(false)}
             />

@@ -5,17 +5,25 @@ import { toast } from "react-toastify";
 import socketService from "../services/socket.js"; // WebSocket service for live market updates
 import "./SellModal.css";
 
-const SellModal = ({ id, name, current_price, price_change, shares, onClose }) => {
-  // Initialize sellPrice state with the baseline current_price received as a prop
-  const [sellPrice, setSellPrice] = useState(current_price);
+const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
+  // Initialize sellPrice state with the baseline price received as a prop
+  useEffect(() => {
+    console.log("ID:", id);
+    console.log("Name:", name);
+    console.log("Current Price:", price);
+    console.log("Price Change:", price_change);
+    console.log("Shares:", shares);
+    console.log("OnClose Function:", onClose);
+  }, [id, name, price, price_change, shares, onClose]);
+  const [sellPrice, setSellPrice] = useState(price);
   const [sp, setsp] = useState(0);
   // Quantity of shares user wants to sell
   const [qty, setQty] = useState(0);
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
 
   // Calculate the dynamic price change:
-  // This determines the percentage change from the initial current_price to the updated sellPrice.
-  const dynamicPriceChange = ((sellPrice - current_price) / current_price) * 100;
+  // This determines the percentage change from the initial price to the updated sellPrice.
+  const dynamicPriceChange = ((sellPrice - price) / price) * 100;
   // isPositive flag to determine if the price change is upward or downward.
   const isPositive = dynamicPriceChange >= 0;
   // Calculate the total value of the sell order.
@@ -46,9 +54,9 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
 
   // Check for circuit limit violation when sp changes
   useEffect(() => {
-    if (sp === 0) return;
+    if (price === 0) return;
     
-    const priceDifference = Math.abs(sp - sellPrice);
+    const priceDifference = Math.abs(price - sellPrice);
     const percentageDifference = (priceDifference / sellPrice) * 100;
     
     if (percentageDifference >= 40) {
@@ -56,7 +64,7 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
     } else {
       setShowCircuitWarning(false);
     }
-  }, [sp, sellPrice]);
+  }, [price, sellPrice]);
 
   // Function to handle the sell order submission
   const handleSell = (e) => {

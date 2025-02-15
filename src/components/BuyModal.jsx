@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 import socketService from "../services/socket.js";
 import "./BuyModal.css";
 
-const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
+const BuyModal = ({ id, name, cash, price, price_change, onClose }) => {
   const [qty, setQty] = useState(0);
-  const [bidPrice, setBidPrice] = useState(current_price);
+  const [bidPrice, setBidPrice] = useState(price);
   const [buyprice, setbuyprice] = useState(0);
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
   
@@ -35,17 +35,17 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
   
   // Check for circuit limit violation when buyprice changes
   useEffect(() => {
-    if (buyprice === 0) return;
+    if (price === 0) return;
     
-    const priceDifference = Math.abs(buyprice - bidPrice);
-    const percentageDifference = (priceDifference / bidPrice) * 100;
+    const priceDifference = Math.abs(price - buyprice);
+    const percentageDifference = (priceDifference / buyprice) * 100;
     
     if (percentageDifference >= 40) {
       setShowCircuitWarning(true);
     } else {
       setShowCircuitWarning(false);
     }
-  }, [buyprice, bidPrice]);
+  }, [price, buyprice]);
 
   const handleBuy = (e) => {
     e.preventDefault();
