@@ -107,7 +107,7 @@ const Portfolio = () => {
           <h5>
             <FaWallet /> Cash
           </h5>
-          <p>₹ {cash}</p>
+          <p>₹{Number(cash).toFixed(2)}</p>
         </div>
       </div>
 
