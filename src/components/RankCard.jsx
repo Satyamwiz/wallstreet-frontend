@@ -1,20 +1,14 @@
+// src/components/LeaderboardCard.js
 import React from "react";
+import "./RankCard.css";
 
-const RankCard = ({id, name, networth, ranki}) => {
+const RankCard = ({ ranki, name, cash, totalValue }) => {
   return (
-    <div className="container">
-      <div
-        className="card mx-ms-auto mx-3 shadow"
-        style={{ backgroundColor: "#3d3d4c", color: "#fefdff" }}
-      >
-        <div className="card-body" style={{ padding: "12px" }}>
-          <div className="row row-cols-3 text-center">
-            <div className="">{ranki}</div>
-            <div>{name}</div>
-            <div>{`₹ ${networth}`}</div>
-          </div>
-        </div>
-      </div>
+    <div className="leaderboard-card">
+      <div className="cell rank-cell">{ranki}</div>
+      <div className="cell name-cell">{name}</div>
+      <div className="cell cash-cell">₹ {Number(cash).toFixed(4)}</div>
+      <div className="cell total-cell">₹ {Number(totalValue).toFixed(2)}</div>
     </div>
   );
 };

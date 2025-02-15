@@ -19,7 +19,7 @@ export default function LandingPage() {
     navigate('/stocks');
   };
 
-  const tickers = ['STRF', 'YOLO', '$LAMBOS', 'MOON', 'LFG', '$GECKO'];
+  const tickers = ['EXCHANGE', 'STOCK', '    ', 'CREDENZ', 'IEEE'];
 
   return (
     <div className="landing-page">
@@ -49,7 +49,7 @@ export default function LandingPage() {
             key={ticker}
             className="floating-ticker"
             style={{
-              left: `${(i * 20) + 10}%`,
+              right: `${(i * 20) + 10}%`,
               top: `${(i * 15) + 10}%`,
               animationDuration: `${5 + i}s`,
             }}

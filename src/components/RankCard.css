@@ -1,0 +1,39 @@
+/* src/components/LeaderboardCard.css */
+.leaderboard-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  
+  .leaderboard-card:hover {
+    transform: translateY(-2px);
+    background-color: #2a2a2a;
+  }
+  
+  .cell {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .rank-cell { flex: 0.5; }
+  .name-cell { flex: 2; }
+  .cash-cell, .total-cell { flex: 1.5; }
+  
+  /* Responsive adjustments for mobile devices */
+  @media (max-width: 600px) {
+    .leaderboard-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .cell {
+      width: 100%;
+      text-align: left;
+      padding: 0.25rem 0;
+    }
+  }
+  

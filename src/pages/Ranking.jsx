@@ -1,117 +1,56 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import RankCard from "../components/RankCard"
+// src/pages/Leaderboard.js
+import React, { useState, useEffect } from "react";
+import RankCard from "../components/RankCard.jsx";
 import { ThreeDots } from "react-loader-spinner";
-// import { rankService } from "../services/apis";
+import { rankService } from "../services/apis.js";
+import { toast } from "react-toastify";
+import "./Ranking.css";
 
-export const rankService = {
-  getRankings: () =>
-    Promise.resolve([
-      {
-        user_id: "1",
-        name: "John Doe",
-        networth: 1250000,
-        change: 12.5,
-        portfolio: {
-          stocks: 15,
-          profit: 45000
-        }
-      },
-      {
-        user_id: "2",
-        name: "Jane Smith",
-        networth: 980000,
-        change: -2.3,
-        portfolio: {
-          stocks: 12,
-          profit: -12000
-        }
-      },
-      {
-        user_id: "3",
-        name: "Robert Johnson",
-        networth: 875000,
-        change: 5.7,
-        portfolio: {
-          stocks: 8,
-          profit: 25000
-        }
-      },
-      {
-        user_id: "4",
-        name: "Emily Brown",
-        networth: 750000,
-        change: 8.9,
-        portfolio: {
-          stocks: 10,
-          profit: 35000
-        }
-      },
-      {
-        user_id: "5",
-        name: "Michael Wilson",
-        networth: 625000,
-        change: -1.5,
-        portfolio: {
-          stocks: 6,
-          profit: -5000
-        }
-      }
-    ])
-};
 const Ranking = () => {
   const [ranks, setRanks] = useState(null);
 
   useEffect(() => {
-
-    setTimeout(() => {
-      rankService.getRankings()
+    // Fetch rankings when the component mounts
+    rankService.getRankings()
       .then((response) => {
-        setRanks(response.slice(0,10));
+        // Optionally, sort the rankings by total value in descending order
+        const sortedRanks = response.sort((a, b) => b.totalValue - a.totalValue);
+        setRanks(sortedRanks);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
+        toast.error("Failed to fetch rankings.");
       });
-    }, 1300)
-
-    
   }, []);
 
   return (
-    <div className="container p-0 p-sm-5">
-      <div className="h3 ranking mb-3 mb-sm-4 text-center">Ranking</div>
-      <br />
-
-      {/* <div class="comingsoon">
-                <h3 className='comingsoonText'>Will be updated soon...</h3>
-            </div> */}
-
-      {!ranks && (
-        <ThreeDots
-          height="55"
-          width="55"
-          color="#5eb5f8"
-          ariaLabel="line-wave"
-          wrapperClass="loader"
-          visible={true}
-          firstLineColor=""
-          middleLineColor=""
-          lastLineColor=""
-        />
+    <div className="leaderboard-container">
+      <h1 className="leaderboard-title">Leaderboard</h1>
+      {!ranks ? (
+        <div className="loader">
+          <ThreeDots
+            height="55"
+            width="55"
+            color="#5eb5f8"
+            ariaLabel="loading-indicator"
+            visible={true}
+          />
+        </div>
+      ) : (
+        <>
+          <div className="leaderboard-header">
+            <div className="header-cell rank-header">Rank</div>
+            <div className="header-cell name-header">Name</div>
+            <div className="header-cell cash-header">Cash</div>
+            <div className="header-cell total-header">Total Value</div>
+          </div>
+          <div className="leaderboard-list">
+            {ranks.map((rank, index) => (
+              <RankCard key={index} ranki={index + 1} {...rank} />
+            ))}
+          </div>
+        </>
       )}
-      <div className="row row-cols-1 g-4 g-sm-3">
-        {ranks && (
-          <>
-            {ranks.map((rank, index) => {
-              return <RankCard key={rank.user_id} {...rank} ranki={index+1}/>;
-            })}
-          </>
-        )}
-      </div>
-      <br />
-      <br />
-
-
     </div>
   );
 };

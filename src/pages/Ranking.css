@@ -1,0 +1,62 @@
+
+.leaderboard-container {
+    background-color: #121212;
+    min-height: 100vh;
+    padding: 2rem;
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .leaderboard-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+  
+  .leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .header-cell {
+    flex: 1;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Adjust flex values for each header cell */
+  .rank-header { flex: 0.5; }
+  .name-header { flex: 2; }
+  .cash-header, .total-header { flex: 1.5; }
+  
+  .leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+  
+  /* Mobile responsiveness adjustments */
+  @media (max-width: 600px) {
+    .leaderboard-header, .leaderboard-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .header-cell, .cell {
+      text-align: left;
+      padding: 0.5rem 0;
+    }
+  }
+  

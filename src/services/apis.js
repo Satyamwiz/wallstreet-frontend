@@ -162,6 +162,7 @@ const marketService = {
     }
 }
 
+
 // const ipoService = {
 //     getIpos: () => {
 //         return axiosAuthInstance.get("/ipos/")
@@ -185,12 +186,12 @@ const marketService = {
 
 const rankService = {
     getRankings: () => {
-        return axiosNoAuthInstance.get('/ranking/')
+        return axiosNoAuthInstance.get('/auth/rankings/')
         .then(res => res.data)
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+         
         })
     }
 }
