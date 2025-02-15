@@ -2,7 +2,7 @@ import axios from "axios";
 import { useLogout } from "../hooks/useLogout"; 
 
 const API_URL = import.meta.env.VITE_BACKEND_URL; 
-console.log(API_URL, import.meta.env.VITE_BACKEND_URL);
+
 
 const axiosNoAuthInstance = axios.create({
   baseURL: API_URL,
