@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        const user = localStorage.getItem('user');
+        const user = localStorage.getItem("user");
         if (user) {
             dispatch({ type: 'LOGIN', payload: user });
             // console.log('CHANGE IN AUTHCONTEXT')

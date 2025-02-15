@@ -13,6 +13,8 @@ const userService = {
             // console.clear()
         })
     }
+    
+
     // logoutUser: () => {
     //     return axiosAuthInstance.post("/auth/token/logout/")
     //     .then(res => res.data)

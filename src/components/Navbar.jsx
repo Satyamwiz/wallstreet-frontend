@@ -20,10 +20,10 @@ const Navbar = () => {
     return (
         <>
             <nav
-                class="navbar navbar-expand-lg navbar-dark"
+                className="navbar navbar-expand-lg navbar-dark"
                 style={{ backgroundColor: "#33333d" }}
             >
-                <div class="container-fluid">
+                <div className="container-fluid">
                     <div className="d-flex flex-row">
                         <NavLink
                             to="/"
@@ -40,7 +40,7 @@ const Navbar = () => {
                     </div>
 
                     <button
-                        class="navbar-toggler"
+                        className="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent"
@@ -48,10 +48,10 @@ const Navbar = () => {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <div class="navbar-toggler-icon"></div>
+                        <div className="navbar-toggler-icon"></div>
                     </button>
                     <div
-                        class="collapse navbar-collapse mt-1"
+                        className="collapse navbar-collapse mt-1"
                         id="navbarSupportedContent"
                     >
                         <div>
@@ -70,7 +70,7 @@ const Navbar = () => {
                                             aria-label="Toggle navigation"
                                         >
                                             <NavLink
-                                                exact
+                                                
                                                 to="/stocks"
                                                 className="nav-link align-middle px-0 py-4"
                                             >
@@ -91,7 +91,7 @@ const Navbar = () => {
                                         aria-label="Toggle navigation"
                                     >
                                         <NavLink
-                                            exact
+                                            
                                             to="/news"
                                             className="nav-link align-middle px-0 py-4"
                                         >
@@ -104,7 +104,7 @@ const Navbar = () => {
 
                                     {/* <li className="nav-item">
                                         <NavLink
-                                        exact
+                                        
                                         to="/ipo"
                                         className="nav-link align-middle px-0 py-4"
                                         > */}
@@ -125,7 +125,7 @@ const Navbar = () => {
                                             aria-label="Toggle navigation"
                                         >
                                             <NavLink
-                                                exact
+                                                
                                                 to="portfolio"
                                                 className="nav-link align-middle px-0 py-4"
                                             >
@@ -146,7 +146,7 @@ const Navbar = () => {
                                         aria-label="Toggle navigation"
                                     >
                                         <NavLink
-                                            exact
+                                            
                                             to="/ranking"
                                             className="nav-link align-middle px-0 py-4"
                                         >
@@ -166,7 +166,7 @@ const Navbar = () => {
                                         aria-label="Toggle navigation"
                                     >
                                         <NavLink
-                                            exact
+                                            
                                             to="/rules"
                                             className="nav-link align-middle px-0 py-4"
                                         >
@@ -187,7 +187,7 @@ const Navbar = () => {
                                             aria-label="Toggle navigation"
                                         >
                                             <NavLink
-                                                exact
+                                                
                                                 to="/login"
                                                 className="nav-link align-middle text-center px-0 py-4"
                                             >
@@ -197,7 +197,7 @@ const Navbar = () => {
                                                 </span>
                                             </NavLink>
                                             {/* <NavLink
-                                                exact
+                                                
                                                 to="/register"
                                                 className="nav-link align-middle px-0 py-4"
                                             >
