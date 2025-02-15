@@ -47,6 +47,7 @@ const Stocks = () => {
     // Market update handler that updates livePrices state
     const handleMarketUpdate = (data) => {
       let payload = data;
+       console.log("jel");
       // If payload is a string, attempt to parse it
       if (typeof payload === "string") {
         try {

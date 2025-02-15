@@ -1,11 +1,15 @@
 // src/services/socketService.js
 import { io } from "socket.io-client";
 
-const SOCKET_SERVER_URL = "http://3.111.114.201:3500" // Replace with actual server URL
+const SOCKET_SERVER_URL = import.meta.env.VITE_SOCKET_LINK ; // Replace with actual server URL
 
 class SocketService {
   constructor() {
-    this.socket = io(SOCKET_SERVER_URL, { autoConnect: false }); // Prevent auto-connect
+    this.socket = io(SOCKET_SERVER_URL, { 
+      transports: ['websocket'],  
+      path: '/socket.io',
+      autoConnect: false     
+  }); // Prevent auto-connect
   }
 
   // Connect to the socket server
