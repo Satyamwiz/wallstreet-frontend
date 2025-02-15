@@ -52,19 +52,24 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
     };
   }, [name, sp]);
 
-  // Check for circuit limit violation when sp changes
+  // Check for circuit limit violation when sp or qty changes
   useEffect(() => {
-    if (price === 0) return;
+    if (sp === 0 || qty === 0) return;
     
-    const priceDifference = Math.abs(price - sellPrice);
+    // Check for price difference
+    const priceDifference = Math.abs(sp - sellPrice);
     const percentageDifference = (priceDifference / sellPrice) * 100;
     
-    if (percentageDifference >= 40) {
+    // Check for quantity-related circuit breaker
+    const totalOrderValue = sp * qty;
+    const maxAllowedValue = sellPrice * shares * 1.5; // Example: 50% more than current holdings value
+    
+    if (percentageDifference >= 40 || totalOrderValue > maxAllowedValue) {
       setShowCircuitWarning(true);
     } else {
       setShowCircuitWarning(false);
     }
-  }, [price, sellPrice]);
+  }, [sp, sellPrice, qty, shares]);
 
   // Function to handle the sell order submission
   const handleSell = (e) => {
@@ -130,7 +135,11 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
           {showCircuitWarning && (
             <div className="circuit-warning">
               <AlertTriangle size={20} className="warning-icon" />
-              <p>Price has crossed the circuit limit according to credenz stock exchange</p>
+              <p>
+                {totalValue > sellPrice * shares * 1.5
+                  ? "Order value exceeds the allowed limit for your holdings"
+                  : "Price has crossed the circuit limit according to credenz stock exchange"}
+              </p>
             </div>
           )}
 

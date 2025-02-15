@@ -5,15 +5,22 @@ import { toast } from "react-toastify";
 import socketService from "../services/socket.js";
 import "./BuyModal.css";
 
-const BuyModal = ({ id, name, cash, price, price_change, onClose }) => {
+const BuyModal = ({ id, name, cash, price, onClose }) => {
+  console.log("ID:", id);
+  console.log("Name:", name);
+  console.log("Cash:", cash);
+  console.log("Price:", price);
+
   const [qty, setQty] = useState(0);
   const [bidPrice, setBidPrice] = useState(price);
   const [buyprice, setbuyprice] = useState(0);
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
-  
-  const isPositive = price_change >= 0;
+
+  // Calculate dynamic 24h price change using market bidPrice vs. initial price prop
+  const dynamicPriceChange = ((bidPrice - price) / price) * 100;
+  const isPositive = dynamicPriceChange >= 0;
   const totalValue = buyprice * qty;
-  
+
   useEffect(() => {
     // Connect and subscribe to market updates for the given company name
     socketService.connect();
@@ -31,21 +38,21 @@ const BuyModal = ({ id, name, cash, price, price_change, onClose }) => {
       socketService.removeListeners();
       socketService.disconnect();
     };
-  }, [name, buyprice]);
-  
-  // Check for circuit limit violation when buyprice changes
+  }, [name]);
+
+  // Check for circuit limit violation when buyprice or dynamic bidPrice changes
   useEffect(() => {
-    if (price === 0) return;
+    if (bidPrice === 0 || buyprice === 0) return;
     
-    const priceDifference = Math.abs(price - buyprice);
-    const percentageDifference = (priceDifference / buyprice) * 100;
+    const priceDifference = Math.abs(buyprice - bidPrice);
+    const percentageDifference = (priceDifference / bidPrice) * 100;
     
     if (percentageDifference >= 40) {
       setShowCircuitWarning(true);
     } else {
       setShowCircuitWarning(false);
     }
-  }, [price, buyprice]);
+  }, [bidPrice, buyprice]);
 
   const handleBuy = (e) => {
     e.preventDefault();
@@ -94,12 +101,8 @@ const BuyModal = ({ id, name, cash, price, price_change, onClose }) => {
             <div className="price-box">
               <p className="price-label">24h Change</p>
               <p className={`price-change ${isPositive ? "positive" : "negative"}`}>
-                {isPositive ? (
-                  <ArrowUpRight size={20} />
-                ) : (
-                  <ArrowDownRight size={20} />
-                )}
-                {Math.abs(price_change)}%
+                {isPositive ? <ArrowUpRight size={20} /> : <ArrowDownRight size={20} />}
+                {Math.abs(dynamicPriceChange).toFixed(2)}%
               </p>
             </div>
           </div>
