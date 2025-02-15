@@ -13,7 +13,7 @@ const userService = {
             // console.clear()
         })
     }
-    
+
 
     // logoutUser: () => {
     //     return axiosAuthInstance.post("/auth/token/logout/")
@@ -86,11 +86,14 @@ const stockService = {
            
         })
     },
-    getQuantity: (id) => {
-        return axiosAuthInstance.get(`/availablequantity/${id}`)
+    getQuantity: (req) => {
+    //    alert(req);
+        const request={company:req};
+        console.log(request);
+        return axiosAuthInstance.post(`/portfolio/companyHolding`, request)
         .then(res => res.data)
         .catch(err => {
-            console.clear()
+            
             throw err.response
             
         })

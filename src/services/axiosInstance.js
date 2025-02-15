@@ -41,6 +41,7 @@ axiosAuthInstance.interceptors.response.use(
       // alert("log");
       const logout= useLogout();
       logout();
+      window.location.href = "/login";
       
     }
     return Promise.reject(error);

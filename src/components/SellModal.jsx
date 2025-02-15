@@ -6,7 +6,7 @@ import socketService from "../services/socket.js"; // WebSocket service for live
 import "./SellModal.css";
 
 const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
-  // Initialize sellPrice state with the baseline price received as a prop
+  // Log initial props
   useEffect(() => {
     console.log("ID:", id);
     console.log("Name:", name);
@@ -15,52 +15,55 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
     console.log("Shares:", shares);
     console.log("OnClose Function:", onClose);
   }, [id, name, price, price_change, shares, onClose]);
+
   const [sellPrice, setSellPrice] = useState(price);
   const [sp, setsp] = useState(0);
-  // Quantity of shares user wants to sell
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(0); // Quantity of shares user wants to sell
+  const [holds, setholds] = useState(0); // Holds fetched current holdings
+
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
 
-  // Calculate the dynamic price change:
-  // This determines the percentage change from the initial price to the updated sellPrice.
+  // Calculate dynamic price change and other metrics
   const dynamicPriceChange = ((sellPrice - price) / price) * 100;
-  // isPositive flag to determine if the price change is upward or downward.
   const isPositive = dynamicPriceChange >= 0;
-  // Calculate the total value of the sell order.
   const totalValue = sp * qty;
 
-  // useEffect to handle WebSocket connection and subscription for live market updates
+  // Handle WebSocket connection for live market updates
   useEffect(() => {
-    // Connect to the WebSocket server
     socketService.connect();
-    // Subscribe to market updates for the specific name/company
     socketService.subscribeToCompany(name);
 
-    // Callback to handle incoming market update events.
-    // data.price contains the latest market price.
     const handleMarketUpdate = (data) => {
       setSellPrice(Number(data.price));
     };
 
-    // Register the market update handler
     socketService.onMarketUpdate(handleMarketUpdate);
 
-    // Cleanup: Remove listeners and disconnect when component unmounts
     return () => {
       socketService.removeListeners();
       socketService.disconnect();
     };
   }, [name, sp]);
 
-  // Check for circuit limit violation when sp or qty changes
+  // Fetch the current holdings from the API
+  useEffect(() => {
+    stockService.getQuantity(name)
+      .then((res) => {
+        console.log("Quantity from API:", res.quantity);
+        setholds(res.quantity);
+      })
+      .catch((err) => {
+        toast.error("Please login again");
+      });
+  }, [name]);
+
+  // Check for circuit limit violation
   useEffect(() => {
     if (sp === 0 || qty === 0) return;
     
-    // Check for price difference
     const priceDifference = Math.abs(sp - sellPrice);
     const percentageDifference = (priceDifference / sellPrice) * 100;
     
-    // Check for quantity-related circuit breaker
     const totalOrderValue = sp * qty;
     const maxAllowedValue = sellPrice * shares * 1.5; // Example: 50% more than current holdings value
     
@@ -71,7 +74,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
     }
   }, [sp, sellPrice, qty, shares]);
 
-  // Function to handle the sell order submission
+  // Function to handle sell order submission
   const handleSell = (e) => {
     e.preventDefault();
     const tid = toast.loading("Processing your order...");
@@ -112,12 +115,10 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
         {/* Modal Body */}
         <div className="modal-body">
           <div className="price-info">
-            {/* Price Box: Displays the updated sellPrice from market updates */}
             <div className="price-box">
               <p className="price-label">Current Price</p>
               <p className="price-value">{`$${Number(sellPrice).toFixed(2)}`}</p>
             </div>
-            {/* Price Box: Displays the dynamic 24h price change */}
             <div className="price-box">
               <p className="price-label">24h Change</p>
               <p className={`price-change ${isPositive ? "positive" : "negative"}`}>
@@ -143,7 +144,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
             </div>
           )}
 
-          {/* Order Form: Allows user to set sell price and quantity */}
+          {/* Order Form */}
           <div className="order-form">
             <div className="form-group">
               <label>Sell Price ($)</label>
@@ -174,7 +175,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
               <PieChart size={20} />
               <span>Current Holdings</span>
             </div>
-            <div className="summary-value">{`${shares ?? 0} shares`}</div>
+            <div className="summary-value">{`${holds} shares`}</div>
           </div>
           <div className="summary-row">
             <div className="summary-label">Total Value</div>
@@ -186,10 +187,10 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
         <div className="modal-footer">
           <button
             onClick={handleSell}
-            disabled={qty > shares || qty <= 0 || showCircuitWarning}
+            disabled={qty > holds || qty <= 0 || showCircuitWarning}
             className="action-button"
           >
-            {qty > shares 
+            {qty > holds 
               ? "Insufficient Shares" 
               : showCircuitWarning 
                 ? "Circuit Limit Exceeded" 

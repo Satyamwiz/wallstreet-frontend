@@ -50,6 +50,7 @@ const TransactionHistory = () => {
               <th scope="col">Price</th>
               <th scope="col">Status</th>
               <th scope="col">Date</th>
+              <th scope="col">Time</th>
             </tr>
           </thead>
           <tbody>
@@ -66,9 +67,11 @@ const TransactionHistory = () => {
                 >
                   {transaction.order_type.toUpperCase()}
                 </td>
-                <td>{transaction.price}</td>
+                <td>{Number(transaction.price).toFixed(2)}</td>
                 <td>{transaction.status}</td>
-                <td>{new Date(transaction.datetimePlaced).toLocaleString()}</td>
+                <td>{new Date(transaction.datetimePlaced).toLocaleDateString()}</td>
+                <td>{new Date(transaction.datetimePlaced).toLocaleTimeString()}</td>
+               
               </tr>
             ))}
           </tbody>

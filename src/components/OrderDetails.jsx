@@ -67,13 +67,15 @@ const OrderDetails = () => {
               <th scope="col">Price</th>
               <th scope="col">Status</th>
               <th scope="col">Date</th>
+              <th scope="col">Time</th>
               <th scope="col">Action</th>
+              
             </tr>
           </thead>
           <tbody>
             {pendingTransactions.map((transaction) => (
               <tr key={transaction.order_id}>
-                <td>{transaction.order_id}</td>
+                {/* <td>{transaction.order_id}</td> */}
                 <td>{transaction.companyName}</td>
                 <td>{transaction.quantity}</td>
                 <td
@@ -87,7 +89,8 @@ const OrderDetails = () => {
                 </td>
                 <td>{Number(transaction.price).toFixed(2)}</td>
                 <td>{transaction.status}</td>
-                <td>{new Date(transaction.datetimePlaced).toLocaleString()}</td>
+                <td>{new Date(transaction.datetimePlaced).toLocaleDateString()}</td>
+                <td>{new Date(transaction.datetimePlaced).toLocaleTimeString()}</td>
                 <td>
                   <button
                     className="btn btn-danger"
