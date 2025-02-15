@@ -99,17 +99,17 @@ const StocksDetail = () => {
     setAvailableShares(100);
     
 
-    setTransactions([
-      {
-        id: 1,
-        ticker: "AAPL",
-        quantity: 10,
-        transaction_type: "buy",
-        traded_price: 182.5,
-        date: "2024-02-01",
-        trade_type: "delivery",
-      },
-    ]);
+    // setTransactions([
+    //   {
+    //     id: 1,
+    //     ticker: "AAPL",
+    //     quantity: 10,
+    //     transaction_type: "buy",
+    //     traded_price: 182.5,
+    //     date: "2024-02-01",
+    //     trade_type: "delivery",
+    //   },
+    // ]);
 
     // Check market status
     marketService
