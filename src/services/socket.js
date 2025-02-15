@@ -1,7 +1,7 @@
 // src/services/socketService.js
 import { io } from "socket.io-client";
 
-const SOCKET_SERVER_URL = import.meta.env.SOCKET_SERVER_URL; // Replace with actual server URL
+const SOCKET_SERVER_URL = "http://3.111.114.201:3500" // Replace with actual server URL
 
 class SocketService {
   constructor() {
