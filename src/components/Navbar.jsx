@@ -210,13 +210,13 @@ const Navbar = () => {
                                     )}
 
                                     {user && (
-                                        <btn
-                                            className="h5 bi bi-box-arrow-left align-items-center align-items-sm-start my-5 mt-5 logoutbtn py-2 px-3"
+                                        <button
+                                            className="h5 bi bi-box-arrow-left align-items-center align-items-sm-start my-5 mt-5 logoutbutton py-2 px-3"
                                             onClick={handleLogout}
                                         >
                                             {" "}
                                             Logout
-                                        </btn>
+                                        </button>
                                     )}
                                 </ul>
                                 <hr />

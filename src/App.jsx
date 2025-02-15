@@ -19,8 +19,13 @@ import Ranking from "./pages/Ranking.jsx";
  * This is the main layout component where all the pages and navbar, sidebar are rendered
  */
 function App() {
-  const { user } = useAuthContext();
-  const [sidebarOpen, setSidebarOpen] = useState(false); // ✅ Track sidebar state
+  const { user, loading } = useAuthContext();
+
+  if (loading) {
+  return <div>Loading...</div>;
+    }
+
+  const [sidebarOpen, setSidebarOpen] = useState(true); // ✅ Track sidebar state
 
   return (
     <div>
@@ -72,29 +77,29 @@ function App() {
           }}
         >
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route  path="/" element={<Home />} />
             <Route
-              exact
+              
               path="/stocks"
               element={user ? <Stocks /> : <Navigate to="/login" />}
             />
             <Route
-              exact
+              
               path="/stocksdetail/:id"
               element={user ? <StocksDetail /> : <Navigate to="/login" />}
             />
             <Route
-              exact
+              
               path="/portfolio"
               element={user ? <Portfolio /> : <Navigate to="/login" />}
             />
             <Route
-              exact
+              
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
-            <Route exact path="/rules" element={<Rules />} />
-            <Route exact path="/ranking" element={<Ranking />} />
+            <Route  path="/rules" element={<Rules />} />
+            <Route  path="/ranking" element={<Ranking />} />
           </Routes>
         </div>
       </div>
