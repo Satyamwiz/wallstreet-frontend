@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowUpRight, ArrowDownRight, PieChart, X } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, PieChart, X, AlertTriangle } from "lucide-react";
 import { stockService } from "../services/apis"; // API service for placing sell orders
 import { toast } from "react-toastify";
 import socketService from "../services/socket.js"; // WebSocket service for live market updates
@@ -8,9 +8,10 @@ import "./SellModal.css";
 const SellModal = ({ id, name, current_price, price_change, shares, onClose }) => {
   // Initialize sellPrice state with the baseline current_price received as a prop
   const [sellPrice, setSellPrice] = useState(current_price);
-  const [sp,setsp]=useState(0);
+  const [sp, setsp] = useState(0);
   // Quantity of shares user wants to sell
   const [qty, setQty] = useState(0);
+  const [showCircuitWarning, setShowCircuitWarning] = useState(false);
 
   // Calculate the dynamic price change:
   // This determines the percentage change from the initial current_price to the updated sellPrice.
@@ -41,18 +42,31 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
       socketService.removeListeners();
       socketService.disconnect();
     };
-  }, [name,sp]);
+  }, [name, sp]);
+
+  // Check for circuit limit violation when sp changes
+  useEffect(() => {
+    if (sp === 0) return;
+    
+    const priceDifference = Math.abs(sp - sellPrice);
+    const percentageDifference = (priceDifference / sellPrice) * 100;
+    
+    if (percentageDifference >= 40) {
+      setShowCircuitWarning(true);
+    } else {
+      setShowCircuitWarning(false);
+    }
+  }, [sp, sellPrice]);
 
   // Function to handle the sell order submission
   const handleSell = (e) => {
     e.preventDefault();
     const tid = toast.loading("Processing your order...");
-    const sellOrderData = { price: sp, quantity: qty, companyName:name };
+    const sellOrderData = { price: sp, quantity: qty, companyName: name };
 
     stockService
       .sellStock(id, sellOrderData)
       .then(() => {
-
         toast.update(tid, {
           render: "Sell order placed successfully! 💰",
           type: "success",
@@ -104,13 +118,21 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
             </div>
           </div>
 
+          {/* Circuit Limit Warning */}
+          {showCircuitWarning && (
+            <div className="circuit-warning">
+              <AlertTriangle size={20} className="warning-icon" />
+              <p>Price has crossed the circuit limit according to credenz stock exchange</p>
+            </div>
+          )}
+
           {/* Order Form: Allows user to set sell price and quantity */}
           <div className="order-form">
             <div className="form-group">
               <label>Sell Price ($)</label>
               <input
                 type="number"
-                
+                value={sp || ""}
                 onChange={(e) => setsp(Number(e.target.value))}
                 step="0.01"
               />
@@ -119,7 +141,7 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
               <label>Quantity</label>
               <input
                 type="number"
-                
+                value={qty || ""}
                 onChange={(e) => setQty(parseInt(e.target.value, 10) || 0)}
                 min="1"
                 step="1"
@@ -128,29 +150,33 @@ const SellModal = ({ id, name, current_price, price_change, shares, onClose }) =
           </div>
         </div>
 
-         Holdings Summary 
-          <div className="modal-summary">
-            <div className="summary-row">
-              <div className="summary-label">
-                <PieChart size={20} />
-                <span>Current Holdings</span>
-              </div>
-              <div className="summary-value">{`${shares ?? 0} shares`}</div>
+        {/* Holdings Summary */}
+        <div className="modal-summary">
+          <div className="summary-row">
+            <div className="summary-label">
+              <PieChart size={20} />
+              <span>Current Holdings</span>
             </div>
-            <div className="summary-row">
-              <div className="summary-label">Total Value</div>
-              <div className="summary-value">{`$${Number(totalValue).toFixed(2)}`}</div>
-            </div>
+            <div className="summary-value">{`${shares ?? 0} shares`}</div>
           </div>
+          <div className="summary-row">
+            <div className="summary-label">Total Value</div>
+            <div className="summary-value">{`$${Number(totalValue).toFixed(2)}`}</div>
+          </div>
+        </div>
 
-          {/* Modal Footer / Action Button */}
+        {/* Modal Footer / Action Button */}
         <div className="modal-footer">
           <button
             onClick={handleSell}
-            disabled={qty > shares || qty <= 0}
+            disabled={qty > shares || qty <= 0 || showCircuitWarning}
             className="action-button"
           >
-            {qty > shares ? "Insufficient Shares" : "Place Sell Order"}
+            {qty > shares 
+              ? "Insufficient Shares" 
+              : showCircuitWarning 
+                ? "Circuit Limit Exceeded" 
+                : "Place Sell Order"}
           </button>
         </div>
       </div>

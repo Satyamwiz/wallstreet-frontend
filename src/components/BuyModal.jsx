@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowUpRight, ArrowDownRight, Wallet, X } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Wallet, X, AlertTriangle } from "lucide-react";
 import { stockService } from "../services/apis";
 import { toast } from "react-toastify";
 import socketService from "../services/socket.js";
@@ -8,9 +8,12 @@ import "./BuyModal.css";
 const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
   const [qty, setQty] = useState(0);
   const [bidPrice, setBidPrice] = useState(current_price);
-  const [buyprice, setbuyprice]= useState(0);
+  const [buyprice, setbuyprice] = useState(0);
+  const [showCircuitWarning, setShowCircuitWarning] = useState(false);
+  
   const isPositive = price_change >= 0;
-  const totalValue= buyprice*qty;
+  const totalValue = buyprice * qty;
+  
   useEffect(() => {
     // Connect and subscribe to market updates for the given company name
     socketService.connect();
@@ -28,12 +31,26 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
       socketService.removeListeners();
       socketService.disconnect();
     };
-  }, [name,buyprice]);
+  }, [name, buyprice]);
+  
+  // Check for circuit limit violation when buyprice changes
+  useEffect(() => {
+    if (buyprice === 0) return;
+    
+    const priceDifference = Math.abs(buyprice - bidPrice);
+    const percentageDifference = (priceDifference / bidPrice) * 100;
+    
+    if (percentageDifference >= 40) {
+      setShowCircuitWarning(true);
+    } else {
+      setShowCircuitWarning(false);
+    }
+  }, [buyprice, bidPrice]);
 
   const handleBuy = (e) => {
     e.preventDefault();
     const tid = toast.loading("Please wait...");
-    const buyOrderData = { price: buyprice, quantity: qty, companyName : name  };
+    const buyOrderData = { price: buyprice, quantity: qty, companyName: name };
 
     stockService
       .buyStock(id, buyOrderData)
@@ -86,12 +103,21 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
               </p>
             </div>
           </div>
+          
+          {/* Circuit Limit Warning */}
+          {showCircuitWarning && (
+            <div className="circuit-warning">
+              <AlertTriangle size={20} className="warning-icon" />
+              <p>Price has crossed the circuit limit according to credenz stock exchange</p>
+            </div>
+          )}
+          
           <div className="order-form">
             <div className="form-group">
               <label>Bid Price (₹)</label>
               <input
                 type="number"
-                
+                value={buyprice || ""}
                 onChange={(e) => setbuyprice(Number(e.target.value))}
                 step="0.01"
               />
@@ -100,7 +126,7 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
               <label>Quantity</label>
               <input
                 type="number"
-               
+                value={qty || ""}
                 onChange={(e) => setQty(parseInt(e.target.value, 10) || 0)}
                 min="1"
                 step="1"
@@ -129,9 +155,13 @@ const BuyModal = ({ id, name, cash, current_price, price_change, onClose }) => {
             type="button"
             className="action-button"
             onClick={handleBuy}
-            disabled={totalValue > cash || qty <= 0}
+            disabled={totalValue > cash || qty <= 0 || showCircuitWarning}
           >
-            {totalValue > cash ? "Insufficient Funds" : "Place Buy Order"}
+            {totalValue > cash 
+              ? "Insufficient Funds" 
+              : showCircuitWarning 
+                ? "Circuit Limit Exceeded" 
+                : "Place Buy Order"}
           </button>
         </div>
       </div>
