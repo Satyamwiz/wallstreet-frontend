@@ -78,11 +78,14 @@ function App() {
         >
           <Routes>
             <Route  path="/" element={<Home />} />
+
+
             <Route
               
               path="/stocks"
               element={user ? <Stocks /> : <Navigate to="/login" />}
             />
+            
             <Route
               
               path="/stocksdetail/:id"
