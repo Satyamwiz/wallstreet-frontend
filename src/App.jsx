@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
-import Navbar from "./components/Navbar.jsx";
 import DesktopNavbar from "./components/DesktopNavbar.jsx";
 import Home from "./pages/Home.jsx";
 import Footer from "./components/Footer.jsx";
@@ -15,17 +14,27 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Ranking from "./pages/Ranking.jsx";
 
-/**
- * This is the main layout component where all the pages and navbar, sidebar are rendered
- */
 function App() {
   const { user, loading } = useAuthContext();
+  // Initialize sidebarOpen: true on desktop (>=768px) and false on mobile.
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false);
+      }
+    };
+    // Check initial window size and add resize listener
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Ensure hooks are always called before conditionally returning.
   if (loading) {
-  return <div>Loading...</div>;
-    }
-
-  const [sidebarOpen, setSidebarOpen] = useState(true); // ✅ Track sidebar state
+    return <div style={{ padding: "20px", textAlign: "center" }}>Loading...</div>;
+  }
 
   return (
     <div>
@@ -42,31 +51,17 @@ function App() {
         theme="dark"
       />
 
-      {/* MOBILE NAVBAR - Only for small screens */}
-      <div className="d-sm-none">
-        <Navbar />
-      </div>
-
-      {/* DESKTOP NAVBAR - Only when user is not logged in */}
-      <div className="d-none d-sm-block">{!user && <DesktopNavbar />}</div>
-
+      {!user && <DesktopNavbar />}
       {!user && <Footer />}
 
-      <div className="d-flex flex-row flex-grow-1">
-        {/* SIDEBAR - Rendered for logged-in users */}
+      <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
         {user && (
-          <div className="d-none d-sm-block">
-            <Sidebar
-              sidebarOpen={sidebarOpen}
-              setSidebarOpen={setSidebarOpen}
-            />
-          </div>
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         )}
-
-        {/* CONTENT AREA - Adjusts dynamically based on sidebar state */}
         <div
-          className="flex-grow-1 px-4"
           style={{
+            flexGrow: 1,
+            padding: "16px",
             width: user
               ? sidebarOpen
                 ? "calc(100% - 230px)"
@@ -77,32 +72,25 @@ function App() {
           }}
         >
           <Routes>
-            <Route  path="/" element={<Home />} />
-
-
+            <Route path="/" element={<Home />} />
             <Route
-              
               path="/stocks"
               element={user ? <Stocks /> : <Navigate to="/login" />}
             />
-            
             <Route
-              
               path="/stocksdetail/:id"
               element={user ? <StocksDetail /> : <Navigate to="/login" />}
             />
             <Route
-              
               path="/portfolio"
               element={user ? <Portfolio /> : <Navigate to="/login" />}
             />
             <Route
-              
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
-            <Route  path="/rules" element={<Rules />} />
-            <Route  path="/ranking" element={<Ranking />} />
+            <Route path="/rules" element={<Rules />} />
+            <Route path="/ranking" element={<Ranking />} />
           </Routes>
         </div>
       </div>
