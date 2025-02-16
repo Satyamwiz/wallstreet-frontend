@@ -1,36 +1,38 @@
-/* Outer container with dark theme and ample spacing */
+/* Outer container */
 .order-details {
   padding: 20px;
   background-color: #2d3748;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  color: #f7fafc; /* Light text for contrast */
+  color: #f7fafc;
 }
 
-/* Heading styling with clear hierarchy */
+/* Heading */
 .order-details h3 {
   font-size: 28px;
   color: #f7fafc;
   margin-bottom: 20px;
 }
 
-/* Container for the table to allow vertical scrolling */
+/* Scroll container: allows horizontal scrolling if table is too wide */
 .order-table-container {
-  max-height: 400px; /* Adjust to desired height */
-  overflow-y: auto;
+  overflow-x: auto;
+  overflow-y: auto; /* Keep vertical scroll if needed */
+  max-height: 400px; /* Adjust as necessary */
   -webkit-overflow-scrolling: touch;
   margin-top: 10px;
 }
 
-/* Table styling with space between rows */
+/* Table reset: remove extra row spacing and allow columns to align properly */
 .order-details table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px; /* Adds vertical space between rows */
+  min-width: 800px; /* Ensures columns have room before wrapping */
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
-/* Table header styling with accent color */
+/* Table header with accent color */
 .order-details th {
   background-color: #2d3748;
   color: #5eb5f8;
@@ -38,79 +40,33 @@
   text-align: center;
   font-weight: 600;
   border-bottom: 2px solid #5eb5f8;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
-/* Table cell styling with improved readability */
+/* Table cells with a solid border */
 .order-details td {
   background-color: #1a202c;
   padding: 12px 16px;
   text-align: center;
-  border-bottom: 1px solid #4a5568;
+ 
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
-/* Hover effect for table rows for a modern interactive feel */
+/* Hover effect on rows */
 .order-details tbody tr:hover td {
   background-color: #2d3748;
   transition: background-color 0.3s;
 }
 
-/* ... (keep existing styles) */
-
-.order-details-table-container {
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin-top: 10px;
-}
-
-.order-details-history table {
-  width: 100%;
-  min-width: 700px; /* Minimum width to maintain table structure */
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
-/* Mobile-specific adjustments */
+/* Responsive font adjustments if needed */
 @media (max-width: 768px) {
-  .order-details-history {
-    padding: 10px;
+  .order-details h3 {
+    font-size: 1.5rem;
   }
-
-  .order-details-history th,
-  .order-details-history td {
-    font-size: 14px; /* Slightly smaller font for mobile */
-    padding: 8px 12px; /* Reduced padding for mobile */
-    white-space: nowrap; /* Prevent text wrapping */
+  
+  .order-details th,
+  .order-details td {
+    font-size: 14px;
+    padding: 8px 12px;
   }
-
-  .order-details-history th {
-    font-size: 12px; /* Smaller header text */
-    padding: 8px 10px;
-  }
-
-  .order-details-table-container {
-    max-height: 500px;
-    border-radius: 6px;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  }
-
-  .order-details-history h3 {
-    font-size: 1.5rem; /* Smaller heading for mobile */
-  }
-}
-
-/* Optional: Add scrollbar styling for better visual */
-.order-details-table-container::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.order-details-table-container::-webkit-scrollbar-track {
-  background: #1a202c;
-}
-
-.order-details-table-container::-webkit-scrollbar-thumb {
-  background: #5eb5f8;
-  border-radius: 4px;
 }
