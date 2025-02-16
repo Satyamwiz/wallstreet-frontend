@@ -13,6 +13,8 @@ import Overview from "../components/Overview.jsx";
 import { portfolioService, stockService } from "../services/apis.js";
 import { toast } from "react-toastify";
 Chart.register(CategoryScale);
+import Graph from '../components/Graph.jsx';
+
 
 // Mock service for market status (includes delivery_price_history)
 export const marketService = {
@@ -120,6 +122,7 @@ const StocksDetail = () => {
 
   // Update chartData when stock data is available
   useEffect(() => {
+    
     if (stock && stock.delivery_price_history) {
       const selectedHistory = stock.delivery_price_history;
       setChartData({
@@ -138,6 +141,7 @@ const StocksDetail = () => {
   }, [stock]);
 
   return (
+    
     <div className="stocks-detail-container">
       {!stock && (
         <div className="loader-wrapper">
@@ -161,11 +165,10 @@ const StocksDetail = () => {
           </header>
 
           {/* Chart Section */}
-          {chartData && (
-            <section className="chart-section">
-              <LineChart chartData={chartData} />
-            </section>
-          )}
+          <section className="Graph-section">
+            
+            <Graph companyName={stock.name} />
+          </section>
 
           {/* Buy/Sell Section */}
           <section className="action-section">
