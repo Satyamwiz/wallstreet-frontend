@@ -37,6 +37,12 @@ class SocketService {
     console.log("Subscribed to", company);
   }
 
+  ranking(callback){
+    
+      this.socket.on('leaderboard',callback);
+
+  }
+
   // Listen for market updates
 
   onMarketUpdate(callback) {

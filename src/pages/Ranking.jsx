@@ -5,22 +5,31 @@ import { ThreeDots } from "react-loader-spinner";
 import { rankService } from "../services/apis.js";
 import { toast } from "react-toastify";
 import "./Ranking.css";
+import socketService from "../services/socket.js";
+
 
 const Ranking = () => {
   const [ranks, setRanks] = useState(null);
 
   useEffect(() => {
     // Fetch rankings when the component mounts
-    rankService.getRankings()
-      .then((response) => {
-        // Optionally, sort the rankings by total value in descending order
-        const sortedRanks = response.sort((a, b) => b.totalValue - a.totalValue);
-        setRanks(sortedRanks);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error("Failed to fetch rankings.");
-      });
+    // rankService.getRankings()
+    //   .then((response) => {
+    //     // Optionally, sort the rankings by total value in descending order
+    //     const sortedRanks = response.sort((a, b) => b.totalValue - a.totalValue);
+    //     setRanks(sortedRanks);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     toast.error("Failed to fetch rankings.");
+    //   });
+
+    const printing=(data)=>{
+
+      const sortedRanks = data.sort((a, b) => b.totalValue - a.totalValue);
+      setRanks(sortedRanks);
+    }
+      socketService.ranking(printing);
   }, []);
 
   return (
@@ -42,7 +51,7 @@ const Ranking = () => {
             <div className="header-cell rank-header">Rank</div>
             <div className="header-cell name-header">Name</div>
             <div className="header-cell cash-header">Cash</div>
-            <div className="header-cell total-header">Total Value</div>
+            <div className="header-cell total-header">Networth</div>
           </div>
           <div className="leaderboard-list">
             {ranks.map((rank, index) => (
