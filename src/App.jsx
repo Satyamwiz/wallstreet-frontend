@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
 import DesktopNavbar from "./components/DesktopNavbar.jsx";
 import Home from "./pages/Home.jsx";
@@ -16,26 +16,35 @@ import Ranking from "./pages/Ranking.jsx";
 
 function App() {
   const { user, loading } = useAuthContext();
-  // Initialize sidebarOpen: true on desktop (>=768px) and false on mobile.
+  const location = useLocation();
+  
+  // Initialize sidebarOpen: open for desktop (>=768px), closed for mobile.
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
-
+  
   useEffect(() => {
+    // Listen for window resize events to update sidebar state on mobile.
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setSidebarOpen(false);
       }
     };
-    // Check initial window size and add resize listener
+    // Check initial window size and add resize listener.
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Ensure hooks are always called before conditionally returning.
+  
+  // Auto-close sidebar on mobile on route change.
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+  }, [location.pathname]);
+  
   if (loading) {
     return <div style={{ padding: "20px", textAlign: "center" }}>Loading...</div>;
   }
-
+  
   return (
     <div>
       <ToastContainer
@@ -50,10 +59,10 @@ function App() {
         pauseOnHover
         theme="dark"
       />
-
+  
       {!user && <DesktopNavbar />}
       {!user && <Footer />}
-
+  
       <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
         {user && (
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -75,27 +84,22 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route
               path="/stocks"
-              onEnter={() => setSidebarOpen(false)}
               element={user ? <Stocks /> : <Navigate to="/login" />}
             />
             <Route
               path="/stocksdetail/:id"
               element={user ? <StocksDetail /> : <Navigate to="/login" />}
-              onEnter={() => setSidebarOpen(false)}
             />
             <Route
               path="/portfolio"
               element={user ? <Portfolio /> : <Navigate to="/login" />}
-              onEnter={() => setSidebarOpen(false)}
             />
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
-              onEnter={() => setSidebarOpen(false)}
             />
-            <Route path="/rules" element={<Rules />}   onEnter={() => setSidebarOpen(false)} />
-
-            <Route path="/ranking" element={<Ranking />}  onEnter={() => setSidebarOpen(false)} />
+            <Route path="/rules" element={<Rules />} />
+            <Route path="/ranking" element={<Ranking />} />
           </Routes>
         </div>
       </div>
