@@ -14,6 +14,7 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* Container for the stocks page */
 .stocks-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -64,10 +65,7 @@ body {
 /* Stock Grid Layout */
 .stock-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(180px, 1fr)
-  ); /* Reduce min size to fit 5 cards */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
   justify-content: center;
 }
@@ -87,7 +85,8 @@ body {
   justify-content: center;
   text-align: center;
   padding: 15px;
-  width: 190px; /* Adjust width to fit 5 per row */
+  width: 190px; /* Fixed width for larger screens */
+  margin: 0 auto;
 }
 
 /* Center Stock Info */
@@ -97,6 +96,7 @@ body {
   align-items: center;
   text-align: center;
   width: 100%;
+  padding: 10px;
 }
 
 .stock-logo {
@@ -106,9 +106,6 @@ body {
   font-weight: bold;
   padding: 20px;
   text-align: center;
-}
-.stock-info {
-  padding: 10px;
 }
 
 .stock-info h3 {
@@ -145,7 +142,7 @@ body {
   color: #dc3545;
 }
 
-/* New styling for the card header layout */
+/* Card header layout */
 .stock-card-header {
   display: flex;
   align-items: center;
@@ -153,10 +150,44 @@ body {
   border-bottom: 1px solid var(--card-shadow);
 }
 
-/* Styling for the ranking number badge */
+/* Ranking number badge */
 .stock-rank {
   font-size: 16px;
   font-weight: bold;
   margin-right: 10px;
   color: var(--accent-color);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+  .stocks-container {
+    padding: 10px;
+  }
+  
+  /* Adjust grid to use smaller cards and center them */
+  .stock-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    justify-items: center;
+  }
+  
+  /* Remove fixed width on cards so they fill available space */
+  .stock-card {
+    width: 100%;
+    max-width: 140px;
+    margin: 0 auto;
+  }
+  
+  .stocks-heading {
+    font-size: 28px;
+  }
+  
+  .stocks-subheading {
+    font-size: 16px;
+  }
+  
+  .search-bar {
+    max-width: 90%;
+    font-size: 14px;
+  }
 }
