@@ -53,31 +53,7 @@ function App() {
 
       {!user && <DesktopNavbar />}
       {!user && <Footer />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/stocks"
-          element={user ? <Stocks /> : <Navigate to="/login" />}
-          onEnter={() => setSidebarOpen(false)}
-        />
-        <Route
-          path="/stocksdetail/:id"
-          element={user ? <StocksDetail /> : <Navigate to="/login" />}
-          onEnter={() => setSidebarOpen(false)}
-        />
-        <Route
-          path="/portfolio"
-          element={user ? <Portfolio /> : <Navigate to="/login" />}
-          onEnter={() => setSidebarOpen(false)}
-        />
-        <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
-          onEnter={() => setSidebarOpen(false)}
-        />
-        <Route path="/rules" element={<Rules />} onEnter={() => setSidebarOpen(false)} />
-        <Route path="/ranking" element={<Ranking />} onEnter={() => setSidebarOpen(false)} />
-      </Routes>
+
       <div style={{ display: "flex", flexDirection: "row", flexGrow: 1 }}>
         {user && (
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -99,23 +75,27 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route
               path="/stocks"
-             
+              onEnter={() => setSidebarOpen(false)}
               element={user ? <Stocks /> : <Navigate to="/login" />}
             />
             <Route
               path="/stocksdetail/:id"
               element={user ? <StocksDetail /> : <Navigate to="/login" />}
+              onEnter={() => setSidebarOpen(false)}
             />
             <Route
               path="/portfolio"
               element={user ? <Portfolio /> : <Navigate to="/login" />}
+              onEnter={() => setSidebarOpen(false)}
             />
             <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
+              onEnter={() => setSidebarOpen(false)}
             />
-            <Route path="/rules" element={<Rules />} />
-            <Route path="/ranking" element={<Ranking />} />
+            <Route path="/rules" element={<Rules />}   onEnter={() => setSidebarOpen(false)} />
+
+            <Route path="/ranking" element={<Ranking />}  onEnter={() => setSidebarOpen(false)} />
           </Routes>
         </div>
       </div>
