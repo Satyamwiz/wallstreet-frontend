@@ -115,7 +115,26 @@ const stockService = {
             throw err.response
             
         })
-    }
+    },
+    getWishlist: () => {
+    return axiosAuthInstance
+      .get("/wishlist") // Assuming this is the correct endpoint
+      .then((res) => res.data)
+      .catch((err) => {
+        console.clear();
+        throw err.response;
+      });
+  },
+  // Add a stock to the wishlist
+  addToWishlist: (stock) => {
+    return axiosAuthInstance
+      .post("/wishlist", stock) // Assuming this is the correct endpoint
+      .then((res) => res.data)
+      .catch((err) => {
+        console.clear();
+        throw err.response;
+      });
+  },
 }
 
 const portfolioService = {
