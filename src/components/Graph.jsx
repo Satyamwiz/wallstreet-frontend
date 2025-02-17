@@ -15,8 +15,6 @@ import "./Graph.css";
 import { stockService } from "../services/apis.js";
 import { toast } from "react-toastify";
 
-
-
 const socket = io(import.meta.env.VITE_SOCKET_LINK, {
   transports: ["websocket", "polling"],
   path: "/socket.io",
@@ -31,56 +29,40 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   // windowSize controls how many data points are shown. Start zoomed in (fewer points)
   const [windowSize, setWindowSize] = useState(30);
 
+  // Helper function to convert time to IST time string
+  const convertToIST = (time) =>
+    new Date(time).toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata" });
 
   useEffect(() => {
     // Fetch historical data for the chart
     const fetchHistoricalData = async () => {
-      
-        stockService.gethistoricaldata( {
-          companyName,
-        }).then((response)=>{
-          const formattedData = response.map(d => ({
-            time: new Date(d.time).toLocaleTimeString(),
-            price: d.price,
-          }));
-          setData(formattedData);
-          // Adjust the windowSize if there are fewer data points than our initial setting.
-          if (formattedData.length < windowSize) {
-            setWindowSize(formattedData.length);
-          }
-        })
-        .catch((err)=>{
-          toast.error("Error fetching historical data:", err);
-        })
-        
-       
-      
-      
+      try {
+        const response = await stockService.gethistoricaldata({ companyName });
+        const formattedData = response.map(d => ({
+          time: convertToIST(d.time),
+          price: d.price,
+        }));
+        setData(formattedData);
+        // Adjust the windowSize if there are fewer data points than our initial setting.
+        if (formattedData.length < windowSize) {
+          setWindowSize(formattedData.length);
+        }
+      } catch (err) {
+        toast.error("Error fetching historical data:", err);
+      }
     };
 
     // Fetch the market opening price
     const fetchOpeningPrice = async () => {
-      
-        stockService.getopeningprice(companyName)
-        .then((response)=>{
-          try {
-
-        
-           
-            const price = Number(response.openingPrice);
-            console.log("Opening price:", price);
-            setOpeningPrice(price);
-          } catch (error) {
-            console.error("Error fetching opening price:", error);
-          }
-        })
-        .catch((err)=>{
-          toast.error("error, please try again ", err)
-        })
-       
-       
-        
-      
+      try {
+        const response = await stockService.getopeningprice(companyName);
+        const price = Number(response.openingPrice);
+        console.log("Opening price:", price);
+        setOpeningPrice(price);
+      } catch (error) {
+        console.error("Error fetching opening price:", error);
+        toast.error("Error, please try again", error);
+      }
     };
 
     fetchHistoricalData();
@@ -96,7 +78,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
       console.log(`Received market update for ${companyName}:`, message);
       setData(prevData => [
         ...prevData,
-        { time: new Date(message.time).toLocaleTimeString(), price: message.price },
+        { time: convertToIST(message.time), price: message.price },
       ]);
     });
 
@@ -138,7 +120,6 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
 
   return (
     <div className="Graph-container">
-      {/* <h2>{companyName} Market Data</h2> */}
       <div style={{ marginBottom: "10px" }}>
         <button className="boton-elegante" onClick={handleZoomIn} style={{ marginRight: "10px" }}>
           Zoom In
@@ -152,16 +133,15 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
           <CartesianGrid strokeDasharray="3 3" stroke="#444" />
           <XAxis dataKey="time" stroke="#ddd" minTickGap={20} tick={{ fontSize: 12 }} />
           <YAxis
-  domain={openingPrice ? [openingPrice * 0.9, openingPrice * 1.1] : ['auto', 'auto']}
-  stroke="#ddd"
-  tick={{ fontSize: 12 }}
-  tickFormatter={(value) => {
-    if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
-    return value;
-  }}
-/>
-
+            domain={openingPrice ? [openingPrice * 0.9, openingPrice * 1.1] : ['auto', 'auto']}
+            stroke="#ddd"
+            tick={{ fontSize: 12 }}
+            tickFormatter={(value) => {
+              if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
+              if (value >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
+              return value;
+            }}
+          />
           <Tooltip 
             contentStyle={{ backgroundColor: "#1e1e1e", color: "#fff" }}
             formatter={(value) => typeof value === "number" ? value.toFixed(1) : value}
