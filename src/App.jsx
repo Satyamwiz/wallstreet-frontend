@@ -80,12 +80,12 @@ function App() {
 
 
 
-            // width: user
-            //   ? sidebarOpen
-            //     ? "calc(100% - 230px)"
-            //     : "100%"
-            //   : "100%",
-            // marginLeft: user ? (sidebarOpen ? "230px" : "0") : "0",
+            width: user && window.innerWidth >= 800
+              ? sidebarOpen
+              ? "calc(100% - 230px)"
+              : "100%"
+              : "100%",
+            marginLeft: user && window.innerWidth >= 768 ? (sidebarOpen ? "230px" : "0") : "0",
             transition: "width 0.3s ease-in-out, margin-left 0.3s ease-in-out",
           }}
         >
