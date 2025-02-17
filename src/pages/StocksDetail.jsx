@@ -234,13 +234,13 @@ const StocksDetail = () => {
               <TrendingUp className="tab-icon" size={20} />
               Fundamentals
             </button>
-            <button
+            {/* <button
               onClick={() => setActiveTab("dividends")}
               className={`tab-button ${activeTab === "dividends" ? "active" : ""}`}
             >
               <DollarSign className="tab-icon" size={20} />
               Dividends
-            </button>
+            </button> */}
             <button
               onClick={() => setActiveTab("about")}
               className={`tab-button ${activeTab === "about" ? "active" : ""}`}
@@ -296,7 +296,7 @@ const StocksDetail = () => {
                 </div>
               </div>
             )}
-            {activeTab === "dividends" && (
+            {/* {activeTab === "dividends" && (
               <div className="dividends-section info-grid">
                 <div className="info-card">
                   <strong>Dividend Yield</strong>
@@ -319,7 +319,7 @@ const StocksDetail = () => {
                   <span>{stock.dividendFrequency || "NA"}</span>
                 </div>
               </div>
-            )}
+            )} */}
             {activeTab === "about" && (
               <div className="about-section">
                 <div className="info-card">
