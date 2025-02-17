@@ -14,13 +14,11 @@ import {  stockService } from "../services/apis.js";
 // import { toast } from "react-toastify";
 Chart.register(CategoryScale);
 import Graph from '../components/Graph.jsx';
-
+import { marketService } from "../services/apis.js";
 
 
 // Mock service for market status (includes delivery_price_history)
-export const marketService = {
-  checkMarketStatus: () => Promise.resolve({ is_open: true }),
-};
+
 
 const StocksDetail = () => {
   const { name } = useParams();
@@ -108,12 +106,28 @@ const StocksDetail = () => {
     //   },
     // ]);
 
-    // Check market status
-    marketService
+    // // Check market status
+    // const checkMarketStatusInterval = setInterval(() => {
+    //   marketService
+    //     .checkMarketStatus()
+    //     .then((res) => setIsMarketOpen(res.is_open))
+    //     .catch((err) => console.log("Error fetching market status", err));
+    // }, 60000);
+
+    // return () => clearInterval(checkMarketStatusInterval);
+
+    const checkMarketStatus = () => {
+      marketService
       .checkMarketStatus()
       .then((res) => setIsMarketOpen(res.is_open))
       .catch((err) => console.log("Error fetching market status", err));
-  }, [stock.name, passedState]);
+    };
+
+    checkMarketStatus();
+    const intervalId = setInterval(checkMarketStatus, 2000); // 2 minutes
+
+    return () => clearInterval(intervalId);
+    }, [stock.name, passedState]);
 
   // Update chartData when stock data is available
   // useEffect(() => {
@@ -188,7 +202,7 @@ const StocksDetail = () => {
               </div>
             ) : (
               <div className="market-closed">
-                [Note: The market is currently closed. Trading resumes at 9 AM.]
+                [Note: The market is currently closed. Trading resumes at 10 AM.]
               </div>
             )}
           </section>

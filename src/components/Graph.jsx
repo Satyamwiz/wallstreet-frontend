@@ -12,8 +12,12 @@ import {
 import { io } from "socket.io-client";
 import axios from "axios";
 import "./Graph.css"; 
+import { stockService } from "../services/apis.js";
+import { toast } from "react-toastify";
 
-const socket = io("https://bklay.xyz", {
+
+
+const socket = io(import.meta.env.VITE_SOCKET_LINK, {
   transports: ["websocket", "polling"],
   path: "/socket.io",
   reconnection: true,
@@ -31,34 +35,52 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   useEffect(() => {
     // Fetch historical data for the chart
     const fetchHistoricalData = async () => {
-      try {
-        const response = await axios.post("https://bklay.xyz/market/historicalMarketData", {
+      
+        stockService.gethistoricaldata( {
           companyName,
-        });
-        const formattedData = response.data.map(d => ({
-          time: new Date(d.time).toLocaleTimeString(),
-          price: d.price,
-        }));
-        setData(formattedData);
-        // Adjust the windowSize if there are fewer data points than our initial setting.
-        if (formattedData.length < windowSize) {
-          setWindowSize(formattedData.length);
-        }
-      } catch (error) {
-        console.error("Error fetching historical data:", error);
-      }
+        }).then((response)=>{
+          const formattedData = response.map(d => ({
+            time: new Date(d.time).toLocaleTimeString(),
+            price: d.price,
+          }));
+          setData(formattedData);
+          // Adjust the windowSize if there are fewer data points than our initial setting.
+          if (formattedData.length < windowSize) {
+            setWindowSize(formattedData.length);
+          }
+        })
+        .catch((err)=>{
+          toast.error("Error fetching historical data:", err);
+        })
+        
+       
+      
+      
     };
 
     // Fetch the market opening price
     const fetchOpeningPrice = async () => {
-      try {
-        const response = await axios.post("https://bklay.xyz/market/opening", { companyName });
-        const price = Number(response.data.openingPrice);
-        console.log("Opening price:", price);
-        setOpeningPrice(price);
-      } catch (error) {
-        console.error("Error fetching opening price:", error);
-      }
+      
+        stockService.getopeningprice(companyName)
+        .then((response)=>{
+          try {
+
+        
+           
+            const price = Number(response.openingPrice);
+            console.log("Opening price:", price);
+            setOpeningPrice(price);
+          } catch (error) {
+            console.error("Error fetching opening price:", error);
+          }
+        })
+        .catch((err)=>{
+          toast.error("error, please try again ", err)
+        })
+       
+       
+        
+      
     };
 
     fetchHistoricalData();

@@ -30,6 +30,7 @@ const Stocks = () => {
           ...stock,
           id: stock.id || index + 1,
         }));
+        console.log(data);
         setStocks(data);
       })
       .catch(() => console.log("Error fetching stocks"));

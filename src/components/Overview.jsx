@@ -36,6 +36,7 @@ const OverviewComponent = ({ stock }) => {
     // Handler to update sell volume.
     const handleSellVolume = (data) => {
       console.log(data);
+      data.sell_volume = Number(data.sell_volume);
       console.log("Buy Volume:", data.sell_volume);
       setSellVolume(Number(data.sell_volume));
       console.log(sellVolume);
@@ -43,13 +44,13 @@ const OverviewComponent = ({ stock }) => {
 
     // Handler to update today's low price.
     const handleMinUpdate = (data) => {
-      console.log("Received min update:", data);
+     
       settodayMin(Number(data.low_price));
     };
 
     // Handler to update today's high price.
     const handleMaxUpdate = (data) => {
-      console.log("Received max update:", data);
+      
       settodayMax(Number(data.high_price));
     };
 

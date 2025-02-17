@@ -47,6 +47,10 @@ const stockService = {
            
         })
     },
+    gethistoricaldata:(req)=>{
+
+        return axiosAuthInstance.post('/market/historicalMarketData',req).then(res=>res.data).catch(err=>{throw err.response})
+    },
     getStockDetail: (id) => {
         return axiosAuthInstance.get(`/stocks/${id}`)
         .then(res => res.data)
@@ -85,6 +89,20 @@ const stockService = {
             throw err.response
            
         })
+    },
+    
+    getopeningprice:(req) => {
+        
+            const request={companyName: req};
+            
+            // const price = Number(response.data.openingPrice);
+            return axiosAuthInstance.post('/market/opening',request)
+            .then(res=>res.data)
+            .catch(err => {
+                throw err.response
+            })
+         
+          
     },
     getQuantity: (req) => {
     //    alert(req);
@@ -161,7 +179,7 @@ const portfolioService = {
 
 const marketService = {
     checkMarketStatus: () => {
-        return axiosNoAuthInstance.get("/market/")
+        return axiosNoAuthInstance.get("/market/marketIsOpen")
         .then(res => res.data)
         .catch(err => {
             console.clear()
