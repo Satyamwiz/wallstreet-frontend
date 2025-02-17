@@ -23,6 +23,7 @@ const OverviewComponent = ({ stock }) => {
     const printdata=(data)=>{
       setvolume(Number(data.buy_volume));
     }
+    
 
   
 
