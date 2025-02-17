@@ -1,5 +1,5 @@
-// src/pages/Leaderboard.js
-import React, { useState, useEffect } from "react";
+
+import  { useState, useEffect } from "react";
 import RankCard from "../components/RankCard.jsx";
 import { ThreeDots } from "react-loader-spinner";
 import { rankService } from "../services/apis.js";
@@ -7,35 +7,48 @@ import { toast } from "react-toastify";
 import "./Ranking.css";
 import socketService from "../services/socket.js";
 
-
-const Ranking = () => {
-  const [ranks, setRanks] = useState(null);
-
+const Leaderboard = () => {
+  const [ranks, setRanks] = useState([]);
+  const [first,setFirst]=useState(0);
   useEffect(() => {
-    // Fetch rankings when the component mounts
-    // rankService.getRankings()
-    //   .then((response) => {
-    //     // Optionally, sort the rankings by total value in descending order
-    //     const sortedRanks = response.sort((a, b) => b.totalValue - a.totalValue);
-    //     setRanks(sortedRanks);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     toast.error("Failed to fetch rankings.");
-    //   });
+    // Fetch initial rankings
+    if(first==0){
+    const fetchRankings = async () => {
+      try {
+        const response = await rankService.getRankings();
+        const sortedRanks = response.sort((a, b) => b.totalValue - a.totalValue);
+        setRanks(sortedRanks);
+        console.log("this is by http");
+      } catch (error) {
+        console.error("Error fetching rankings:", error);
+        toast.error("Failed to fetch rankings.");
+      }
+    };
+    setFirst(1);
+    fetchRankings();
+  }
 
-    const printing=(data)=>{
-
+    // Socket connection for live updates
+    const handleRankingUpdate = (data) => {
       const sortedRanks = data.sort((a, b) => b.totalValue - a.totalValue);
       setRanks(sortedRanks);
-    }
-      socketService.ranking(printing);
-  }, []);
+      console.log("now by sockets");
+    };
+
+    socketService.connect();
+    socketService.ranking(handleRankingUpdate);
+
+    // Cleanup on unmount
+    return () => {
+      socketService.removeListeners();
+      socketService.disconnect();
+    };
+  },[] );
 
   return (
     <div className="leaderboard-container">
       <h1 className="leaderboard-title">Leaderboard</h1>
-      {!ranks ? (
+      {ranks.length === 0 ? (
         <div className="loader">
           <ThreeDots
             height="55"
@@ -64,4 +77,4 @@ const Ranking = () => {
   );
 };
 
-export default Ranking;
+export default Leaderboard;
