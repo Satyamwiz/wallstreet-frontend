@@ -1,101 +1,111 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import socketService from "../services/socket.js";
-import SellModal from "./SellModal.jsx";
 
 const OverviewComponent = ({ stock }) => {
-  // Initialize state with the stock's current price and default range values.
-  const [prices, setPrices] = useState(stock.price);
-  const [todaysMin, settodayMin] = useState(0);
-  const [todaysMax, settodayMax] = useState(0);
+  // Use stock.price as the initial value for currentPrice.
+  const [currentPrice, setCurrentPrice] = useState(stock.price);
+  const [todaysMin, setTodaysMin] = useState(0);
+  const [todaysMax, setTodaysMax] = useState(0);
   const [clampedTodaysPos, setClampedTodaysPos] = useState(0);
   const [buyVolume, setBuyVolume] = useState(0);
   const [sellVolume, setSellVolume] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Effect for establishing the WebSocket connection and subscribing to events.
+  // Establish the websocket connection and subscribe to events.
   useEffect(() => {
-    // Connect to the socket server and subscribe to the specific company's updates.
     socketService.connect();
     socketService.subscribeToCompany(stock.name);
     console.log("Subscribed to stock:", stock);
 
-    // Handler to update the current price.
+    // Update current price.
     const handleMarketUpdate = (data) => {
-      setPrices(Number(data.price));
+      // Ensure data.price exists
+      if (data.price) {
+        setCurrentPrice(Number(data.price));
+      }
     };
 
-    // Handler to update buy volume.
-    const handleBuyVolume = (data) => {
-      // Parse the incoming data.
-      
-     console.log(data);
-      // Log the parsed value directly.
-     
-      setBuyVolume(Number(data.buy_volume));
-    };
-
-    // Handler to update sell volume.
-    const handleSellVolume = (data) => {
-      console.log(data);
-      console.log("Buy Volume:", data.sell_volume);
-      setSellVolume(Number(data.sell_volume));
-      console.log(sellVolume);
-    };
-
-    // Handler to update today's low price.
+    // Update today's low price.
     const handleMinUpdate = (data) => {
       console.log("Received min update:", data);
-      settodayMin(Number(data.low_price));
+      if (data.low_price) {
+        setTodaysMin(Number(data.low_price));
+      }
     };
 
-    // Handler to update today's high price.
+    // Update today's high price.
     const handleMaxUpdate = (data) => {
       console.log("Received max update:", data);
-      settodayMax(Number(data.high_price));
+      if (data.high_price) {
+        setTodaysMax(Number(data.high_price));
+      }
     };
 
-    // Register the event handlers.
+    // Update volume values.
+    const handleBuyVolume = (data) => {
+      console.log("Buy volume update:", data);
+      if (data.buy_volume) {
+        setBuyVolume(Number(data.buy_volume));
+      }
+    };
+
+    const handleSellVolume = (data) => {
+      console.log("Sell volume update:", data);
+      if (data.sell_volume) {
+        setSellVolume(Number(data.sell_volume));
+      }
+    };
+
+    // Register event handlers.
     socketService.onMarketUpdate(handleMarketUpdate);
     socketService.onnonupdates(handleMinUpdate);
     socketService.onupdates(handleMaxUpdate);
-
-    // Subscribe to volume updates.
-    // Assuming getvolume returns buy volume and get2volume returns sell volume.
     socketService.getvolume(handleBuyVolume);
     socketService.get2volume(handleSellVolume);
 
-    // Cleanup: remove listeners and disconnect when the component unmounts.
     return () => {
       socketService.removeListeners();
       socketService.disconnect();
     };
   }, [stock]);
 
-  // Effect to recalculate the current price's position within today's range.
+  // Recalculate the slider position when currentPrice, todaysMin, or todaysMax changes.
   useEffect(() => {
     if (todaysMax !== todaysMin) {
-      const todaysPosition = ((prices - todaysMin) / (todaysMax - todaysMin)) * 100;
-      setClampedTodaysPos(Math.max(0, Math.min(100, todaysPosition)));
+      const pos = ((currentPrice - todaysMin) / (todaysMax - todaysMin)) * 100;
+      setClampedTodaysPos(Math.max(0, Math.min(100, pos)));
     }
-  }, [prices, todaysMin, todaysMax]);
-
-  // Optional: useEffect to log buyVolume when it changes.
-  useEffect(() => {
-    console.log("Updated buyVolume:", buyVolume);
-  }, [buyVolume]);
+  }, [currentPrice, todaysMin, todaysMax]);
 
   return (
     <div className="overview-component">
       {/* Today's Range Display */}
       <div className="info-card range-card">
         <h3>Today's Range</h3>
-        <div className="range-slider">
+        <div
+          className="range-slider"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Custom tooltip on hover */}
+          {isHovered && (
+            <div className="tooltip">
+              Current Price: ${currentPrice.toFixed(2)}
+            </div>
+          )}
           <div className="range-values">
             <span>${todaysMin.toFixed(2)}</span>
             <span>${todaysMax.toFixed(2)}</span>
           </div>
           <div className="range-bar">
-            <div className="range-progress" style={{ width: `${clampedTodaysPos}%` }}></div>
-            <div className="range-marker" style={{ left: `${clampedTodaysPos}%` }}></div>
+            <div
+              className="range-progress"
+              style={{ width: `${clampedTodaysPos}%` }}
+            ></div>
+            <div
+              className="range-marker"
+              style={{ left: `${clampedTodaysPos}%` }}
+            ></div>
           </div>
         </div>
       </div>
