@@ -60,3 +60,48 @@
     }
   }
   
+/* Container for the leaderboard list */
+.leaderboard-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Individual rank cards */
+.rank-card {
+  flex: 1 1 calc(25% - 0.75rem); /* Four cards per row */
+  background-color: #1e1e1e;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Media query for tablets */
+@media (max-width: 992px) {
+  .rank-card {
+    flex: 1 1 calc(50% - 0.75rem); /* Two cards per row */
+  }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+  .rank-card {
+    flex: 1 1 100%; /* One card per row */
+  }
+}
+
+/* Custom scrollbar styles for WebKit browsers */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5eb5f8; /* Thumb color */
+  border-radius: 6px; /* Roundness of the thumb */
+  border: 3px solid #1e1e1e; /* Padding around thumb */
+}
+
+
