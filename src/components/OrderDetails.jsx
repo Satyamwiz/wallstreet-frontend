@@ -43,7 +43,8 @@ const OrderDetails = () => {
       
 
         console.log("hello ", order_id);
-        toast.info(" Requested Cancel Order");
+        toast.info("Requested Cancel Order. Please refresh and wait some time before the order is cancelled.");
+        toast.info("You can see transaction status in history.")
         setPendingTransactions((prevTransactions) =>
           prevTransactions.filter((transaction) => transaction.order_id !== order_id)
         );
