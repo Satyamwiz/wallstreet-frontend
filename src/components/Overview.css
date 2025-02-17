@@ -42,5 +42,22 @@
     background-color: #0056b3;
     border-radius: 50%;
     transform: translateX(-50%);
+  }.range-slider {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .tooltip {
+    position: absolute;
+    top: -40px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 10;
   }
   

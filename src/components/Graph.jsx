@@ -151,14 +151,17 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
         <LineChart data={viewData} margin={{ top: 20, right: 30, left: 0, bottom: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#444" />
           <XAxis dataKey="time" stroke="#ddd" minTickGap={20} tick={{ fontSize: 12 }} />
-          <YAxis 
-            domain={[
-              (dataMin) => openingPrice ? Math.min(dataMin, openingPrice * 0.9) : dataMin,
-              (dataMax) => openingPrice ? Math.max(dataMax, openingPrice * 1.1) : dataMax
-            ]}
-            stroke="#ddd"
-            tick={{ fontSize: 12 }}
-          />
+          <YAxis
+  domain={openingPrice ? [openingPrice * 0.9, openingPrice * 1.1] : ['auto', 'auto']}
+  stroke="#ddd"
+  tick={{ fontSize: 12 }}
+  tickFormatter={(value) => {
+    if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
+    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
+    return value;
+  }}
+/>
+
           <Tooltip 
             contentStyle={{ backgroundColor: "#1e1e1e", color: "#fff" }}
             formatter={(value) => typeof value === "number" ? value.toFixed(1) : value}
