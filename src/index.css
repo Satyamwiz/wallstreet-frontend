@@ -11,10 +11,7 @@
   background-color: #373a46;
 }
 
-.sidebar {
-  background-color: #33333d;
-  box-shadow: 20px;
-}
+
 
 #menu .active {
   color: #fefdff;
@@ -78,6 +75,10 @@
   border-radius: 10px;
   border: none;
   color: #fefdff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 .stockcard:hover {

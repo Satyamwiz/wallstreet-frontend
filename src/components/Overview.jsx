@@ -35,6 +35,7 @@ const OverviewComponent = ({ stock }) => {
     // Handler to update sell volume.
     const handleSellVolume = (data) => {
       const parsedData = JSON.parse(data);
+      console.log("parse",parsedData);
       setSellVolume(Number(parsedData.sell_volume));
     };
 
