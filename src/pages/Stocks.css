@@ -1,6 +1,6 @@
 /* Always dark mode styling */
 :root {
-  --bg-color: #121212;
+  --bg-color: #1a202c;
   --text-color: #e0e0e0;
   --accent-color: #484846; /* Warm orange accent */
   --card-bg: #1e1e1e;

@@ -28,7 +28,7 @@ const BuyModal = ({ id, name, price, onClose }) => {
       setCash(paisa.cash)
     })
     .catch((err) => toast.error("Error fetching cash", err));
-  }, []);
+  }, [handleBuy]);
   useEffect(() => {
     // Connect and subscribe to market updates for the given company name
     socketService.connect();

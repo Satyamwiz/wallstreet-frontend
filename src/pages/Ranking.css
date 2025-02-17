@@ -1,6 +1,6 @@
 
 .leaderboard-container {
-    background-color: #121212;
+    background-color: #1a202c;
     min-height: 100vh;
     padding: 2rem;
     color: #e0e0e0;
@@ -18,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    background-color: #1e1e1e;
+    background-color: #343d50;
     border-radius: 8px;
     margin-bottom: 1rem;
   }
