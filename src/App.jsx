@@ -71,12 +71,20 @@ function App() {
           style={{
             flexGrow: 1,
             padding: "16px",
-            width: user
-              ? sidebarOpen
-                ? "calc(100% - 230px)"
-                : "100%"
-              : "100%",
-            marginLeft: user ? (sidebarOpen ? "230px" : "0") : "0",
+
+// OYYYYYYYYYYY HAPPY BIRTHDAY NASLELEA KANDA NE SANGITLA IKDE SMTG MEDIA QUERY TAK ANI MOVILE NA NONE KR 
+
+
+
+
+
+
+            // width: user
+            //   ? sidebarOpen
+            //     ? "calc(100% - 230px)"
+            //     : "100%"
+            //   : "100%",
+            // marginLeft: user ? (sidebarOpen ? "230px" : "0") : "0",
             transition: "width 0.3s ease-in-out, margin-left 0.3s ease-in-out",
           }}
         >
@@ -85,6 +93,7 @@ function App() {
             <Route
               path="/stocks"
               element={user ? <Stocks /> : <Navigate to="/login" />}
+             
             />
             <Route
               path="/stocksdetail/:id"

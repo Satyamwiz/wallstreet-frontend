@@ -29,14 +29,14 @@ const OverviewComponent = ({ stock }) => {
       
      console.log(data);
       // Log the parsed value directly.
-      console.log("Parsed Buy Volume:", Number(data.buy_volume));
+     
       setBuyVolume(Number(data.buy_volume));
     };
 
     // Handler to update sell volume.
     const handleSellVolume = (data) => {
-      
-      
+      console.log(data);
+      console.log("Buy Volume:", data.sell_volume);
       setSellVolume(Number(data.sell_volume));
       console.log(sellVolume);
     };

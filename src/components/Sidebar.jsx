@@ -42,13 +42,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <>
       {/* Hamburger icon shown when sidebar is closed */}
-      {!sidebarOpen && (
-        <div className="hamburger" onClick={() => setSidebarOpen(true)}>
+      <div className="hamburger" onClick={() => setSidebarOpen((prev)=>!prev)}>
           <FaBars />
         </div>
-      )}
+      {/* {!sidebarOpen && ( */}
+      {/* )} */}
 
       <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
+        <div className="hamburger" onClick={() => setSidebarOpen((prev)=>!prev)}>
+          <FaBars />
+        </div>
         <NavLink to="/" className="logo-container">
           <img src={image} alt="logo" className="logo" />
           <span className="logo-text">Wall Street</span>

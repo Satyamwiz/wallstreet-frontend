@@ -9,9 +9,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 10px;
-  transition: transform 0.3s ease-in-out;
   z-index: 1000;
+  padding: 20px 10px;
+  transition: transform 1s ease-in-out;
+  /*z-index: 1000;
+   */:;
+  -webkit-transition: transform 1s ease-in-out;
+  -moz-transition: transform 1s ease-in-out;
+  -ms-transition: transform 1s ease-in-out;
+  -o-transition: transform 1s ease-in-out;
 }
 
 /* Sidebar closed state */
@@ -31,7 +37,7 @@
   left: 15px;
   font-size: 30px;
   color: #fff;
-  z-index: 1100;
+  z-index: 3000;
   cursor: pointer;
 }
 
@@ -132,4 +138,21 @@
   background-color: #5eb5f8; /* Thumb color */
   border-radius: 6px; /* Roundness of the thumb */
   border: 3px solid #1e1e1e; /* Padding around thumb */
+}
+
+/* Logo container adjustments to shift it down */
+.logo-container {
+  margin-top: 60px; /* This shifts the logo and text downward */
+  /* Retain the existing styles */
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  text-decoration: none;
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+  .logo-container {
+    margin-top: 40px; /* A slightly smaller top margin for mobile devices */
+  }
 }
