@@ -11,6 +11,7 @@ import Portfolio from "./pages/Portfolio.jsx";
 import Login from "./pages/Login.jsx";
 import { useAuthContext } from "./hooks/useAuthContext";
 import { ToastContainer } from "react-toastify";
+import MyWishlist from "./pages/wishlist.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import Ranking from "./pages/Ranking.jsx";
 
@@ -99,6 +100,10 @@ function App() {
               path="/stocksdetail/:id"
               element={user ? <StocksDetail /> : <Navigate to="/login" />}
             />
+            <Route 
+             path="/wishlist"  
+             element={user ? <MyWishlist/> : <Navigate to="/login"/>}
+             />
             <Route
               path="/portfolio"
               element={user ? <Portfolio /> : <Navigate to="/login" />}

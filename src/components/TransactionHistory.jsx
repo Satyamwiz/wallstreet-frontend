@@ -68,7 +68,15 @@ const TransactionHistory = () => {
                   {transaction.order_type.toUpperCase()}
                 </td>
                 <td>{Number(transaction.price).toFixed(2)}</td>
-                <td>{transaction.status}</td>
+                <td
+                  className={
+                    String(transaction.status) === "COMPLETED"
+                      ? "text-success"
+                      : "text-danger"
+                  }
+                >
+                  {transaction.status}
+                </td>
                 <td>{new Date(transaction.datetimePlaced).toLocaleDateString()}</td>
                 <td>{new Date(transaction.datetimePlaced).toLocaleTimeString()}</td>
                

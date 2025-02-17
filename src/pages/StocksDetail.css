@@ -327,3 +327,22 @@
   border-radius: 6px; /* Roundness of the thumb */
   border: 3px solid #1e1e1e; /* Padding around thumb */
 }
+
+/* New header content styles */
+.stock-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.current-price {
+  font-size: 1.5rem;
+  color: #63b3ed;
+}
+
+.bookmark-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
