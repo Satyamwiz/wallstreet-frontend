@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import socketService from "../services/socket.js";
+import SellModal from "./SellModal.jsx";
 
 const OverviewComponent = ({ stock }) => {
   // Initialize state with the stock's current price and default range values.
@@ -25,18 +26,19 @@ const OverviewComponent = ({ stock }) => {
     // Handler to update buy volume.
     const handleBuyVolume = (data) => {
       // Parse the incoming data.
-      const parsedData = JSON.parse(data);
-      const newBuyVolume = Number(parsedData.buy_volume);
+      
+     console.log(data);
       // Log the parsed value directly.
-      console.log("Parsed Buy Volume:", newBuyVolume);
-      setBuyVolume(newBuyVolume);
+      console.log("Parsed Buy Volume:", Number(data.buy_volume));
+      setBuyVolume(Number(data.buy_volume));
     };
 
     // Handler to update sell volume.
     const handleSellVolume = (data) => {
-      const parsedData = JSON.parse(data);
-      console.log("parse",parsedData);
-      setSellVolume(Number(parsedData.sell_volume));
+      
+      
+      setSellVolume(Number(data.sell_volume));
+      console.log(sellVolume);
     };
 
     // Handler to update today's low price.

@@ -20,12 +20,20 @@ import { Car } from "lucide-react";
 socketService.connect();
 
 const Portfolio = () => {
+  // Consolidated net worth state variable.
+  const [netWorth, setNetWorth] = useState(0);
   const [cash, setCash] = useState(0);
-  const [networth, setNetworth] = useState(0);
+  // Removed duplicate networth state variable.
+  // const [networth, setNetworth] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [holdings, setHoldings] = useState(null);
 
   const [activeTab, setActiveTab] = useState("holdings");
+
+  const handleNetWorth = (newNetWorth) => {
+    // Update the portfolio net worth by summing cash and the holdings net worth.
+    setNetWorth(Number(newNetWorth) + Number(cash));
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -58,7 +66,7 @@ const Portfolio = () => {
         setHoldings(response);
       });
 
-      setNetworth(154300.75);
+    
       //  setHoldings([
       //   {
       //     id: 1,
@@ -101,7 +109,7 @@ const Portfolio = () => {
           <h5>
             <FaChartPie /> Net Worth
           </h5>
-          <p>₹ {networth.toFixed(2)}</p>
+          <p>₹ {Number(netWorth).toFixed(2)}</p>
         </div>
         <div className="overview-card">
           <h5>
@@ -146,7 +154,9 @@ const Portfolio = () => {
         </div>
       ) : (
         <div className="component-container">
-          {activeTab === "holdings" && <HoldingsCard holdings={holdings} />}
+          {activeTab === "holdings" && (
+            <HoldingsCard holdings={holdings} onNetWorthChange={handleNetWorth} />
+          )}
           {/* {activeTab === "pnl" && <CompanyWisePnL holdings={holdings} />} */}
           {activeTab === "orders" && <OrderDetails pendingTransactions />}
           {activeTab === "transactions" && <TransactionHistory transactions />}

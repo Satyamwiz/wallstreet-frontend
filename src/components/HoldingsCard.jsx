@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import socketService from "../services/socket.js";
 import "./HoldingsCard.css";
 
-const HoldingsCard = ({ holdings = [] }) => {
+const HoldingsCard = ({ holdings = [], onNetWorthChange }) => {
   // State to store each company's latest price.
   const [prices, setPrices] = useState({});
 
@@ -19,6 +19,7 @@ const HoldingsCard = ({ holdings = [] }) => {
     const handleMarketUpdate = (data) => {
       const payload = data;
       console.log(payload);
+      // Update the state with the latest price
       setPrices((prevPrices) => ({
         ...prevPrices,
         [payload.company]: Number(payload.price),
@@ -34,6 +35,23 @@ const HoldingsCard = ({ holdings = [] }) => {
       socketService.disconnect();
     };
   }, [holdings]);
+
+  // Effect to calculate net worth whenever prices or holdings change.
+  useEffect(() => {
+    let netWorth = 0;
+    holdings.forEach((holding) => {
+      // Determine current price: use the updated price if available, otherwise fallback.
+      const currentPrice =
+        prices[holding.companyName] !== undefined
+          ? prices[holding.companyName]
+          : Number(holding.currentPrice);
+      netWorth += currentPrice * holding.quantity;
+    });
+    // Send the computed net worth back to the parent.
+    if (onNetWorthChange) {
+      onNetWorthChange(netWorth);
+    }
+  }, [holdings, prices, onNetWorthChange]);
 
   return (
     <div className="holdings-card container mt-5">
@@ -57,7 +75,7 @@ const HoldingsCard = ({ holdings = [] }) => {
                 // Use the updated price from state if available; otherwise fallback.
                 const currentPrice =
                   prices[holding.companyName] !== undefined
-                    ? Number(prices[holding.companyName])
+                    ? prices[holding.companyName]
                     : Number(holding.currentPrice);
                 const profitLoss =
                   (currentPrice - holding.averagePrice) * holding.quantity;
