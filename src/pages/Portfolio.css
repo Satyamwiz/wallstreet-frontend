@@ -1,6 +1,7 @@
 /* Overall Portfolio Container */
 .portfolio-container {
   padding: 30px;
+  z-index:1000;
   height: 100%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #e2e8f0;

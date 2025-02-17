@@ -4,6 +4,9 @@ import { ThreeDots } from "react-loader-spinner";
 import "./Stocks.css";
 import { stockService } from "../services/apis.js";
 import socketService from "../services/socket.js";
+// import { FaBull, FaBear } from 'react-icons/fa';
+
+
 
 const Stocks = () => {
   // Set stocks initial state to an empty array to simplify filtering.
@@ -141,6 +144,7 @@ const Stocks = () => {
               >
                 <div className="stock-card-header">
                   <div className="stock-rank">{index + 1}</div>
+                  {/* {isPositive ? <FaBull className="bull-icon" /> : <FaBear className="bear"></FaBear> } */}
                   <div className="stock-logo">{stock.symbol}</div>
                 </div>
                 <div className="stock-info">

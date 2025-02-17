@@ -53,7 +53,7 @@ const stockService = {
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+            
         })
     },
     buyStock: (id, buyOrderData) => {
@@ -107,7 +107,7 @@ const portfolioService = {
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+         
         })
     },
     getCash: () => {
@@ -117,7 +117,7 @@ const portfolioService = {
         .catch(err => {
             console.clear()
             throw err.response
-            console.clear()
+            
         })
     },
     getTransactions: () => {
@@ -126,7 +126,16 @@ const portfolioService = {
         .catch(err => {
             console.clear()
             throw err.response
+            
+        })
+    },
+    getindiTransactions:(req)=>{
+        return axiosAuthInstance.post("/company/orders",req)
+        .then(res=>res.data)
+        .catch(err=>{
             console.clear()
+            console.log(err)
+            throw err.response
         })
     },
     getPendingTransactions: () => {

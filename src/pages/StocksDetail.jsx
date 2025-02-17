@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import BuyModal from "../components/BuyModal";
 import SellModal from "../components/SellModal";
 import { useParams, useLocation } from "react-router-dom";
@@ -6,14 +6,15 @@ import { ThreeDots } from "react-loader-spinner";
 import Chart from "chart.js/auto";
 import { Activity, TrendingUp, DollarSign, Building, History } from "lucide-react";
 import { CategoryScale } from "chart.js";
-import LineChart from "../components/LineChart";
+// import LineChart from "../components/LineChart";
 import "./StocksDetail.css"; // Custom dark-mode & grow page styles
-import TransactionHistory from "../components/TransactionHistory.jsx";
+import Transactionsindi from "../components/Transactionsindi.jsx";
 import Overview from "../components/Overview.jsx";
-import { portfolioService, stockService } from "../services/apis.js";
-import { toast } from "react-toastify";
+import {  stockService } from "../services/apis.js";
+// import { toast } from "react-toastify";
 Chart.register(CategoryScale);
 import Graph from '../components/Graph.jsx';
+
 
 
 // Mock service for market status (includes delivery_price_history)
@@ -31,14 +32,14 @@ const StocksDetail = () => {
   const [stock, setStock] = useState(passedState?.stock || null);
   
   const [availableShares, setAvailableShares] = useState(0);
-  const [chartData, setChartData] = useState(null);
+  // const [chartData, setChartData] = useState(null);
   const [isMarketOpen, setIsMarketOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
   const [showBuyModal, setShowBuyModal] = useState(false);
   const [showSellModal, setShowSellModal] = useState(false);
-  const [transactions, setTransactions] = useState([]);
-  const [min, setMin] = useState(passedState?.min ?? 0);
-  const [max, setMax] = useState(passedState?.max ?? 1000);
+  
+  // const [min, setMin] = useState(passedState?.min ?? 0);
+  // const [max, setMax] = useState(passedState?.max ?? 1000);
 
   // Fetch stock details if not available via state
   useEffect(() => {
@@ -112,27 +113,27 @@ const StocksDetail = () => {
       .checkMarketStatus()
       .then((res) => setIsMarketOpen(res.is_open))
       .catch((err) => console.log("Error fetching market status", err));
-  }, [name, passedState]);
+  }, [stock.name, passedState]);
 
   // Update chartData when stock data is available
-  useEffect(() => {
+  // useEffect(() => {
     
-    if (stock && stock.delivery_price_history) {
-      const selectedHistory = stock.delivery_price_history;
-      setChartData({
-        labels: selectedHistory.map((data) => data.datetime.slice(0, 10)),
-        datasets: [
-          {
-            label: "Delivery Price",
-            data: selectedHistory.map((data) => data.price),
-            backgroundColor: "rgba(75,192,192,0.6)",
-            borderColor: "#5eb5f8",
-            borderWidth: 2,
-          },
-        ],
-      });
-    }
-  }, [stock]);
+  //   if (stock && stock.delivery_price_history) {
+  //     const selectedHistory = stock.delivery_price_history;
+  //     setChartData({
+  //       labels: selectedHistory.map((data) => data.datetime.slice(0, 10)),
+  //       datasets: [
+  //         {
+  //           label: "Delivery Price",
+  //           data: selectedHistory.map((data) => data.price),
+  //           backgroundColor: "rgba(75,192,192,0.6)",
+  //           borderColor: "#5eb5f8",
+  //           borderWidth: 2,
+  //         },
+  //       ],
+  //     });
+  //   }
+  // }, [stock]);
 
   return (
     
@@ -349,7 +350,7 @@ const StocksDetail = () => {
             )}
             {activeTab === "transactions" && (
               <div className="transactions-section">
-                <TransactionHistory transactions={transactions} />
+                <Transactionsindi name={stock.name} />
               </div>
             )}
           </div>

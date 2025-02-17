@@ -64,6 +64,7 @@ const BuyModal = ({ id, name, price, onClose }) => {
 
   const handleBuy = (e) => {
     e.preventDefault();
+   
     const tid = toast.loading("Please wait...");
     const buyOrderData = { price: buyprice, quantity: qty, companyName: name };
 
@@ -75,8 +76,10 @@ const BuyModal = ({ id, name, price, onClose }) => {
           type: "success",
           isLoading: false,
           autoClose: 2300,
+
         });
         onClose();
+        window.location.href = "/portfolio";
       })
       .catch((err) => {
         toast.update(tid, {
