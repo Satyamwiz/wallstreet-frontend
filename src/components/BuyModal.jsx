@@ -79,7 +79,9 @@ const BuyModal = ({ id, name, price, onClose }) => {
 
         });
         onClose();
-        window.location.href = "/portfolio";
+        setTimeout(() => {
+          window.location.href = "/portfolio";
+        }, 8000);
       })
       .catch((err) => {
         toast.update(tid, {

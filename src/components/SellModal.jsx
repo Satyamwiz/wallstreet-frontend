@@ -90,6 +90,9 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
           autoClose: 2300,
         });
         onClose();
+        setTimeout(() => {
+          window.location.href = "/portfolio";
+        }, 8000);
       })
       .catch((err) => {
         toast.update(tid, {
