@@ -10,6 +10,8 @@ const OverviewComponent = ({ stock }) => {
   const [clampedTodaysPos, setClampedTodaysPos] = useState(0);
   const [buyVolume, setBuyVolume] = useState(0);
   const [sellVolume, setSellVolume] = useState(0);
+  // Track the last data received to handle missing fields
+  const [lastVolumeData, setLastVolumeData] = useState({});
 
   // Effect for establishing the WebSocket connection and subscribing to events.
   useEffect(() => {
@@ -25,20 +27,70 @@ const OverviewComponent = ({ stock }) => {
 
     // Handler to update buy volume.
     const handleBuyVolume = (data) => {
-      // Parse the incoming data.
+      console.log("Buy volume data:", data);
       
-     console.log(data);
-      // Log the parsed value directly.
-     
-      setBuyVolume(Number(data.buy_volume));
+      // Check for data.buy_volume first
+      if (data && typeof data === 'object' && 'buy_volume' in data) {
+        console.log("Buy Volume:", data.buy_volume);
+        setBuyVolume(Number(data.buy_volume));
+        
+        // Save this data for cross-referencing
+        setLastVolumeData(prevData => ({
+          ...prevData,
+          buy_volume: data.buy_volume,
+          company: data.company
+        }));
+      } 
+      // If we're getting sell_volume but no buy_volume, we need to handle that 
+      else if (data && typeof data === 'object' && 'sell_volume' in data) {
+        console.log("Received sell volume in buy handler:", data.sell_volume);
+        setSellVolume(Number(data.sell_volume));
+        
+        // Save this data for cross-referencing
+        setLastVolumeData(prevData => ({
+          ...prevData,
+          sell_volume: data.sell_volume,
+          company: data.company
+        }));
+      }
+      else if (typeof data === 'string' || typeof data === 'number') {
+        console.log("Buy Volume (direct value):", data);
+        setBuyVolume(Number(data));
+      }
     };
 
     // Handler to update sell volume.
     const handleSellVolume = (data) => {
-      console.log(data);
-      console.log("Buy Volume:", data.sell_volume);
-      setSellVolume(Number(data.sell_volume));
-      console.log(sellVolume);
+      console.log("Sell volume data:", data);
+      
+      // Check for data.sell_volume first
+      if (data && typeof data === 'object' && 'sell_volume' in data) {
+        console.log("Sell Volume:", data.sell_volume);
+        setSellVolume(Number(data.sell_volume));
+        
+        // Save this data for cross-referencing
+        setLastVolumeData(prevData => ({
+          ...prevData,
+          sell_volume: data.sell_volume,
+          company: data.company
+        }));
+      }
+      // If we're getting buy_volume but no sell_volume, we need to handle that
+      else if (data && typeof data === 'object' && 'buy_volume' in data) {
+        console.log("Received buy volume in sell handler:", data.buy_volume);
+        setBuyVolume(Number(data.buy_volume));
+        
+        // Save this data for cross-referencing
+        setLastVolumeData(prevData => ({
+          ...prevData,
+          buy_volume: data.buy_volume,
+          company: data.company
+        }));
+      }
+      else if (typeof data === 'string' || typeof data === 'number') {
+        console.log("Sell Volume (direct value):", data);
+        setSellVolume(Number(data));
+      }
     };
 
     // Handler to update today's low price.
@@ -59,7 +111,6 @@ const OverviewComponent = ({ stock }) => {
     socketService.onupdates(handleMaxUpdate);
 
     // Subscribe to volume updates.
-    // Assuming getvolume returns buy volume and get2volume returns sell volume.
     socketService.getvolume(handleBuyVolume);
     socketService.get2volume(handleSellVolume);
 
@@ -78,10 +129,10 @@ const OverviewComponent = ({ stock }) => {
     }
   }, [prices, todaysMin, todaysMax]);
 
-  // Optional: useEffect to log buyVolume when it changes.
+  // Optional: useEffect to log volume updates for debugging
   useEffect(() => {
-    console.log("Updated buyVolume:", buyVolume);
-  }, [buyVolume]);
+    console.log("Current volumes - Buy:", buyVolume, "Sell:", sellVolume);
+  }, [buyVolume, sellVolume]);
 
   return (
     <div className="overview-component">
