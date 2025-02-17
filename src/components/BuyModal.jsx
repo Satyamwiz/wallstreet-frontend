@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { ArrowUpRight, ArrowDownRight, Wallet, X, AlertTriangle } from "lucide-react";
-import { stockService } from "../services/apis";
+import { stockService,portfolioService } from "../services/apis";
 import { toast } from "react-toastify";
 import socketService from "../services/socket.js";
 import "./BuyModal.css";
 
-const BuyModal = ({ id, name, cash, price, onClose }) => {
+const BuyModal = ({ id, name, price, onClose }) => {
   console.log("ID:", id);
   console.log("Name:", name);
-  console.log("Cash:", cash);
+ 
   console.log("Price:", price);
 
   const [qty, setQty] = useState(0);
   const [bidPrice, setBidPrice] = useState(price);
   const [buyprice, setbuyprice] = useState(0);
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
-
+  const [cash, setCash] = useState(0);
   // Calculate dynamic 24h price change using market bidPrice vs. initial price prop
   const dynamicPriceChange = ((bidPrice - price) / price) * 100;
   const isPositive = dynamicPriceChange >= 0;
   const totalValue = buyprice * qty;
-
+  useEffect(() => {
+    portfolioService
+    .getCash()
+    .then((paisa) => {
+      
+      setCash(paisa.cash)
+    })
+    .catch((err) => toast.error("Error fetching cash", err));
+  }, []);
   useEffect(() => {
     // Connect and subscribe to market updates for the given company name
     socketService.connect();

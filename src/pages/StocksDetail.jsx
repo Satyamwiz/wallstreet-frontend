@@ -29,7 +29,7 @@ const StocksDetail = () => {
   
   // Initialize with passed state if available; otherwise, null
   const [stock, setStock] = useState(passedState?.stock || null);
-  const [cash, setCash] = useState(0);
+  
   const [availableShares, setAvailableShares] = useState(0);
   const [chartData, setChartData] = useState(null);
   const [isMarketOpen, setIsMarketOpen] = useState(true);
@@ -89,13 +89,7 @@ const StocksDetail = () => {
     //   ],
     // });
     // Fetch cash and other details regardless of state
-    portfolioService
-      .getCash()
-      .then((res) => {
-        
-        setCash(res.cash)
-      })
-      .catch((err) => toast.error("Error fetching cash", err));
+   
 
     // Set available shares and mock transactions
     setAvailableShares(100);
@@ -202,7 +196,8 @@ const StocksDetail = () => {
           {showBuyModal && (
             <BuyModal
               id={stock.id}
-              cash={cash}
+              
+
               name={stock.name}
              
               price={stock.price}
