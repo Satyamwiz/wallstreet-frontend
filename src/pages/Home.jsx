@@ -17,7 +17,7 @@ export default function Home() {
     navigate("/stocks");
   };
 
-  const tickers = ["EXCHANGE", "STOCK"," ", "CREDENZ", "IEEE"];
+  const tickers = ["EXCHANGE", "   ","   ", "  ", "STOCK"];
 
   return (
     <div className="landing-page">
