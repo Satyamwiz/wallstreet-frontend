@@ -115,9 +115,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   };
 
   return (
-    //i should see here but i cant
-    
-    <div style={{ width: "60vw", height: "60vh", padding: "20px", margin: "auto" }}>
+    <div className="Graph-container">
       {/* <h2>{companyName} Market Data</h2> */}
       <div style={{ marginBottom: "10px" }}>
         <button className="boton-elegante" onClick={handleZoomIn} style={{ marginRight: "10px" }}>
