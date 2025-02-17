@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
   z-index: 1000;
   padding: 20px 10px;
   transition: transform 1s ease-in-out;
@@ -41,8 +42,16 @@
   cursor: pointer;
 }
 
-/* Logo container */
+.sidebar.open ~ .hamburger {
+  position: relative;
+  top: auto;
+  left: auto;
+  z-index: 100;
+}
+
+/* Logo container adjustments to shift it upwards */
 .logo-container {
+  margin-top: 40px; /* Reduced the margin to move it up */
   display: flex;
   align-items: center;
   margin-bottom: 40px;
@@ -53,6 +62,7 @@
   width: 45px;
   height: 45px;
   margin-right: 12px;
+  margin-top: px;
 }
 
 .logo-text {
@@ -93,13 +103,13 @@
   font-size: 22px;
 }
 
-/* Logout button */
+/* Logout button adjustments to move it up */
 .logoutbtn {
   background: none;
   border: 2px solid #5eb5f8;
   color: #5eb5f8;
   border-radius: 12px;
-  padding: 8px 16px;
+  padding: 10px 16px; /* Adjusted padding for better visibility */
   margin-top: auto;
   cursor: pointer;
   transition: background 0.3s ease;
@@ -109,6 +119,7 @@
   justify-content: center;
 }
 
+/* Logout button hover effect */
 .logoutbtn:hover {
   background-color: #5eb5f8;
   color: #fff;
@@ -122,6 +133,16 @@
   /* Adjust content area via a class (see App.css or inline styles) */
   .content-area.with-sidebar {
     margin-left: 200px;
+  }
+
+  /* Logo container adjustments for mobile devices */
+  .logo-container {
+    margin-top: 40px; /* Further reduce margin on mobile for compactness */
+  }
+
+  .logoutbtn {
+    padding-top: 5px;
+    padding-bottom: 5px; /* Adjust padding for mobile screens */
   }
 }
 
@@ -138,21 +159,4 @@
   background-color: #5eb5f8; /* Thumb color */
   border-radius: 6px; /* Roundness of the thumb */
   border: 3px solid #1e1e1e; /* Padding around thumb */
-}
-
-/* Logo container adjustments to shift it down */
-.logo-container {
-  margin-top: 60px; /* This shifts the logo and text downward */
-  /* Retain the existing styles */
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-  text-decoration: none;
-}
-
-/* Responsive adjustments for mobile devices */
-@media (max-width: 768px) {
-  .logo-container {
-    margin-top: 40px; /* A slightly smaller top margin for mobile devices */
-  }
 }
