@@ -6,7 +6,7 @@ import "./Home.css";
 export default function Home() {
   const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
-
+  //here it has some issues ig
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -17,7 +17,7 @@ export default function Home() {
     navigate("/stocks");
   };
 
-  const tickers = ["EXCHANGE", "STOCK", "CREDENZ", "IEEE"];
+  const tickers = ["EXCHANGE", "STOCK"," ", "CREDENZ", "IEEE"];
 
   return (
     <div className="landing-page">
