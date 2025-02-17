@@ -124,7 +124,7 @@ const StocksDetail = () => {
     };
 
     checkMarketStatus();
-    const intervalId = setInterval(checkMarketStatus, 2000); // 2 minutes
+    const intervalId = setInterval(checkMarketStatus, 30000); //half a min
 
     return () => clearInterval(intervalId);
     }, [stock.name, passedState]);
