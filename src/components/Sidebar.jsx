@@ -12,6 +12,7 @@ import {
   FaUserTie,
   FaSignOutAlt,
   FaTrophy,
+  FaHeart, // Wishlist icon
 } from "react-icons/fa";
 import "./Sidebar.css";
 
@@ -30,8 +31,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }
     };
     document.addEventListener("click", handleOutsideClick);
-    return () =>
-      document.removeEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
   }, [sidebarOpen, setSidebarOpen]);
 
   const handleLogout = () => {
@@ -41,17 +41,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <>
-      {/* Hamburger icon shown when sidebar is closed */}
-      <div className="hamburger" onClick={() => setSidebarOpen((prev)=>!prev)}>
-          <FaBars />
-        </div>
-      {/* {!sidebarOpen && ( */}
-      {/* )} */}
+      {/* Hamburger icon to toggle sidebar */}
+      <div
+        className="hamburger"
+        onClick={() => setSidebarOpen((prev) => !prev)}
+      >
+        <FaBars />
+      </div>
 
       <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
-        <div className="hamburger" onClick={() => setSidebarOpen((prev)=>!prev)}>
-          <FaBars />
-        </div>
         <NavLink to="/" className="logo-container">
           <img src={image} alt="logo" className="logo" />
           <span className="logo-text">Wall Street</span>
@@ -70,6 +68,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <NavLink to="/portfolio" className="nav-link">
                 <FaUserTie className="icon" />
                 Portfolio
+              </NavLink>
+            </li>
+          )}
+          {/* Wishlist Page Link */}
+          {user && (
+            <li className="nav-item">
+              <NavLink to="/wishlist" className="nav-link">
+                <FaHeart className="icon" /> Wishlist
               </NavLink>
             </li>
           )}
