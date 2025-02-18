@@ -18,7 +18,7 @@ const OverviewComponent = ({ stock ,marketCap}) => {
     // Connect to the socket server and subscribe to the specific company's updates.
     socketService.connect();
     socketService.subscribeToCompany(stock.name);
-    console.log("Subscribed to stock:", stock);
+    // console.log("Subscribed to stock:", stock);
 
     // Handler to update the current price.
     const handleMarketUpdate = (data) => {
@@ -27,11 +27,11 @@ const OverviewComponent = ({ stock ,marketCap}) => {
 
     // Handler to update buy volume.
     const handleBuyVolume = (data) => {
-      console.log("Buy volume data:", data);
+      // console.log("Buy volume data:", data);
       
       // Check for data.buy_volume first
       if (data && typeof data === 'object' && 'buy_volume' in data) {
-        console.log("Buy Volume:", data.buy_volume);
+        // console.log("Buy Volume:", data.buy_volume);
         setBuyVolume(Number(data.buy_volume));
         
         // Save this data for cross-referencing
@@ -43,7 +43,7 @@ const OverviewComponent = ({ stock ,marketCap}) => {
       } 
       // If we're getting sell_volume but no buy_volume, we need to handle that 
       else if (data && typeof data === 'object' && 'sell_volume' in data) {
-        console.log("Received sell volume in buy handler:", data.sell_volume);
+        // console.log("Received sell volume in buy handler:", data.sell_volume);
         setSellVolume(Number(data.sell_volume));
         
         // Save this data for cross-referencing
@@ -54,18 +54,18 @@ const OverviewComponent = ({ stock ,marketCap}) => {
         }));
       }
       else if (typeof data === 'string' || typeof data === 'number') {
-        console.log("Buy Volume (direct value):", data);
+        // console.log("Buy Volume (direct value):", data);
         setBuyVolume(Number(data));
       }
     };
 
     // Handler to update sell volume.
     const handleSellVolume = (data) => {
-      console.log("Sell volume data:", data);
+      // console.log("Sell volume data:", data);
       
       // Check for data.sell_volume first
       if (data && typeof data === 'object' && 'sell_volume' in data) {
-        console.log("Sell Volume:", data.sell_volume);
+        // console.log("Sell Volume:", data.sell_volume);
         setSellVolume(Number(data.sell_volume));
         
         // Save this data for cross-referencing
@@ -77,7 +77,7 @@ const OverviewComponent = ({ stock ,marketCap}) => {
       }
       // If we're getting buy_volume but no sell_volume, we need to handle that
       else if (data && typeof data === 'object' && 'buy_volume' in data) {
-        console.log("Received buy volume in sell handler:", data.buy_volume);
+        // console.log("Received buy volume in sell handler:", data.buy_volume);
         setBuyVolume(Number(data.buy_volume));
         
         // Save this data for cross-referencing
@@ -88,20 +88,20 @@ const OverviewComponent = ({ stock ,marketCap}) => {
         }));
       }
       else if (typeof data === 'string' || typeof data === 'number') {
-        console.log("Sell Volume (direct value):", data);
+        // console.log("Sell Volume (direct value):", data);
         setSellVolume(Number(data));
       }
     };
 
     // Handler to update today's low price.
     const handleMinUpdate = (data) => {
-      console.log("Received min update:", data);
+      // console.log("Received min update:", data);
       settodayMin(Number(data.low_price));
     };
 
     // Handler to update today's high price.
     const handleMaxUpdate = (data) => {
-      console.log("Received max update:", data);
+      // console.log("Received max update:", data);
       settodayMax(Number(data.high_price));
     };
 
@@ -131,7 +131,7 @@ const OverviewComponent = ({ stock ,marketCap}) => {
 
   // Optional: useEffect to log volume updates for debugging
   useEffect(() => {
-    console.log("Current volumes - Buy:", buyVolume, "Sell:", sellVolume);
+    // console.log("Current volumes - Buy:", buyVolume, "Sell:", sellVolume);
   }, [buyVolume, sellVolume]);
 
   return (

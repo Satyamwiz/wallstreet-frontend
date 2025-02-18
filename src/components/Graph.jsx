@@ -13,9 +13,10 @@ import { io } from "socket.io-client";
 import "./Graph.css"; 
 import { stockService } from "../services/apis.js";
 import { toast } from "react-toastify";
+import socketService from "../services/socket.js";
 
 const socket = io(import.meta.env.VITE_SOCKET_LINK, {
-  transports: ["websocket", "polling"],
+  transports: ["websocket"],
   path: "/socket.io",
   reconnection: true,
   reconnectionAttempts: 5,
@@ -34,28 +35,29 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
 
   useEffect(() => {
     // Fetch historical data for the chart
+    
+    socket.off("disconnect");
+
+
+
     const fetchHistoricalData = async () => {
      
-      
-      try {
-        const response = await stockService.gethistoricaldata({ companyName });
-        const formattedData = response.map(d => ({
-        time: convertToIST(d.time),
-        price: d.price,
-        }));
-        setData(formattedData);
-        // Adjust the windowSize if there are fewer data points than our initial setting.
-        if (formattedData.length < windowSize) {
+      stockService.gethistoricaldata({ companyName })
+        .then(response => {
+          console.log("pspspspsppsps", response);
+            const formattedData = response.data.map(d => ({
+            time: convertToIST(d.time),
+            price: d.price,
+            }));
+          setData(formattedData);
+          // Adjust the windowSize if there are fewer data points than our initial setting.
+          if (formattedData.length < windowSize) {
         setWindowSize(formattedData.length);
-        }
-       
-      } catch (err) {
-        
-        
-        toast.error("Error fetching historical data:", err);
-      
-        
-      }
+          }
+        })
+        .catch(err => {
+          toast.error("Error fetching historical data:", err);
+        });
       }
     
 
@@ -63,6 +65,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
     const fetchOpeningPrice = async () => {
       try {
       const response = await stockService.getopeningprice(companyName);
+      console.log("spspspspsp",response);
       const price = Number(response.openingPrice);
       console.log("Opening price:", price);
       setOpeningPrice(price);
@@ -76,6 +79,8 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
 
     fetchHistoricalData();
     fetchOpeningPrice();
+
+
 
     // Setup WebSocket connection for real-time updates
     socket.on("connect", () => {
@@ -96,9 +101,13 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
     });
 
     return () => {
-      socket.off("market");
-      socket.off("connect");
-      socket.off("disconnect");
+    //   socket.off("disconnect");
+    //   socket.off("disconnect");
+    //   socket.off("connect");
+      socket.disconnect();
+
+      
+     
     };
   }, [companyName, windowSize]);
 
