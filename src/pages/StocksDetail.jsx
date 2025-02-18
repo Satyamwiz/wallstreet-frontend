@@ -51,11 +51,12 @@ const StocksDetail = () => {
             })
             .catch((err) => {
               // Optionally, handle the error again or show a message
+              toast.error("the about request")
             });
         }, 5000);
       });
     
-  }, []); // empty dependency array to run only once
+  }, [passedState]); // empty dependency array to run only once
 
   // Market status check for enabling/disabling Buy/Sell buttons.
   useEffect(() => {

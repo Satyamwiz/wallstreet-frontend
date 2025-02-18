@@ -69,6 +69,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
       const price = Number(response.openingPrice);
       console.log("Opening price:", price);
       setOpeningPrice(price);
+      return;
       } catch (error) {
       console.error("Error fetching opening price:", error);
       setTimeout(fetchOpeningPrice, 4000); // Retry after 3 seconds
