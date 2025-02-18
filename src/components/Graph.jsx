@@ -10,7 +10,6 @@ import {
   ReferenceLine
 } from "recharts";
 import { io } from "socket.io-client";
-import axios from "axios";
 import "./Graph.css"; 
 import { stockService } from "../services/apis.js";
 import { toast } from "react-toastify";
@@ -36,9 +35,8 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   useEffect(() => {
     // Fetch historical data for the chart
     const fetchHistoricalData = async () => {
-      let attempts = 0;
-      const maxAttempts = 3;
-      while (attempts < maxAttempts) {
+     
+      
       try {
         const response = await stockService.gethistoricaldata({ companyName });
         const formattedData = response.map(d => ({
@@ -50,17 +48,16 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
         if (formattedData.length < windowSize) {
         setWindowSize(formattedData.length);
         }
-        return; // Exit the loop if successful
+       
       } catch (err) {
-        attempts += 1;
-        if (attempts >= maxAttempts) {
+        
+        
         toast.error("Error fetching historical data:", err);
-        } else {
-        console.warn(`Attempt ${attempts} failed. Retrying...`);
-        }
+      
+        
       }
       }
-    };
+    
 
     // Fetch the market opening price
     const fetchOpeningPrice = async () => {
@@ -72,7 +69,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
       return;
       } catch (error) {
       console.error("Error fetching opening price:", error);
-      setTimeout(fetchOpeningPrice, 4000); // Retry after 3 seconds
+      // setTimeout(fetchOpeningPrice, 4000); // Retry after 3 seconds
       toast.error("Error, please try again", error);
       }
     };

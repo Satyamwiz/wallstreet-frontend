@@ -75,7 +75,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           {user && (
             <li className="nav-item">
               <NavLink to="/wishlist" className="nav-link">
-                <FaHeart className="icon" /> Wishlist
+                <FaHeart className="icon" /> WatchList
               </NavLink>
             </li>
           )}
