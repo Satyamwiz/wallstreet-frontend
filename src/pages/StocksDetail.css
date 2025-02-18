@@ -106,6 +106,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
   font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #cbd5e0;
   transition: transform 0.3s ease;
 }
@@ -346,3 +347,8 @@
   border: none;
   cursor: pointer;
 }
+
+.para{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+

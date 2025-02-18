@@ -36,32 +36,43 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   useEffect(() => {
     // Fetch historical data for the chart
     const fetchHistoricalData = async () => {
+      let attempts = 0;
+      const maxAttempts = 3;
+      while (attempts < maxAttempts) {
       try {
         const response = await stockService.gethistoricaldata({ companyName });
         const formattedData = response.map(d => ({
-          time: convertToIST(d.time),
-          price: d.price,
+        time: convertToIST(d.time),
+        price: d.price,
         }));
         setData(formattedData);
         // Adjust the windowSize if there are fewer data points than our initial setting.
         if (formattedData.length < windowSize) {
-          setWindowSize(formattedData.length);
+        setWindowSize(formattedData.length);
         }
+        return; // Exit the loop if successful
       } catch (err) {
+        attempts += 1;
+        if (attempts >= maxAttempts) {
         toast.error("Error fetching historical data:", err);
+        } else {
+        console.warn(`Attempt ${attempts} failed. Retrying...`);
+        }
+      }
       }
     };
 
     // Fetch the market opening price
     const fetchOpeningPrice = async () => {
       try {
-        const response = await stockService.getopeningprice(companyName);
-        const price = Number(response.openingPrice);
-        console.log("Opening price:", price);
-        setOpeningPrice(price);
+      const response = await stockService.getopeningprice(companyName);
+      const price = Number(response.openingPrice);
+      console.log("Opening price:", price);
+      setOpeningPrice(price);
       } catch (error) {
-        console.error("Error fetching opening price:", error);
-        toast.error("Error, please try again", error);
+      console.error("Error fetching opening price:", error);
+      setTimeout(fetchOpeningPrice, 4000); // Retry after 3 seconds
+      toast.error("Error, please try again", error);
       }
     };
 

@@ -3,7 +3,7 @@ import React from "react";
 const Rules = () => {
     return (
         <div className="container rulesPage mb-5">
-            <div class="rulesCard card mx-auto text-light border-0 shadow-lg mb-5">
+            <div className="rulesCard ">
                 <div class="card-header rulesCardTitle border-0 text-center">
                     Rules
                 </div>

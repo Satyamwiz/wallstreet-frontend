@@ -51,8 +51,9 @@ const stockService = {
 
         return axiosAuthInstance.post('/market/historicalMarketData',req).then(res=>res.data).catch(err=>{throw err.response})
     },
-    getStockDetail: (id) => {
-        return axiosAuthInstance.get(`/stocks/${id}`)
+    getStockDetail: (req) => {
+        const request={companyName:req};
+        return axiosAuthInstance.post(`/company/about`,request)
         .then(res => res.data)
         .catch(err => {
             console.clear()

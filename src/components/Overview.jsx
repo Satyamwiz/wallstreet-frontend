@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import socketService from "../services/socket.js";
-import SellModal from "./SellModal.jsx";
 
-const OverviewComponent = ({ stock }) => {
+
+const OverviewComponent = ({ stock ,marketCap}) => {
   // Initialize state with the stock's current price and default range values.
   const [prices, setPrices] = useState(stock.price);
   const [todaysMin, settodayMin] = useState(0);
@@ -154,10 +154,7 @@ const OverviewComponent = ({ stock }) => {
 
       {/* Key Statistics Display */}
       <div className="info-grid">
-        <div className="info-card">
-          <strong>Market Cap</strong>
-          <span>{stock.marketCap || "NA"}</span>
-        </div>
+       
         <div className="info-card">
           <strong>Buy Volume</strong>
           <span>{buyVolume}</span>

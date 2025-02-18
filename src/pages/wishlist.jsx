@@ -81,7 +81,7 @@ const MyWishlist = () => {
   // Handle removing stock from the wishlist
   const handleRemoveStock = (stockId) => {
     stockService
-      .removeFromWishlist(stockId) // Assuming `removeFromWishlist()` removes stock from the wishlist
+      .removeFromWishlist(stockId) 
       .then(() => {
         setWishlist((prev) => prev.filter((stock) => stock.id !== stockId));
         setNotification("Stock removed from wishlist!");

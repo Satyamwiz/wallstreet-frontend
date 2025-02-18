@@ -7,8 +7,7 @@ class SocketService {
   constructor() {
     this.socket = io(SOCKET_SERVER_URL, { 
       transports: ['websocket'],  
-      path: '/socket.io',
-      autoConnect: false     
+      path: '/socket.io',  
   }); // Prevent auto-connect
   }
 
