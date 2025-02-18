@@ -1,47 +1,50 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { stockService,wishlistService } from "../services/apis.js"; // Your API service
-import socketService from "../services/socket.js"; // Your socket service
-import "./Wishlist.css"; // Your CSS file
+import { stockService, wishlistService } from "../services/apis.js";
+import socketService from "../services/socket.js";
+import "./Wishlist.css";
 import { toast } from "react-toastify";
 
 const MyWishlist = () => {
-  const [wishlist, setWishlist] = useState([]); // Wishlist stocks
-  const [livePrices, setLivePrices] = useState({}); // Live price updates
+  const [wishlist, setWishlist] = useState([]); // Wishlist stocks (transformed)
+  const [livePrices, setLivePrices] = useState({}); // Live price updates keyed by stock name
   const [notification, setNotification] = useState(""); // Notification state
 
-  // Fetch Wishlist Data from API
+  // Fetch wishlist data and transform each object to match Stocks.jsx structure.
   useEffect(() => {
     wishlistService
-      . getWishlist() // Assuming `getWishlist()` fetches user's wishlist stocks
+      .getWishlist() // Fetch user's wishlist stocks
       .then((res) => {
-        console.log(res);
         if (res.length === 0) {
-          
-          setWishlist([]); // No wishlist data
+          setWishlist([]);
         } else {
-          setWishlist(res);
+          // Transform each stock: rename "companyName" to "name" while keeping "price" as raw numeric value.
+          const transformedWishlist = res.map((stock) => ({
+            ...stock,
+            name: stock.companyName,
+            // Ensure price remains as the raw numeric value.
+          }));
+          setWishlist(transformedWishlist);
         }
       })
       .catch((err) => {
         toast.error(err);
-        setWishlist([]); // Handle error and set empty wishlist
+        setWishlist([]);
       });
   }, []);
 
-  // Setup socket for live stock price updates
+  // Setup socket connection for live price updates.
   useEffect(() => {
-    
     if (wishlist.length === 0) return;
 
     socketService.connect();
 
+    // Subscribe to updates using the "name" field.
     wishlist.forEach((stock) => {
-      socketService.subscribeToCompany(stock.companyName);
+      socketService.subscribeToCompany(stock.name);
     });
 
-    // Market update handler
     const handleMarketUpdate = (data) => {
       let payload = data;
       console.log("Received live update:", payload);
@@ -55,9 +58,10 @@ const MyWishlist = () => {
         }
       }
 
+      // Store the live price as a raw number.
       setLivePrices((prev) => ({
         ...prev,
-        [payload.company]: Number(payload.price).toFixed(2),
+        [payload.company]: Number(payload.price),
       }));
     };
 
@@ -69,10 +73,10 @@ const MyWishlist = () => {
     };
   }, [wishlist]);
 
-  // Handle adding stock to the wishlist
+  // Handle adding a stock to the wishlist.
   const handleAddStock = (stock) => {
     stockService
-      .addToWishlist(stock) // Assuming `addToWishlist()` adds stock to the wishlist
+      .addToWishlist(stock)
       .then(() => {
         setWishlist((prev) => [...prev, stock]);
         setNotification("Stock added to wishlist!");
@@ -83,8 +87,6 @@ const MyWishlist = () => {
       });
   };
 
-  
-
   return (
     <div className="wishlist-container">
       <h2 className="wishlist-heading">My Wishlist</h2>
@@ -93,10 +95,9 @@ const MyWishlist = () => {
       {/* Notification Message */}
       {notification && <div className="notification">{notification}</div>}
 
-      {/* Loader */}
+      {/* If no wishlist items, prompt user to add stocks */}
       {wishlist.length === 0 ? (
-        <div >
-          
+        <div>
           <div className="add-stock-message">
             <p>No stocks in your wishlist yet.</p>
             <Link to="/stocks" className="btn-add-stock">
@@ -107,29 +108,31 @@ const MyWishlist = () => {
       ) : (
         <div className="wishlist-grid">
           {wishlist.map((stock, index) => {
+            // Determine the current price using live updates if available, else use the raw stock.price.
             const currentPrice =
-              livePrices[stock.companyName] !== undefined
-                ? livePrices[stock.companyName]
-                : stock.price;
+              livePrices[stock.name] !== undefined
+                ? livePrices[stock.name]
+                : Number(stock.price);
+            // Format the price for display (only for UI).
             const displayPrice =
-              currentPrice !== undefined ? `$${currentPrice}` : "N/A";
+              !isNaN(currentPrice) ? `$${currentPrice.toFixed(2)}` : "N/A";
 
             return (
               <Link
-                to={`/stocksdetail/${stock.companyName}`} // Link to stock detail page
-                state={{ stock }} // Pass stock data as state to the details page
-                key={stock.companyName} // Unique key for each stock
-                className="wishlist-card" // Add a class for styling
+                to={`/stocksdetail/${stock.name}`}
+                key={stock.name}
+                // Pass the transformed stock object as state (matching Stocks.jsx expectations).
+                state={{ stock }}
+                className="stock-card"
               >
                 <div className="wishlist-card-header">
                   <div className="wishlist-rank">{index + 1}</div>
                   <div className="wishlist-logo">{stock.symbol}</div>
                 </div>
                 <div className="wishlist-info">
-                  <h3>{stock.companyName}</h3>
+                  <h3>{stock.name}</h3>
                   <div className="wishlist-price">{displayPrice}</div>
                 </div>
-
               </Link>
             );
           })}

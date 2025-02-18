@@ -23,7 +23,6 @@ const StocksDetail = () => {
   const location = useLocation();
   const passedState = location.state;
 
-
   // const [availableShares, setAvailableShares] = useState(0);
   const [isMarketOpen, setIsMarketOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
@@ -33,13 +32,13 @@ const StocksDetail = () => {
   const [currentPrice, setCurrentPrice] = useState(passedState.stock ?passedState.stock.price : 0);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  
+ 
 
   // Fetch detailedpassedState.stock info for the About tab once.
   useEffect(() => {
     
    
-    stockService.getStockDetail(passedState.stock.name)
+   stockService.getStockDetail(passedState.stock.name)
       .then((res) => {
         setInfostock(res);
       })
