@@ -166,6 +166,15 @@ const wishlistService= {
             console.clear()
             throw err.response
         })
+    },
+    isBookmark:(stock)=>{
+        return axiosAuthInstance.post('/watchlist/isBookmarked',stock)
+        .then((res)=> res.data)
+        .catch((err)=>{
+            console.clear()
+            throw err.response
+        })
+
     }
 }
 

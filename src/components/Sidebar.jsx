@@ -93,7 +93,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           </li>
           <li className="nav-item">
             <a
-              href="https://news-frontend-wallstreet.vercel.app/"
+              href="https://news-wallstreet-credenz.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="nav-link"

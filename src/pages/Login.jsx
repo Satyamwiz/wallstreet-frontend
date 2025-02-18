@@ -26,7 +26,7 @@ const Login = () => {
           <FaUser className="input-icon" />
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Email Address"
             onChange={(e) => setName(e.target.value)}
             value={username}
             required 

@@ -23,8 +23,10 @@ const MyWishlist = () => {
           const transformedWishlist = res.map((stock) => ({
             ...stock,
             name: stock.companyName,
-            // Ensure price remains as the raw numeric value.
+            
           }));
+          console.error(transformedWishlist);
+
           setWishlist(transformedWishlist);
         }
       })
@@ -89,7 +91,7 @@ const MyWishlist = () => {
 
   return (
     <div className="wishlist-container">
-      <h2 className="wishlist-heading">My Wishlist</h2>
+      <h2 className="wishlist-heading">My Watchlist</h2>
       <p className="wishlist-subheading">Stocks you are tracking</p>
 
       {/* Notification Message */}
@@ -99,7 +101,7 @@ const MyWishlist = () => {
       {wishlist.length === 0 ? (
         <div>
           <div className="add-stock-message">
-            <p>No stocks in your wishlist yet.</p>
+            <p>No stocks in your watchlist yet.</p>
             <Link to="/stocks" className="btn-add-stock">
               Add Stocks
             </Link>
@@ -115,7 +117,7 @@ const MyWishlist = () => {
                 : Number(stock.price);
             // Format the price for display (only for UI).
             const displayPrice =
-              !isNaN(currentPrice) ? `$${currentPrice.toFixed(2)}` : "N/A";
+              !isNaN(currentPrice) ? `${currentPrice.toFixed(2)}` : "N/A";
 
             return (
               <Link
@@ -126,8 +128,8 @@ const MyWishlist = () => {
                 className="stock-card"
               >
                 <div className="wishlist-card-header">
-                  <div className="wishlist-rank">{index + 1}</div>
-                  <div className="wishlist-logo">{stock.symbol}</div>
+                  
+                  <div >{stock.ticker}</div>
                 </div>
                 <div className="wishlist-info">
                   <h3>{stock.name}</h3>

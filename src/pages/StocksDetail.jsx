@@ -32,11 +32,23 @@ const StocksDetail = () => {
   const [currentPrice, setCurrentPrice] = useState(passedState.stock ?passedState.stock.price : 0);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  
  
 
   // Fetch detailedpassedState.stock info for the About tab once.
   useEffect(() => {
+     
     
+    wishlistService.isBookmark({companyName:passedState.stock.name})
+    .then((res)=>{
+      console.log("bookmark")
+      setIsBookmarked(res.is_marked);
+      
+    })
+    .catch((err)=>{
+      console.log("not")
+      toast.error(err);
+    })
    
    stockService.getStockDetail(passedState.stock.name)
       .then((res) => {
@@ -73,6 +85,8 @@ const StocksDetail = () => {
 
   // Socket subscription to update currentPrice continuously.
   useEffect(() => {
+    
+
     if (!passedState.stock) return;
     socketService.connect();
     socketService.subscribeToCompany(passedState.stock.name);
@@ -84,9 +98,11 @@ const StocksDetail = () => {
       socketService.removeListeners();
       socketService.disconnect();
     };
+    
   }, [passedState.stock]);
 
   // Toggle bookmark state.
+
   const toggleBookmark = () => {
     setIsBookmarked((prev) => !prev);
 
@@ -100,7 +116,7 @@ const StocksDetail = () => {
           setIsBookmarked((prev) => !prev); // Revert state on failure
         });
     } else {
-      wishlistService. removeWishlist({companyName:passedState.stock.name})
+      stockService.removeWishlist({companyName:passedState.stock.name})
         .then(() => {
           toast.success("Removed from wishlist");
         })
@@ -132,7 +148,7 @@ const StocksDetail = () => {
             <div className="stock-header-content">
               <h1 className="stock-title">{passedState.stock.name}</h1>
               <span className="current-price">{`₹ ${Number(currentPrice).toFixed(2)}`}</span>
-              <button className="bookmark-button" onClick={toggleBookmark}>
+              <button className="bookmark-button" onClick={toggleBookmark} >
             
 
               <FaBookmark
@@ -173,7 +189,7 @@ const StocksDetail = () => {
               </div>
             ) : (
               <div className="market-closed">
-                [Note: The market is currently closed. Trading resumes at 12 AM.]
+                [Note: The market is currently closed. Trading resumes at 9 AM.]
               </div>
             )}
           </section>

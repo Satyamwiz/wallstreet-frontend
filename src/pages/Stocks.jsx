@@ -124,7 +124,7 @@ const Stocks = () => {
                 ? livePrices[stock.name]
                 : stock.price;
             const displayPrice =
-              currentPrice !== undefined ? `$${currentPrice}` : "N/A";
+              currentPrice !== undefined ? `${currentPrice}` : "N/A";
 
             // Calculate the percentage change from the opening price (stock.price)
             let changePercentage = 0;
@@ -144,9 +144,9 @@ const Stocks = () => {
                 className="stock-card"
               >
                 <div className="stock-card-header">
-                  <div className="stock-rank">{index + 1}</div>
+                  
                   {/* {isPositive ? <FaBull className="bull-icon" /> : <FaBear className="bear"></FaBear> } */}
-                  <div className="stock-logo">{stock.symbol}</div>
+                  <div >{stock.ticker}</div>
                 </div>
                 <div className="stock-info">
                   <h3>{stock.name}</h3>
