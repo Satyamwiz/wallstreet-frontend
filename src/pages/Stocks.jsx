@@ -89,7 +89,7 @@ const Stocks = () => {
     const lowerQuery = searchQuery.toLowerCase().trim();
     return (
       stock.name?.toLowerCase().includes(lowerQuery) ||
-      stock.symbol?.toLowerCase().includes(lowerQuery)
+      stock.ticker?.toLowerCase().includes(lowerQuery)
     );
   });
 

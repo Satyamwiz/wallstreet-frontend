@@ -54,40 +54,7 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div className="how-to-play">
-        <h2>
-          Pump and Dump 101 <span className="disclaimer">*Not Financial Advice</span>
-        </h2>
-        <div className="steps">
-          <div className="step">
-            <div className="step-icon">
-              <DollarSign size={48} />
-            </div>
-            <h3>Step 1: YOLO</h3>
-            <p>
-              Throw your virtual life savings into the most questionable stocks you can find.
-            </p>
-          </div>
-          <div className="step">
-            <div className="step-icon">
-              <TrendingUp size={48} />
-            </div>
-            <h3>Step 2: To The Moon</h3>
-            <p>
-              Watch your portfolio soar (or crash) in real-time with our realistic market simulator.
-            </p>
-          </div>
-          <div className="step">
-            <div className="step-icon">
-              <Rocket size={48} />
-            </div>
-            <h3>Step 3: Lambo Time</h3>
-            <p>
-              Earn something, climb the leaderboard, and flex on the paper hands.
-            </p>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 }

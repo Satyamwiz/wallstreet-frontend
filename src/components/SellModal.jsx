@@ -67,7 +67,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
     const totalOrderValue = sp * qty;
     const maxAllowedValue = sellPrice * shares * 1.5; // Example: 50% more than current holdings value
     
-    if (percentageDifference >= 40 || totalOrderValue > maxAllowedValue) {
+    if (percentageDifference >= 12 || totalOrderValue > maxAllowedValue) {
       setShowCircuitWarning(true);
     } else {
       setShowCircuitWarning(false);

@@ -41,7 +41,7 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
     if (bidPrice === 0 || buyprice === 0) return;
     const priceDifference = Math.abs(buyprice - bidPrice);
     const percentageDifference = (priceDifference / bidPrice) * 100;
-    setShowCircuitWarning(percentageDifference >= 40);
+    setShowCircuitWarning(percentageDifference >= 12);
   }, [bidPrice, buyprice]);
 
   const handleBuy = (e) => {
@@ -61,7 +61,7 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
         onClose();
         setTimeout(() => {
           window.location.href = "/portfolio";
-        }, 4000);
+        }, 2000);
       })
       .catch((err) => {
         toast.update(tid, {
