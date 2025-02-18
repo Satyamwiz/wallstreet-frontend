@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { stockService } from "../services/apis.js"; // Your API service
+import { stockService,wishlistService } from "../services/apis.js"; // Your API service
 import socketService from "../services/socket.js"; // Your socket service
 import "./Wishlist.css"; // Your CSS file
+import { toast } from "react-toastify";
 
 const MyWishlist = () => {
   const [wishlist, setWishlist] = useState([]); // Wishlist stocks
@@ -12,28 +13,32 @@ const MyWishlist = () => {
 
   // Fetch Wishlist Data from API
   useEffect(() => {
-    stockService
-      .getWishlist() // Assuming `getWishlist()` fetches user's wishlist stocks
+    wishlistService
+      . getWishlist() // Assuming `getWishlist()` fetches user's wishlist stocks
       .then((res) => {
+        console.log(res);
         if (res.length === 0) {
+          
           setWishlist([]); // No wishlist data
         } else {
           setWishlist(res);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        toast.error(err);
         setWishlist([]); // Handle error and set empty wishlist
       });
   }, []);
 
   // Setup socket for live stock price updates
   useEffect(() => {
+    
     if (wishlist.length === 0) return;
 
     socketService.connect();
 
     wishlist.forEach((stock) => {
-      socketService.subscribeToCompany(stock.name);
+      socketService.subscribeToCompany(stock.companyName);
     });
 
     // Market update handler
@@ -78,19 +83,7 @@ const MyWishlist = () => {
       });
   };
 
-  // Handle removing stock from the wishlist
-  const handleRemoveStock = (stockId) => {
-    stockService
-      .removeFromWishlist(stockId) 
-      .then(() => {
-        setWishlist((prev) => prev.filter((stock) => stock.id !== stockId));
-        setNotification("Stock removed from wishlist!");
-        setTimeout(() => setNotification(""), 3000);
-      })
-      .catch((err) => {
-        console.error("Error removing stock from wishlist", err);
-      });
-  };
+  
 
   return (
     <div className="wishlist-container">
@@ -102,8 +95,8 @@ const MyWishlist = () => {
 
       {/* Loader */}
       {wishlist.length === 0 ? (
-        <div className="loader">
-          <ThreeDots height="55" width="55" color="#5eb5f8" />
+        <div >
+          
           <div className="add-stock-message">
             <p>No stocks in your wishlist yet.</p>
             <Link to="/stocks" className="btn-add-stock">
@@ -115,17 +108,17 @@ const MyWishlist = () => {
         <div className="wishlist-grid">
           {wishlist.map((stock, index) => {
             const currentPrice =
-              livePrices[stock.name] !== undefined
-                ? livePrices[stock.name]
+              livePrices[stock.companyName] !== undefined
+                ? livePrices[stock.companyName]
                 : stock.price;
             const displayPrice =
               currentPrice !== undefined ? `$${currentPrice}` : "N/A";
 
             return (
               <Link
-                to={`/stocksdetail/${stock.name}`} // Link to stock detail page
+                to={`/stocksdetail/${stock.companyName}`} // Link to stock detail page
                 state={{ stock }} // Pass stock data as state to the details page
-                key={stock.name} // Unique key for each stock
+                key={stock.companyName} // Unique key for each stock
                 className="wishlist-card" // Add a class for styling
               >
                 <div className="wishlist-card-header">
@@ -133,20 +126,10 @@ const MyWishlist = () => {
                   <div className="wishlist-logo">{stock.symbol}</div>
                 </div>
                 <div className="wishlist-info">
-                  <h3>{stock.name}</h3>
+                  <h3>{stock.companyName}</h3>
                   <div className="wishlist-price">{displayPrice}</div>
                 </div>
 
-                {/* Remove Stock Button */}
-                <button
-                  className="remove-from-wishlist-btn"
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent link navigation when removing from wishlist
-                    handleRemoveStock(stock.id);
-                  }}
-                >
-                  Remove
-                </button>
               </Link>
             );
           })}

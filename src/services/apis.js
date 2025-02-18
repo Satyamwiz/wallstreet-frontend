@@ -133,16 +133,40 @@ const stockService = {
         throw err.response;
       });
   },
-  // Add a stock to the wishlist
+  
   addToWishlist: (stock) => {
+    console.log(stock);
     return axiosAuthInstance
-      .post("/wishlist", stock) // Assuming this is the correct endpoint
+      .post("/watchlist/add", stock) 
       .then((res) => res.data)
       .catch((err) => {
-        console.clear();
+        
+        
         throw err.response;
       });
   },
+  removeWishlist : (stock)=>{
+    console.log(stock);
+    return axiosAuthInstance
+   
+    .post("/watchlist/remove",stock)
+    .then((res)=> res.data)
+    .catch((err)=>{
+       
+        throw err.response;
+    })
+  }
+}
+
+const wishlistService= {
+    getWishlist:()=>{
+        return axiosAuthInstance.get('/watchlist')
+        .then((res)=> res.data)
+        .catch((err)=>{
+            console.clear()
+            throw err.response
+        })
+    }
 }
 
 const portfolioService = {
@@ -250,4 +274,4 @@ const rankService = {
     }
 }
 
-export {userService, stockService, portfolioService, marketService, rankService};
+export {userService, stockService, portfolioService, marketService, rankService, wishlistService};

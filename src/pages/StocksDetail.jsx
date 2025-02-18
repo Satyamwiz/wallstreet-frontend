@@ -9,13 +9,13 @@ import { CategoryScale } from "chart.js";
 import "./StocksDetail.css";
 import Transactionsindi from "../components/Transactionsindi.jsx";
 import Overview from "../components/Overview.jsx";
-import { stockService, marketService } from "../services/apis.js";
+import { stockService, marketService, wishlistService } from "../services/apis.js";
 import BuyModal from "../components/BuyModal";
 import SellModal from "../components/SellModal";
 import Graph from "../components/Graph.jsx";
 import socketService from "../services/socket.js";
 import { toast } from "react-toastify";
-
+import { FaBookmark } from 'react-icons/fa';
 Chart.register(CategoryScale);
 
 const StocksDetail = () => {
@@ -90,7 +90,26 @@ const StocksDetail = () => {
   // Toggle bookmark state.
   const toggleBookmark = () => {
     setIsBookmarked((prev) => !prev);
-    // Optionally, add API calls here to persist bookmark status.
+
+    if (!isBookmarked) {
+      stockService.addToWishlist({companyName:passedState.stock.name})
+        .then(() => {
+          toast.success("Added to wishlist");
+        })
+        .catch((err) => {
+          toast.error("Failed to add to wishlist");
+          setIsBookmarked((prev) => !prev); // Revert state on failure
+        });
+    } else {
+      wishlistService. removeWishlist({companyName:passedState.stock.name})
+        .then(() => {
+          toast.success("Removed from wishlist");
+        })
+        .catch((err) => {
+          toast.error("Failed to remove from wishlist");
+          setIsBookmarked((prev) => !prev); // Revert state on failure
+        });
+    }
   };
 
   return (
@@ -115,7 +134,14 @@ const StocksDetail = () => {
               <h1 className="stock-title">{passedState.stock.name}</h1>
               <span className="current-price">{`₹ ${Number(currentPrice).toFixed(2)}`}</span>
               <button className="bookmark-button" onClick={toggleBookmark}>
-                <Bookmark size={24} color={isBookmarked ? "#63b3ed" : "#a0aec0"} />
+            
+
+              <FaBookmark
+               size={48}
+                  color={isBookmarked ? "#63b3ed" : "#a0aec0"}
+                  />
+
+                {/* <Bookmark size={48} color={isBookmarked ? "#63b3ed" : "#a0aec0"} /> */}
               </button>
             </div>
           </header>
