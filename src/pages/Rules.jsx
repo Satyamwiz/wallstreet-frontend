@@ -25,7 +25,7 @@ const Rules = () => {
                         <br />
                         <li>Company information will be available on the company page within the platform.</li>
                         <br />
-                        <li>Participants can buy and sell stocks even after market hours. Orders placed after the market has closed will be processed upon the next market opening.</li>
+                        <li>Participants cannot buy and sell stocks even after market hours.</li>
                         <br />
                         <li>
                             Participant rankings will be determined based on their valuation amount, calculated as the net sum of:
