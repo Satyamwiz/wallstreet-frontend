@@ -33,7 +33,7 @@ class SocketService {
     catch(e){
       alert(e)
     }
-    console.log("Subscribed to", company);
+    // console.log("Subscribed to", company);
   }
 
   ranking(callback){
