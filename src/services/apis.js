@@ -2,7 +2,7 @@ import {axiosAuthInstance, axiosNoAuthInstance} from "../services/axiosInstance.
 // import axios from "axios";
 const userService = {
     loginUser: (loginData) => {
-        console.log(loginData);
+        // console.log(loginData);
         
         return axiosNoAuthInstance.post("/auth/login", loginData)
         .then(res => res.data)
@@ -19,18 +19,18 @@ const userService = {
     //     return axiosAuthInstance.post("/auth/token/logout/")
     //     .then(res => res.data)
     //     .catch(err => {
-    //         console.clear()
+            // console.clear()
     //         throw err.response
-    //         console.clear()
+            // console.clear()
     //     })
     // },
     // registerUser: (registerData) => {
     //     return axiosNoAuthInstance.post("/auth/users/", registerData)
     //     .then(res => res.data)
     //     .catch(err => {
-    //         console.clear()
+            // console.clear()
     //         throw err.response
-    //         console.clear()
+            // console.clear()
     //     })
     // }
 }
@@ -83,7 +83,7 @@ const stockService = {
         // console.log("working",id);
         
         const req = { order_id: id };
-        console.log(req);
+        // console.log(req);
 
        
         
@@ -110,7 +110,7 @@ const stockService = {
     getQuantity: (req) => {
     //    alert(req);
         const request={company:req};
-        console.log(request);
+        // console.log(request);
         return axiosAuthInstance.post(`/portfolio/companyHolding`, request)
         .then(res => res.data)
         .catch(err => {
@@ -130,7 +130,7 @@ const stockService = {
   },
   
   addToWishlist: (stock) => {
-    console.log(stock);
+    // console.log(stock);
     return axiosAuthInstance
       .post("/watchlist/add", stock) 
       .then((res) => res.data)
@@ -141,7 +141,7 @@ const stockService = {
       });
   },
   removeWishlist : (stock)=>{
-    console.log(stock);
+    // console.log(stock);
     return axiosAuthInstance
    
     .post("/watchlist/remove",stock)
@@ -207,7 +207,7 @@ const portfolioService = {
         .then(res=>res.data)
         .catch(err=>{
             console.clear()
-            console.log(err)
+            // console.log(err)
             throw err.response
         })
     },
@@ -250,18 +250,18 @@ const marketService = {
 //         return axiosAuthInstance.get("/ipos/")
 //         .then(res => res.data)
 //         .catch(err => {
-//             console.clear()
+            // console.clear()
 //             throw err.response
-//             console.clear()
+            // console.clear()
 //         })
 //     },
 //     subscribeIpo: (id, ipoSubscribeData) => {
 //         return axiosAuthInstance.post(`/ipos/subscribe/${id}`, ipoSubscribeData)
 //         .then(res => res.data)
 //         .catch(err => {
-//             console.clear()
+            // console.clear()
 //             throw err.response
-//             console.clear()
+            // console.clear()
 //         })
 //     }
 // }
