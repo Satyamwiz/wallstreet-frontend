@@ -181,3 +181,29 @@
   border-radius: 6px; /* Roundness of the thumb */
   border: 3px solid #1e1e1e; /* Padding around thumb */
 }
+
+/* Footer Styles */
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 2rem;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.footer a {
+  color: #007BFF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}

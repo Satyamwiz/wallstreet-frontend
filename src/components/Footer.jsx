@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -12,12 +11,14 @@ const Footer = () => {
                     >
                         Designed & developed by -
                     </p>
-                    <NavLink className="text-decoration-none" to="">
-                        <p className="mb-0 text-light">
-                            {" "}
-                            <u> Web Team</u>{" "}
-                        </p>
-                    </NavLink>
+                    <a
+                        className="text-decoration-none text-light"
+                        href="https://example.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <u> Web Team</u>
+                    </a>
                 </div>
             </footer>
         </div>
