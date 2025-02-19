@@ -13,7 +13,7 @@ const Footer = () => {
                     </p>
                     <a
                         className="text-decoration-none text-light"
-                        href="https://example.com"
+                        href="https://wallstreet-webteam.vercel.app"
                         target="_blank"
                         rel="noopener noreferrer"
                     >

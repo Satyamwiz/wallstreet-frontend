@@ -57,7 +57,7 @@ export default function Home() {
       <footer className="footer">
         <p>
           Developed by{" "}
-          <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://wallstreet-webteam.vercel.app" target="_blank" rel="noopener noreferrer">
             web team
           </a>
         </p>
