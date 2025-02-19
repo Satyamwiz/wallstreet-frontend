@@ -156,15 +156,21 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   tickFormatter={(value) => {
     if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
     if (value >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
-    return value;
+    return value.toFixed(1); // Ensure one decimal place
   }}
   domain={
-    data.length > 0
+    viewData.length > 0
       ? (() => {
-          const prices = data.map(d => d.price);
+          let prices = viewData
+            .map(d => Number(d.price))
+            .filter(price => !isNaN(price) && price > 0 && price < 1e6); // Prevent extreme values
+
+          if (prices.length === 0) return ["auto", "auto"];
+          
           const minPrice = Math.min(...prices);
-          const maxPrice = Math.max(...prices);
-          const buffer = (maxPrice - minPrice) * 0.1; 
+          let maxPrice = Math.max(...prices);
+          const buffer = (maxPrice - minPrice) * 0.1 || 1; // Add spacing
+
           return [Math.max(0, minPrice - buffer), maxPrice + buffer];
         })()
       : ["auto", "auto"]

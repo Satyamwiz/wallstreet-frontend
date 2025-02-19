@@ -85,15 +85,10 @@ const stockService = {
         const req = { order_id: id };
         console.log(req);
 
-        return marketService.checkMarketStatus()
-            .then(status => {
-            if (status.is_open) {
-                return axiosAuthInstance.post(`/order/delete`, req);
-            } else {
-                return axiosAuthInstance.post(`/order/deleteWhenClose`, req);
-            }
-            })
-            .then(res => res.data)
+       
+        
+                return axiosAuthInstance.post(`/order/delete`, req)
+                .then(res => res.data)
             .catch(err => {
             throw err.response;
             });

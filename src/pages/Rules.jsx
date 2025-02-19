@@ -20,6 +20,8 @@ const Rules = () => {
                                 <li>Day 3: The market will be open from 9:00 AM to 4:00 PM.</li>
                             </ul>
                         </li>
+                        <br/>
+                        <li> Each stock has an upper and lower circuit limit of 12%, meaning the you cannot purchase a stock with increase or decrease by more than 12% in any trade. </li>
                         <br />
                         <li>Company information will be available on the company page within the platform.</li>
                         <br />
