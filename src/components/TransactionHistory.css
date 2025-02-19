@@ -1,61 +1,18 @@
-/* Outer container with improved spacing and a dark theme */
+/* Existing transaction history styles remain unchanged */
 .transaction-history {
   padding: 20px;
   background-color: #2d3748;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  color: #f7fafc; /* Light text for contrast */
+  color: #f7fafc;
 }
 
-/* Heading styling with more breathing room */
 .transaction-history h2 {
   font-size: 28px;
   color: #f7fafc;
   margin-bottom: 20px;
 }
-
-/* Container for the table to enable vertical scrolling with extra margin */
-.transaction-table-container {
-  max-height: 400px;    /* Adjust as needed */
-  overflow-y: auto;  
-  overflow-x: auto ;   /* Enables vertical scrolling */
-  -webkit-overflow-scrolling: touch;
-  margin-top: 10px;
-}
-
-/* Table styling with separate borders.
- for row spacing */
-.transaction-history table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;  /* Adds vertical space between rows */
-}
-
-/* Table header styling with your original header color accent */
-.transaction-history th {
-  background-color: #2d3748;
-  color: #5eb5f8;  /* Original accent color */
-  padding: 12px 16px;
-  text-align: center;
-  font-weight: 600;
-  border-bottom: 2px solid #5eb5f8;
-}
-
-/* Table cell styling with increased padding and a subtle border */
-.transaction-history td {
-  background-color: #1a202c;
-  padding: 12px 16px;
-  text-align: center;
-  border-bottom: 1px solid #4a5568;
-}
-
-/* Hover effect on rows for a modern interactive feel */
-.transaction-history tbody tr:hover td {
-  background-color: #2d3748;
-  transition: background-color 0.3s;
-}
-/* ... (keep existing styles) */
 
 .transaction-table-container {
   max-height: 400px;
@@ -67,41 +24,34 @@
 
 .transaction-history table {
   width: 100%;
-  min-width: 700px; /* Minimum width to maintain table structure */
+  min-width: 700px; /* Ensures table structure is maintained */
   border-collapse: separate;
   border-spacing: 0 10px;
 }
 
-/* Mobile-specific adjustments */
-@media (max-width: 768px) {
-  .transaction-history {
-    padding: 10px;
-  }
-
-  .transaction-history th,
-  .transaction-history td {
-    font-size: 14px; /* Slightly smaller font for mobile */
-    padding: 8px 12px; /* Reduced padding for mobile */
-    white-space: nowrap; /* Prevent text wrapping */
-  }
-
-  .transaction-history th {
-    font-size: 12px; /* Smaller header text */
-    padding: 8px 10px;
-  }
-
-  .transaction-table-container {
-    max-height: 500px;
-    border-radius: 6px;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  }
-
-  .transaction-history h3 {
-    font-size: 1.5rem; /* Smaller heading for mobile */
-  }
+.transaction-history th {
+  background-color: #2d3748;
+  color: #5eb5f8;
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 2px solid #5eb5f8;
 }
 
-/* Optional: Add scrollbar styling for better visual */
+.transaction-history td {
+  background-color: #1a202c;
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #4a5568;
+}
+
+/* Hover effect for rows */
+.transaction-history tbody tr:hover td {
+  background-color: #2d3748;
+  transition: background-color 0.3s;
+}
+
+/* Optional scrollbar styling */
 .transaction-table-container::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -116,3 +66,44 @@
   border-radius: 4px;
 }
 
+/* New class for company name cells */
+.transaction-history td.company-name {
+  /* Default state can remain unchanged (nowrap) on larger screens */
+  white-space: nowrap;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .transaction-history {
+    padding: 10px;
+  }
+  
+  .transaction-history th,
+  .transaction-history td {
+    font-size: 14px;
+    padding: 8px 12px;
+    white-space: nowrap; /* Default for most cells */
+  }
+  
+  .transaction-history th {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  .transaction-table-container {
+    max-height: 500px;
+    border-radius: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .transaction-history h3 {
+    font-size: 1.5rem;
+  }
+  
+  /* Override for the company name cell on mobile */
+  .transaction-history td.company-name {
+    white-space: normal;       /* Allow text wrapping */
+    word-break: break-word;     /* Ensure long words are broken up */
+    max-width: 150px;           /* Limit the cell's width for better readability */
+  }
+}

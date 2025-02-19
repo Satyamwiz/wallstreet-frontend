@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ArrowUpRight, ArrowDownRight, Wallet, X, AlertTriangle } from "lucide-react";
 import { stockService, portfolioService } from "../services/apis";
 import { toast } from "react-toastify";
@@ -13,16 +13,17 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
   const [qty, setQty] = useState(0);
   // bidPrice reflects the continuously updated price from the socket
   const [bidPrice, setBidPrice] = useState(socketPrice);
-  // buyprice is the user-entered bid price in the order form
-  const [buyprice, setBuyprice] = useState(0);
+  // Store buyprice as a string to allow empty input; initialize with socketPrice.
+  const [buyprice, setBuyprice] = useState(String(socketPrice));
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
   const [cash, setCash] = useState(0);
+  const [value, setvalue] = useState(price);
 
   // Calculate the dynamic 24h change relative to the initial price prop
   const dynamicPriceChange = ((bidPrice - price) / price) * 100;
   const isPositive = dynamicPriceChange >= 0;
-  const totalValue = buyprice * qty;
-
+  const totalValue = (parseFloat(buyprice) || 0) * qty;
+  
   // Fetch available cash on mount
   useEffect(() => {
     portfolioService
@@ -31,15 +32,27 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
       .catch((err) => toast.error("Error fetching cash", err));
   }, []);
 
-  // Update the bidPrice when the socketPrice prop changes
+  // Update bidPrice when socketPrice changes
   useEffect(() => {
     setBidPrice(socketPrice);
   }, [socketPrice]);
 
+  // If the user hasn't modified the bid price (i.e. it's still the previous socketPrice), update it.
+  const prevSocketPriceRef = useRef(socketPrice);
+  useEffect(() => {
+    if (buyprice === String(parseFloat(prevSocketPriceRef.current).toFixed(2))) {
+      setBuyprice(String(socketPrice));
+    }
+    prevSocketPriceRef.current = socketPrice;
+
+  }, [socketPrice, buyprice]);
+
   // Check for circuit limit violation when buyprice or bidPrice changes
   useEffect(() => {
-    if (bidPrice === 0 || buyprice === 0) return;
-    const priceDifference = Math.abs(buyprice - bidPrice);
+    if (bidPrice === 0 || buyprice === "") return;
+    const userPrice = parseFloat(buyprice);
+    if (isNaN(userPrice)) return;
+    const priceDifference = Math.abs(userPrice - bidPrice);
     const percentageDifference = (priceDifference / bidPrice) * 100;
     setShowCircuitWarning(percentageDifference >= 12);
   }, [bidPrice, buyprice]);
@@ -47,7 +60,8 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
   const handleBuy = (e) => {
     e.preventDefault();
     const tid = toast.loading("Please wait...");
-    const buyOrderData = { price: buyprice, quantity: qty, companyName: name };
+    // Convert buyprice to a number for the API call
+    const buyOrderData = { price: parseFloat(buyprice) || 0, quantity: qty, companyName: name };
 
     stockService
       .buyStock(id, buyOrderData)
@@ -113,9 +127,9 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
               <label>Bid Price (₹)</label>
               <input
                 type="number"
-                value={buyprice || ""}
-                onChange={(e) => setBuyprice(Number(e.target.value))}
-                step="0.01"
+                step="1"
+                value={buyprice}
+                onChange={(e) => setBuyprice(e.target.value)}
               />
             </div>
             <div className="form-group">

@@ -79,10 +79,11 @@ const StocksDetail = () => {
     };
 
     checkMarketStatus();
+   
     // const intervalId = setInterval(checkMarketStatus, 30000);
     // return () => clearInterval(intervalId);
   }, []);
-
+  
   // Socket subscription to update currentPrice continuously.
   useEffect(() => {
     
@@ -168,8 +169,7 @@ const StocksDetail = () => {
 
           {/* Buy/Sell Section */}
           <section className="action-section">
-            {isMarketOpen ? (
-              <div className="market-actions">
+          <div className="market-actions">
                 <button
                   className="btn btn-buy"
                   onClick={() => setShowBuyModal(true)}
@@ -187,12 +187,15 @@ const StocksDetail = () => {
                   Sell
                 </button>
               </div>
+              </section>
+            {isMarketOpen ? (
+              <div className="market-actions"></div>
             ) : (
               <div className="market-closed">
                 [Note: The market is currently closed. Trading resumes at 9 AM.]
               </div>
             )}
-          </section>
+          
 
           {/* Modals */}
           {showBuyModal && (

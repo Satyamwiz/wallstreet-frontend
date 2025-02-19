@@ -44,6 +44,7 @@ const TransactionHistory = () => {
         <table className="table text-light text-center">
           <thead>
             <tr style={{ color: "#5eb5f8" }}>
+              
               <th scope="col">Company</th>
               <th scope="col">Quantity</th>
               <th scope="col">Order Type</th>

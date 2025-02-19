@@ -17,16 +17,19 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
   }, [id, name, price, price_change, shares, onClose]);
 
   const [sellPrice, setSellPrice] = useState(price);
-  const [sp, setsp] = useState(0);
+  // Store sp as a string to allow free editing and empty value
+  const [sp, setsp] = useState(String(price));
   const [qty, setQty] = useState(0); // Quantity of shares user wants to sell
   const [holds, setholds] = useState(0); // Holds fetched current holdings
 
   const [showCircuitWarning, setShowCircuitWarning] = useState(false);
+  // Track focus state for sp input so we can format only when not editing
+  const [isSpFocused, setIsSpFocused] = useState(false);
 
   // Calculate dynamic price change and other metrics
   const dynamicPriceChange = ((sellPrice - price) / price) * 100;
   const isPositive = dynamicPriceChange >= 0;
-  const totalValue = sp * qty;
+  const totalValue = (parseFloat(sp) || 0) * qty;
 
   // Handle WebSocket connection for live market updates
   useEffect(() => {
@@ -43,7 +46,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
       socketService.removeListeners();
       socketService.disconnect();
     };
-  }, [name, sp]);
+  }, [name]);
 
   // Fetch the current holdings from the API
   useEffect(() => {
@@ -59,12 +62,13 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
 
   // Check for circuit limit violation
   useEffect(() => {
-    if (sp === 0 || qty === 0) return;
+    const spValue = parseFloat(sp);
+    if (!sp || spValue === 0 || qty === 0) return;
     
-    const priceDifference = Math.abs(sp - sellPrice);
+    const priceDifference = Math.abs(spValue - sellPrice);
     const percentageDifference = (priceDifference / sellPrice) * 100;
     
-    const totalOrderValue = sp * qty;
+    const totalOrderValue = spValue * qty;
     const maxAllowedValue = sellPrice * shares * 1.5; // Example: 50% more than current holdings value
     
     if (percentageDifference >= 12 || totalOrderValue > maxAllowedValue) {
@@ -78,7 +82,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
   const handleSell = (e) => {
     e.preventDefault();
     const tid = toast.loading("Processing your order...");
-    const sellOrderData = { price: sp, quantity: qty, companyName: name };
+    const sellOrderData = { price: parseFloat(sp) || 0, quantity: qty, companyName: name };
 
     stockService
       .sellStock(id, sellOrderData)
@@ -153,9 +157,22 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
               <label>Sell Price ($)</label>
               <input
                 type="number"
-                value={sp || ""}
-                onChange={(e) => setsp(Number(e.target.value))}
                 step="0.01"
+                value={
+                  isSpFocused
+                    ? sp
+                    : sp !== ""
+                      ? parseFloat(sp).toFixed(2)
+                      : ""
+                }
+                onFocus={() => setIsSpFocused(true)}
+                onBlur={() => {
+                  setIsSpFocused(false);
+                  if (sp !== "") {
+                    setsp(parseFloat(sp).toFixed(2));
+                  }
+                }}
+                onChange={(e) => setsp(e.target.value)}
               />
             </div>
             <div className="form-group">

@@ -104,7 +104,7 @@ const Stocks = () => {
       <input
         type="text"
         className="search-bar"
-        placeholder="Search by ticker, company, or description"
+        placeholder="Search by ticker or Company name"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

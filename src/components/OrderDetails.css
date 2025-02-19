@@ -85,3 +85,37 @@
   border-radius: 6px; /* Roundness of the thumb */
   border: 3px solid #1e1e1e; /* Padding around thumb */
 }
+
+/* Original styles remain unchanged for desktop */
+.order-details td {
+  background-color: #1a202c;
+  padding: 12px 16px;
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping for most cells */
+}
+
+/* New class for company name cells */
+.order-details td.company-name {
+  /* Initially keep nowrap for consistency on larger screens */
+  white-space: nowrap;
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+  .order-details h3 {
+    font-size: 1.5rem;
+  }
+  
+  .order-details th,
+  .order-details td {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  /* Override for the company name cell on mobile */
+  .order-details td.company-name {
+    white-space: normal;       /* Allow text wrapping */
+    word-break: break-word;     /* Break long words if necessary */
+    max-width: 150px;           /* Limit the cell's width */
+  }
+}

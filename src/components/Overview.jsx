@@ -154,7 +154,10 @@ const OverviewComponent = ({ stock ,marketCap}) => {
 
       {/* Key Statistics Display */}
       <div className="info-grid">
-       
+        <div className="info-card">
+          <strong>Opening Price</strong>
+          <span>{Number(stock.price).toFixed(2)}</span>
+          </div>
         <div className="info-card">
           <strong>Buy Volume</strong>
           <span>{buyVolume}</span>
