@@ -54,11 +54,10 @@ const StocksDetail = () => {
     const checkMarketStatus = () => {
       marketService.checkMarketStatus()
         .then((res) => setIsMarketOpen(res.is_open))
-        .catch((err) => console.log("Error fetching market status", err));
+        .catch((err) => {});
     };
 
     checkMarketStatus();
-    // Optionally, you can enable periodic updates with setInterval.
   }, []);
 
   // Socket subscription for live price updates
@@ -236,14 +235,96 @@ const StocksDetail = () => {
             {activeTab === "overview" && <Overview stock={passedState.stock} />}
             {activeTab === "fundamentals" && (
               <div className="fundamentals-section info-grid">
-                {/* Info cards with fundamentals data */}
+                <div className="info-card">
+                  <strong>Market Cap</strong>
+                  <span>{infostock ? infostock.marketcap : passedState.stock.marketcap || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>P/E Ratio (TTM)</strong>
+                  <span>{infostock ? infostock.fundamentals?.peRatio : passedState.stock.fundamentals?.peRatio || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>ROE</strong>
+                  <span>{infostock ? infostock.fundamentals?.roe : passedState.stock.fundamentals?.roe || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>Book Value</strong>
+                  <span>{infostock ? infostock.fundamentals?.bookValue : passedState.stock.fundamentals?.bookValue || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>Face Value</strong>
+                  <span>{infostock ? infostock.facevalue : passedState.stock.facevalue || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>Debt to Equity</strong>
+                  <span>{infostock ? infostock.fundamentals?.debtToEquity : passedState.stock.fundamentals?.debtToEquity || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>EPS (TTM)</strong>
+                  <span>{infostock ? infostock.fundamentals?.eps : passedState.stock.fundamentals?.eps || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>ROCE</strong>
+                  <span>{infostock ? infostock.fundamentals?.roce : passedState.stock.fundamentals?.roce || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>Current Ratio</strong>
+                  <span>{infostock ? infostock.fundamentals?.currentRatio : passedState.stock.fundamentals?.currentRatio || "NA"}</span>
+                </div>
+                <div className="info-card">
+                  <strong>RSI</strong>
+                  <span>{infostock ? infostock.fundamentals?.rsi : passedState.stock.fundamentals?.rsi || "NA"}</span>
+                </div>
               </div>
             )}
             {activeTab === "about" && (
               <div className="about-section">
                 <div className="info-card">
                   <div className="company-info">
-                    {/* Company info details */}
+                    <div>
+                      <strong>CEO/MD</strong>
+                      <span>{infostock ? infostock.ceo : passedState.stock.ceo || "NA"}</span>
+                    </div>
+                    <div>
+                      <strong>Sector</strong>
+                      <span>{infostock ? infostock.sector : passedState.stock.sector || "NA"}</span>
+                    </div>
+                    <div>
+                      <strong>Subsector</strong>
+                      <span>{infostock ? infostock.subsector : passedState.stock.subsector || "NA"}</span>
+                    </div>
+                    <div>
+                      <strong>Group</strong>
+                      <span>{infostock ? infostock.group : passedState.stock.group || "NA"}</span>
+                    </div>
+                    <div>
+                      <strong>Locations</strong>
+                      <span>{(infostock ? infostock.locations : passedState.stock.locations)?.join(", ") || "NA"}</span>
+                    </div>
+                    {infostock && infostock.foreign_trade_exposure && infostock.foreign_trade_exposure.length > 0 && (
+                      <div>
+                        <strong>Foreign Trade Exposure</strong>
+                        <span>
+                          {infostock.foreign_trade_exposure.map((item, index) => (
+                            `${item.Country}: ${item.Percentage}${index < infostock.foreign_trade_exposure.length - 1 ? ', ' : ''}`
+                          ))}
+                        </span>
+                      </div>
+                    )}
+                    {infostock && infostock.government_schemes_involvement && infostock.government_schemes_involvement.length > 0 && (
+                      <div>
+                        <strong>Government Schemes</strong>
+                        <span>
+                          {infostock.government_schemes_involvement.join(", ")}
+                        </span>
+                      </div>
+                    )}
+                    {infostock && infostock.public_sector && (
+                      <div>
+                        <strong>Public Sector</strong>
+                        <span>{infostock.public_sector}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -251,7 +332,17 @@ const StocksDetail = () => {
             {activeTab === "info" && (
               <div className="info-section">
                 <div className="info-card">
-                  {/* Company description */}
+                  <h3 className="para">{infostock ? infostock.name : passedState.stock.name}</h3>
+                  <p className="para">
+                    {infostock ? infostock.name : passedState.stock.name} ({infostock ? infostock.ticker : passedState.stock.ticker}) is a leading company in the {infostock ? infostock.sector : passedState.stock.sector} sector, specifically focusing on {infostock ? infostock.subsector : passedState.stock.subsector}. With a market capitalization of {infostock ? infostock.marketcap : passedState.stock.marketcap}, it has established itself as a significant player in the industry.
+                  </p>
+                  <p className="para">
+                    The company reported an annual revenue of {infostock ? infostock.revenue : passedState.stock.revenue} with year-over-year growth of {infostock ? infostock.yoy_growth : passedState.stock.yoy_growth}. The profit after tax (PAT) stands at {infostock ? infostock.pat : passedState.stock.pat}, showing a growth of {infostock ? infostock.profit_growth : passedState.stock.profit_growth}.
+                  </p>
+                  <h4 className="para">Expansion Plans</h4>
+                  {(infostock ? infostock.expansion_plans : passedState.stock.expansion_plans)?.map((plan, index) => (
+                    <span className="para" key={index}>{plan}</span>
+                  ))}
                 </div>
               </div>
             )}

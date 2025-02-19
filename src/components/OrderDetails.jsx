@@ -11,7 +11,7 @@ const OrderDetails = () => {
     const fetchPendingOrders = async () => {
       try {
         const response = await portfolioService.getPendingTransactions();
-        console.log("API Response:", response);
+        // console.log("API Response:", response);
         let data = [];
 
         if (response && response.data) {
@@ -19,16 +19,16 @@ const OrderDetails = () => {
         } else if (Array.isArray(response)) {
           data = response;
         } else {
-          console.error("Unexpected response format:", response);
+          // console.error("Unexpected response format:", response);
         }
 
         if (!Array.isArray(data)) {
-          console.error("Expected an array but received:", data);
+          // console.error("Expected an array but received:", data);
           data = [];
         }
         setPendingTransactions(data);
       } catch (error) {
-        console.error("Error fetching pending orders:", error);
+        // console.error("Error fetching pending orders:", error);
       }
     };
 
@@ -42,7 +42,7 @@ const OrderDetails = () => {
       .then(() => {
       
 
-        console.log("hello ", order_id);
+        // console.log("hello ", order_id);
         toast.info("Requested Cancel Order. Please refresh and wait some time before the order is cancelled.");
         toast.info("You can see transaction status in history.")
         setPendingTransactions((prevTransactions) =>
@@ -50,7 +50,7 @@ const OrderDetails = () => {
         );
       })
       .catch((error) => {
-        console.log("ello ", order_id);
+        // console.log("ello ", order_id);
         toast.error("Error cancelling order!");
       });
   };

@@ -30,10 +30,10 @@ const Stocks = () => {
           ...stock,
           id: stock.id || index + 1,
         }));
-        console.log(data);
+        // console.log(data);
         setStocks(data);
       })
-      .catch(() => console.log("Error fetching stocks"));
+      // .catch(() => console.log("Error fetching stocks"));
   }, []);
 
   // Setup socket connection for live price updates once stocks are loaded
@@ -51,17 +51,17 @@ const Stocks = () => {
     // Market update handler that updates livePrices state
     const handleMarketUpdate = (data) => {
       let payload = data;
-       console.log("jel");
+      //  console.log("jel");
       // If payload is a string, attempt to parse it
       if (typeof payload === "string") {
         try {
           payload = JSON.parse(payload);
         } catch (err) {
-          console.error("Error parsing payload:", err);
+          // console.error("Error parsing payload:", err);
           return;
         }
       }
-      console.log("Market update:", payload);
+      // console.log("Market update:", payload);
       // Update state with the new price.
       // We assume payload.company matches stock.name and payload.price is a number.
       setLivePrices((prev) => ({
@@ -81,7 +81,7 @@ const Stocks = () => {
 
   // Debug: log the search query whenever it changes
   useEffect(() => {
-    console.log("Current search query:", searchQuery);
+    // console.log("Current search query:", searchQuery);
   }, [searchQuery]);
 
   // Improved search filtering

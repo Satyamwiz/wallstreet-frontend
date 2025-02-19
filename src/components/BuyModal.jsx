@@ -5,10 +5,10 @@ import { toast } from "react-toastify";
 import "./BuyModal.css";
 
 const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
-  console.log("ID:", id);
-  console.log("Name:", name);
-  console.log("Initial Price:", price);
-  console.log("Socket Price:", socketPrice);
+  // console.log("ID:", id);
+  // console.log("Name:", name);
+  // console.log("Initial Price:", price);
+  // console.log("Socket Price:", socketPrice);
 
   const [qty, setQty] = useState(0);
   // bidPrice reflects the continuously updated price from the socket

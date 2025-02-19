@@ -8,12 +8,12 @@ import "./SellModal.css";
 const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
   // Log initial props
   useEffect(() => {
-    console.log("ID:", id);
-    console.log("Name:", name);
-    console.log("Current Price:", price);
-    console.log("Price Change:", price_change);
-    console.log("Shares:", shares);
-    console.log("OnClose Function:", onClose);
+    // console.log("ID:", id);
+    // console.log("Name:", name);
+    // console.log("Current Price:", price);
+    // console.log("Price Change:", price_change);
+    // console.log("Shares:", shares);
+    // console.log("OnClose Function:", onClose);
   }, [id, name, price, price_change, shares, onClose]);
 
   const [sellPrice, setSellPrice] = useState(price);
@@ -52,7 +52,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
   useEffect(() => {
     stockService.getQuantity(name)
       .then((res) => {
-        console.log("Quantity from API:", res.quantity);
+        // console.log("Quantity from API:", res.quantity);
         setholds(res.quantity);
       })
       .catch((err) => {

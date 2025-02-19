@@ -9,7 +9,7 @@ const TransactionHistory = () => {
     const fetchTransactions = async () => {
       try {
         const response = await portfolioService.getTransactions();
-        console.log("API Response:", response);
+        // console.log("API Response:", response);
 
         let data = [];
         if (response && response.data) {
@@ -18,17 +18,17 @@ const TransactionHistory = () => {
           // If the response itself is an array, use it directly
           data = response;
         } else {
-          console.error("Unexpected response format:", response);
+          // console.error("Unexpected response format:", response);
         }
 
         // Ensure data is an array; if not, log an error and default to an empty array
         if (!Array.isArray(data)) {
-          console.error("Expected an array but received:", data);
+          // console.error("Expected an array but received:", data);
           data = [];
         }
         setTransactions(data);
       } catch (error) {
-        console.error("Error fetching transactions:", error);
+        // console.error("Error fetching transactions:", error);
       }
     };
 

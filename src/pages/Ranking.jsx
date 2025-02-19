@@ -18,9 +18,9 @@ const Leaderboard = () => {
         const response = await rankService.getRankings();
         const sortedRanks = response.sort((a, b) => b.totalValue - a.totalValue);
         setRanks(sortedRanks);
-        console.log("this is by http");
+        // console.log("this is by http");
       } catch (error) {
-        console.error("Error fetching rankings:", error);
+        // console.error("Error fetching rankings:", error);
         toast.error("Failed to fetch rankings.");
       }
     };
@@ -32,7 +32,7 @@ const Leaderboard = () => {
     const handleRankingUpdate = (data) => {
       const sortedRanks = data.sort((a, b) => b.totalValue - a.totalValue);
       setRanks(sortedRanks);
-      console.log("now by sockets");
+      
     };
 
     socketService.connect();

@@ -25,7 +25,7 @@ const MyWishlist = () => {
             name: stock.companyName,
             
           }));
-          console.error(transformedWishlist);
+          // console.error(transformedWishlist);
 
           setWishlist(transformedWishlist);
         }
@@ -49,13 +49,13 @@ const MyWishlist = () => {
 
     const handleMarketUpdate = (data) => {
       let payload = data;
-      console.log("Received live update:", payload);
+      // console.log("Received live update:", payload);
 
       if (typeof payload === "string") {
         try {
           payload = JSON.parse(payload);
         } catch (err) {
-          console.error("Error parsing payload:", err);
+          // console.error("Error parsing payload:", err);
           return;
         }
       }
@@ -85,7 +85,7 @@ const MyWishlist = () => {
         setTimeout(() => setNotification(""), 3000);
       })
       .catch((err) => {
-        console.error("Error adding stock to wishlist", err);
+        // console.error("Error adding stock to wishlist", err);
       });
   };
 

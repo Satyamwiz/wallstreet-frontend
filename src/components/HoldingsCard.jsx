@@ -18,7 +18,7 @@ const HoldingsCard = ({ holdings = [], onNetWorthChange }) => {
     // Define a market update handler.
     const handleMarketUpdate = (data) => {
       const payload = data;
-      console.log(payload);
+      // console.log(payload);
       // Update the state with the latest price
       setPrices((prevPrices) => ({
         ...prevPrices,

@@ -44,7 +44,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
      
       stockService.gethistoricaldata({ companyName })
         .then(response => {
-          console.log("pspspspsppsps", response);
+          // console.log("pspspspsppsps", response);
             const formattedData = response.data.map(d => ({
             time: convertToIST(d.time),
             price: d.price,
@@ -65,13 +65,13 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
     const fetchOpeningPrice = async () => {
       try {
       const response = await stockService.getopeningprice(companyName);
-      console.log("spspspspsp",response);
+      // console.log("spspspspsp",response);
       const price = Number(response.openingPrice);
-      console.log("Opening price:", price);
+      // console.log("Opening price:", price);
       setOpeningPrice(price);
       
       } catch (error) {
-      console.error("Error fetching opening price:", error);
+      // console.error("Error fetching opening price:", error);
       // setTimeout(fetchOpeningPrice, 4000); // Retry after 3 seconds
       toast.error("Error, please try again", error);
       }
@@ -84,12 +84,12 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
 
     // Setup WebSocket connection for real-time updates
     socket.on("connect", () => {
-      console.log("Connected to the server");
+      // console.log("Connected to the server");
       socket.emit("subscribeToCompany", companyName);
     });
 
     socket.on("market", (message) => {
-      console.log(`Received market update for ${companyName}:`, message);
+      // console.log(`Received market update for ${companyName}:`, message);
       setData(prevData => [
         ...prevData,
         { time: convertToIST(message.time), price: message.price },
@@ -97,7 +97,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
     });
 
     socket.on("disconnect", (reason) => {
-      console.log("Disconnected from the server. Reason:", reason);
+      // console.log("Disconnected from the server. Reason:", reason);
     });
 
     return () => {
