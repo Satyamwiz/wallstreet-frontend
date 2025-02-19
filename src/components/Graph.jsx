@@ -151,15 +151,25 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
           <CartesianGrid strokeDasharray="3 3" stroke="#444" />
           <XAxis dataKey="time" stroke="#ddd" minTickGap={20} tick={{ fontSize: 12 }} />
           <YAxis
-            domain={openingPrice ? [openingPrice * 0.9, openingPrice * 1.1] : ['auto', 'auto']}
-            stroke="#ddd"
-            tick={{ fontSize: 12 }}
-            tickFormatter={(value) => {
-              if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-              if (value >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
-              return value;
-            }}
-          />
+  stroke="#ddd"
+  tick={{ fontSize: 12 }}
+  tickFormatter={(value) => {
+    if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
+    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}k`;
+    return value;
+  }}
+  domain={
+    data.length > 0
+      ? (() => {
+          const prices = data.map(d => d.price);
+          const minPrice = Math.min(...prices);
+          const maxPrice = Math.max(...prices);
+          const buffer = (maxPrice - minPrice) * 0.1; 
+          return [Math.max(0, minPrice - buffer), maxPrice + buffer];
+        })()
+      : ["auto", "auto"]
+  }
+/>
           <Tooltip 
             contentStyle={{ backgroundColor: "#1e1e1e", color: "#fff" }}
             formatter={(value) => typeof value === "number" ? value.toFixed(1) : value}

@@ -66,44 +66,55 @@
   border-radius: 4px;
 }
 
-/* New class for company name cells */
-.transaction-history td.company-name {
-  /* Default state can remain unchanged (nowrap) on larger screens */
-  white-space: nowrap;
+
+
+
+
+/* Existing styles for your transaction table (simplified) */
+.transaction-history table {
+  width: 100%;
+  border-collapse: collapse;
+  /* If you want columns to have fixed widths, consider:
+     table-layout: fixed;
+  */
 }
 
-/* Mobile-specific adjustments */
+.transaction-history th,
+.transaction-history td {
+  text-align: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #4a5568;
+  /* Some projects set:
+     white-space: nowrap;
+     If so, we will override it below for the company column.
+  */
+}
+
+/* 1. Assign a dedicated class to the Company column cells. */
+.transaction-history td.company-name {
+  /* 2. Override any global 'nowrap' */
+  white-space: normal;  
+  /* 3. Allow breaking long words or URLs */
+  word-break: break-word; 
+  /* 4. Constrain the width to encourage wrapping */
+  max-width: 150px; 
+  /* Alternatively:
+     overflow-wrap: break-word;
+  */
+}
+
+/* Example media query for smaller devices */
 @media (max-width: 768px) {
-  .transaction-history {
-    padding: 10px;
-  }
-  
   .transaction-history th,
   .transaction-history td {
     font-size: 14px;
     padding: 8px 12px;
-    white-space: nowrap; /* Default for most cells */
+    
   }
-  
-  .transaction-history th {
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-  
-  .transaction-table-container {
-    max-height: 500px;
-    border-radius: 6px;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .transaction-history h3 {
-    font-size: 1.5rem;
-  }
-  
-  /* Override for the company name cell on mobile */
+
   .transaction-history td.company-name {
-    white-space: normal;       /* Allow text wrapping */
-    word-break: break-word;     /* Ensure long words are broken up */
-    max-width: 150px;           /* Limit the cell's width for better readability */
+    white-space: normal;
+    word-break: break-word;
+    max-width: 100px; /* Tighter constraint for mobile */
   }
 }

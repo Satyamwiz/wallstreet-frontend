@@ -57,7 +57,7 @@ const TransactionHistory = () => {
           <tbody>
             {transactions.map((transaction) => (
               <tr key={transaction.order_id}>
-                <td>{transaction.companyName}</td>
+                <td className="company-name">{transaction.companyName}</td>
                 <td>{transaction.quantity}</td>
                 <td
                   className={
