@@ -36,7 +36,7 @@ const Graph = ({ companyName }) => { // Accept companyName as a prop
   useEffect(() => {
     // Fetch historical data for the chart
     
-    socket.off("disconnect");
+    // socket.off("disconnect");
 
 
 

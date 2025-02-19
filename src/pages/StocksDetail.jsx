@@ -169,32 +169,33 @@ const StocksDetail = () => {
 
           {/* Buy/Sell Section */}
           <section className="action-section">
-          <div className="market-actions">
-                <button
-                  className="btn btn-buy"
-                  onClick={() => setShowBuyModal(true)}
-                  data-toggle="modal"
-                  data-target={`#modal${passedState.stock.name}`}
-                >
-                  Buy
-                </button>
-                <button
-                  className="btn btn-sell"
-                  onClick={() => setShowSellModal(true)}
-                  data-toggle="modal"
-                  data-target={`#sellmodal${passedState.stock.name}`}
-                >
-                  Sell
-                </button>
-              </div>
-              </section>
+          
+             
             {isMarketOpen ? (
-              <div className="market-actions"></div>
+             <div className="market-actions">
+             <button
+               className="btn btn-buy"
+               onClick={() => setShowBuyModal(true)}
+               data-toggle="modal"
+               data-target={`#modal${passedState.stock.name}`}
+             >
+               Buy
+             </button>
+             <button
+               className="btn btn-sell"
+               onClick={() => setShowSellModal(true)}
+               data-toggle="modal"
+               data-target={`#sellmodal${passedState.stock.name}`}
+             >
+               Sell
+             </button>
+           </div>
             ) : (
               <div className="market-closed">
                 [Note: The market is currently closed. Trading resumes at 9 AM.]
               </div>
             )}
+             </section>
           
 
           {/* Modals */}
