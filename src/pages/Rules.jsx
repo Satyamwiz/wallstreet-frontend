@@ -16,7 +16,7 @@ const Rules = () => {
                         <li>
                             Market Timings:
                             <ul>
-                                <li>Day 1 & Day 2: The market will be open from 9:00 AM to 12:00 AM.</li>
+                                <li>Day 1 & Day 2: The market will be open from 1:00 PM to 6.30 PM.</li>
                                 <li>Day 3: The market will be open from 9:00 AM to 4:00 PM.</li>
                             </ul>
                         </li>
