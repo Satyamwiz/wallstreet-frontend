@@ -165,7 +165,7 @@ const StocksDetail = () => {
               </div>
             ) : (
               <div className="market-closed">
-                [Note: The market is currently closed. Trading resumes at 9 AM.]
+                [Note: The market is currently closed. Trading resumes at 9:30 AM.]
               </div>
             )}
           </section>
