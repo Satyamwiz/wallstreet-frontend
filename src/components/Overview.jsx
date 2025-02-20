@@ -142,8 +142,8 @@ const OverviewComponent = ({ stock ,marketCap}) => {
         <h4>{Number(prices).toFixed(2)}</h4>
         <div className="range-slider">
           <div className="range-values">
-            <span>{todaysMin.toFixed(2)}</span>
-            <span>{todaysMax.toFixed(2)}</span>
+            <span>₹ {todaysMin.toFixed(2)}</span>
+            <span>₹ {todaysMax.toFixed(2)}</span>
           </div>
           <div className="range-bar">
             <div className="range-progress" style={{ width: `${clampedTodaysPos}%` }}></div>
