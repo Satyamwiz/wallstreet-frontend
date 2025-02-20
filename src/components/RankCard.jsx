@@ -7,7 +7,7 @@ const RankCard = ({ ranki, name, cash, totalValue }) => {
     <div className="leaderboard-card">
       <div className="cell rank-cell">{ranki}</div>
       <div className="cell name-cell">{name}</div>
-      <div className="cell cash-cell">₹ {Number(cash).toFixed(4)}</div>
+      {/* <div className="cell cash-cell">₹ {Number(cash).toFixed(4)}</div> */}
       <div className="cell total-cell">₹ {Number(totalValue).toFixed(2)}</div>
     </div>
   );

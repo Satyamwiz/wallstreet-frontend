@@ -63,7 +63,7 @@ const Leaderboard = () => {
           <div className="leaderboard-header">
             <div className="header-cell rank-header">Rank</div>
             <div className="header-cell name-header">Name</div>
-            <div className="header-cell cash-header">Cash</div>
+            {/* <div className="header-cell cash-header">Cash</div> */}
             <div className="header-cell total-header">Networth</div>
           </div>
           <div className="leaderboard-list">
