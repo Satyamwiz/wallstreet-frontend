@@ -49,13 +49,13 @@ const BuyModal = ({ id, name, price, socketPrice, onClose }) => {
 
   // Check for circuit limit violation when buyprice or bidPrice changes
   useEffect(() => {
-    if (bidPrice === 0 || buyprice === "") return;
+    if ( buyprice === "") return;
     const userPrice = parseFloat(buyprice);
     if (isNaN(userPrice)) return;
-    const priceDifference = Math.abs(userPrice - bidPrice);
-    const percentageDifference = (priceDifference / bidPrice) * 100;
+    const priceDifference = Math.abs(userPrice - price);
+    const percentageDifference = (priceDifference / price) * 100;
     setShowCircuitWarning(percentageDifference >= 12);
-  }, [bidPrice, buyprice]);
+  }, [ buyprice]);
 
   const handleBuy = (e) => {
     e.preventDefault();

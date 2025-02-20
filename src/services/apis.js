@@ -80,7 +80,7 @@ const stockService = {
         })
     },
     deleteOrder: (id) => {
-        // console.log("working",id);
+        console.log("working",id);
         
         const req = { order_id: id };
         // console.log(req);
