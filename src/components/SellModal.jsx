@@ -65,18 +65,18 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
     const spValue = parseFloat(sp);
     if (!sp || spValue === 0 || qty === 0) return;
     
-    const priceDifference = Math.abs(spValue - sellPrice);
-    const percentageDifference = (priceDifference / sellPrice) * 100;
+    const priceDifference = Math.abs(spValue - price);
+    const percentageDifference = (priceDifference / price) * 100;
     
-    const totalOrderValue = spValue * qty;
-    const maxAllowedValue = sellPrice * shares * 1.5; // Example: 50% more than current holdings value
+  
     
-    if (percentageDifference >= 12 || totalOrderValue > maxAllowedValue) {
+    
+    if (percentageDifference >= 12 ) {
       setShowCircuitWarning(true);
     } else {
       setShowCircuitWarning(false);
     }
-  }, [sp, sellPrice, qty, shares]);
+  }, [sp, qty, shares]);
 
   // Function to handle sell order submission
   const handleSell = (e) => {

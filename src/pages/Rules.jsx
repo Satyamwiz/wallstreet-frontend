@@ -21,6 +21,8 @@ const Rules = () => {
                             </ul>
                         </li>
                         <br/>
+                        <li>Upon partial order execution, cancellation of the remaining portion will result in portfolio adjustments reflecting the updated share and cash balances.</li>
+                        <br/>
                         <li> Each stock has an upper and lower circuit limit of 12%, meaning the you cannot purchase a stock with increase or decrease by more than 12% in any trade. </li>
                         <br />
                         <li>Company information will be available on the company page within the platform.</li>
