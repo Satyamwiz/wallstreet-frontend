@@ -138,7 +138,7 @@ const OverviewComponent = ({ stock ,marketCap}) => {
     <div className="overview-component">
       {/* Today's Range Display */}
       <div className="info-card range-card">
-        <h3>Today's Range</h3>
+        <h3>All Time Range</h3>
         <h4>{Number(prices).toFixed(2)}</h4>
         <div className="range-slider">
           <div className="range-values">
