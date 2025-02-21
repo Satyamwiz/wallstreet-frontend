@@ -124,7 +124,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
           <div className="price-info">
             <div className="price-box">
               <p className="price-label">Current Price</p>
-              <p className="price-value">{`$${Number(sellPrice).toFixed(2)}`}</p>
+              <p className="price-value">{`${Number(sellPrice).toFixed(2)}`}</p>
             </div>
             <div className="price-box">
               <p className="price-label">24h Change</p>
@@ -154,7 +154,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
           {/* Order Form */}
           <div className="order-form">
             <div className="form-group">
-              <label>Sell Price ($)</label>
+              <label>Sell Price </label>
               <input
                 type="number"
                 step="0.01"
@@ -199,7 +199,7 @@ const SellModal = ({ id, name, price, price_change, shares, onClose }) => {
           </div>
           <div className="summary-row">
             <div className="summary-label">Total Value</div>
-            <div className="summary-value">{`$${Number(totalValue).toFixed(2)}`}</div>
+            <div className="summary-value">{`${Number(totalValue).toFixed(2)}`}</div>
           </div>
         </div>
 
