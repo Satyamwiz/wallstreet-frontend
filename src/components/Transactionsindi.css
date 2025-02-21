@@ -82,7 +82,7 @@
     .transaction-history td {
       font-size: 14px; /* Slightly smaller font for mobile */
       padding: 8px 12px; /* Reduced padding for mobile */
-      white-space: nowrap; /* Prevent text wrapping */
+      /* Prevent text wrapping */
     }
   
     .transaction-history th {

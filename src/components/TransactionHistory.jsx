@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { portfolioService } from "../services/apis.js";
 import "./TransactionHistory.css"; 
 
@@ -15,18 +15,63 @@ const TransactionHistory = () => {
         if (response && response.data) {
           data = response.data;
         } else if (Array.isArray(response)) {
-          // If the response itself is an array, use it directly
           data = response;
         } else {
           // console.error("Unexpected response format:", response);
         }
 
-        // Ensure data is an array; if not, log an error and default to an empty array
         if (!Array.isArray(data)) {
           // console.error("Expected an array but received:", data);
           data = [];
         }
-        setTransactions(data);
+
+        // Process each transaction: if it's canceled with shares_transacted > 0,
+        // split it into two transactions: one for the canceled remainder and one for the completed part.
+        const processedData = data.flatMap((transaction) => {
+          if (
+            transaction.status === "CANCELED" &&
+            transaction.shares_transacted &&
+            transaction.shares_transacted > 0
+          ) {
+            const transactedShares = transaction.shares_transacted;
+            const originalQuantity = transaction.quantity;
+            const originalPrice = Number(transaction.price);
+            const moneyExchanged = transaction.money_exchanged; // total money exchanged for transacted shares
+
+            // Calculate the remaining quantity and adjust the price accordingly
+            const remainingQuantity = originalQuantity - transactedShares;
+            let cancelledPrice = originalPrice;
+            if (remainingQuantity > 0) {
+              cancelledPrice =
+                ((originalQuantity * originalPrice) - moneyExchanged) /
+                remainingQuantity;
+            }
+            const cancelledTransaction = {
+              ...transaction,
+              quantity: remainingQuantity,
+              price: cancelledPrice,
+              status: "CANCELED",
+            };
+
+            // For the completed part, price is computed as moneyExchanged divided by transactedShares
+            const completedPrice = moneyExchanged / transactedShares;
+            const completedTransaction = {
+              ...transaction,
+              quantity: transactedShares,
+              price: completedPrice,
+              status: "COMPLETED",
+              // Reset these fields for the completed part
+              shares_transacted: 0,
+              money_exchanged: 0,
+            };
+
+            // Return both transactions
+            return [cancelledTransaction, completedTransaction];
+          }
+          return transaction;
+        });
+
+        setTransactions(processedData);
       } catch (error) {
         // console.error("Error fetching transactions:", error);
       }
@@ -44,7 +89,6 @@ const TransactionHistory = () => {
         <table className="table text-light text-center">
           <thead>
             <tr style={{ color: "#5eb5f8" }}>
-              
               <th scope="col">Company</th>
               <th scope="col">Quantity</th>
               <th scope="col">Order Type</th>
@@ -56,7 +100,7 @@ const TransactionHistory = () => {
           </thead>
           <tbody>
             {transactions.map((transaction) => (
-              <tr key={transaction.order_id}>
+              <tr key={transaction.order_id + transaction.status}>
                 <td className="company-name">{transaction.companyName}</td>
                 <td>{transaction.quantity}</td>
                 <td
@@ -78,9 +122,12 @@ const TransactionHistory = () => {
                 >
                   {transaction.status}
                 </td>
-                <td>{new Date(transaction.datetimePlaced).toLocaleDateString()}</td>
-                <td>{new Date(transaction.datetimePlaced).toLocaleTimeString()}</td>
-               
+                <td>
+                  {new Date(transaction.datetimePlaced).toLocaleDateString()}
+                </td>
+                <td>
+                  {new Date(transaction.datetimePlaced).toLocaleTimeString()}
+                </td>
               </tr>
             ))}
           </tbody>
